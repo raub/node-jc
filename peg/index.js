@@ -3,15 +3,26 @@
 const peg = require('pegjs');
 const parser = peg.generate(`
 	
-jc = import* // ? class+
+	// jc = 'import Vertex from vertex'
+	
+	
+jc0 = imports? .* //class+
 
-import = skip 'import' // \s classNames \s 'from' \s modulePath
+import  = skip 'import' // white_sure classNames white_sure 'from' white_sure modulePath new_line
+imports = import+
 
-skip         = (comment / whitespace)*
+skip         = skip_sure?
+skip_sure    = (comment / white_sure)
+
+white_maybe  = white_sure?
+white_sure   = white_symbol+
+white_line   = new_line / white_symbol
+white_symbol = [\\t\\v\\f \\u00A0\\uFEFF]
+new_line     = '\\r'? '\\n'
+
 comment      = commentLine / commentMulti
-commentLine  = '//' .* \n
+commentLine  = '//' .* new_line
 commentMulti = '/*' .* '*/'
-whitespace   = \s
 
 // classNames = className (\,\s? className)
 // className  = [A-Z][\w]+
@@ -21,7 +32,8 @@ whitespace   = \s
 // dirPath    = ((\w|\s)+\/?)+
 // jcExt      = '.jc'
 
-// class = skip className (\s 'extends' \s className)? \s? classBody
+// class = skip className (\s 'extends' \s className)? \s? classBody new_line
+// classes = class+
 
 // classBody = \{ .* \}
 

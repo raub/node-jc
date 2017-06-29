@@ -14,5 +14,6 @@
     "url": "https://github.com/raub/node-jc"
   },
   "dependencies": {
+    "pegjs": "^0.10.0"
   }
 }
