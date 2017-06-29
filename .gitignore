@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+
+data/*
+node_modules
+
+bin/build/tmp

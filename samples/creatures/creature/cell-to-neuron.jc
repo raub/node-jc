@@ -1,0 +1,23 @@
+import Neuron from ../brain
+import Cell   from ../body
+
+
+CellToNeuron {
+	
+	.cell   : Cell
+	.neuron : Neuron
+	
+	
+	.constructor(cell, neuron) {
+		.cell   = cell
+		.neuron = neuron
+	}
+	
+	
+	send() {
+		CellToNeuron[] {
+			.neuron.set(.cell.get())
+		}
+	}
+	
+}

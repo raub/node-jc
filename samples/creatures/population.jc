@@ -1,0 +1,24 @@
+import Creature from creature
+import Brain    from brain
+import Body     from body
+
+
+Population {
+	
+	.сreatures : Creature[]
+	
+	
+	.constructor(int n, int size) {
+		
+		[n]() {
+			.сreatures << new Creature(new Brain(size), new Body(size))
+		}
+		
+	}
+	
+	
+	simulate() {
+		Creature.simulate();
+	}
+	
+}

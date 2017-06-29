@@ -1,0 +1,19 @@
+{
+  "name": "creatures",
+  "version": "0.0.1",
+  "description": "Creatures sample for JC",
+  "main": "index.js",
+  "keywords": [
+    "jc",
+    "gpu"
+  ],
+  "author": "Luis Blanco <raubtierxxx@gmail.com> (https://github.com/raub)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raub/node-jc"
+  },
+  "dependencies": {
+    "node-jc": "git+https://github.com/raub/node-jc",
+  }
+}

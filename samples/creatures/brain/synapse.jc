@@ -1,0 +1,27 @@
+import Edge   from ../graph
+import Neuron from neuron
+
+
+Synapse extends Edge {
+	
+	.weight : float
+	
+	
+	.constructor(Neuron a, Neuron b, weight) {
+		
+		.super(a, b, 2.0 - 2.0 * weight)
+		
+		.weight = weight
+		
+	}
+	
+	
+	.transmit() {
+		
+		.pull()
+		
+		// TODO: synaptic activity
+		
+	}
+	
+}

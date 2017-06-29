@@ -1,0 +1,27 @@
+Vertex {
+	
+	// Static prop, thickness coef, initial 1.0
+	frict : float = 0.9999
+	
+	.pos : float3
+	.rgb : float3
+	.vel : float3
+	
+	
+	// Constructor, uses init-params
+	.constructor(pos, rgb, vel) {
+		.pos = pos
+		.rgb = rgb
+		.vel = vel
+	}
+	
+	
+	// Move: simply apply velocity and friction
+	.move() {
+		.pos += .vel
+		.vel *= frict
+	}
+	
+}
+
+

@@ -1,0 +1,26 @@
+import Synapse from synapse
+import Neuron  from neuron
+
+
+Brain extends Graph {
+	
+	.neurons  : .vertices
+	.synapses : .edges
+	
+	
+	.constructor(int size) {
+		
+		[size]() {
+			.neurons  << new Neuron()
+			.synapses << new Synapse()
+		}
+		
+	}
+	
+	
+	think() {
+		Neuron[]  { .think()    }
+		Synapse[] { .transmit() }
+	}
+	
+}

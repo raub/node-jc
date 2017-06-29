@@ -1,0 +1,26 @@
+import Muscle from muscle
+import Cell   from cell
+
+
+Body extends Graph {
+	
+	.cells   : .vertices
+	.muscles : .edges
+	
+	
+	.constructor(int size) {
+		
+		[size]() {
+			.cells   << new Cell()
+			.muscles << new Muscle()
+		}
+		
+	}
+	
+	
+	live() {
+		Cell[]   { .live()     }
+		Muscle[] { .contract() }
+	}
+	
+}

@@ -1,0 +1,22 @@
+import Vertex from ../graph
+
+
+Cell extends Vertex {
+	
+	.value : float
+	
+	
+	.constructor(pos, rgb, vel) {
+		.super(pos, rgb, vel)
+	}
+	
+	
+	.live() {
+		
+		.move()
+		
+		// TODO: cell business
+		
+	}
+	
+}
