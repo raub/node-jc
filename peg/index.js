@@ -40,11 +40,6 @@ const parsed1 = parser.parse(`
 // }
 
 Vertex {
-	Node {
-		
-		
-		
-	}
 	
 	
 	// Static prop, friction coef, initial 1.0
@@ -99,7 +94,7 @@ Edge {
 	.dist : float
 	
 	// known positions of vertices, use to draw lines
-	.pos : float3 a, float3 b
+	.pos : float3 a, b
 	
 	
 	// // Constructor, uses init-params

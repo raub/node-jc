@@ -38,7 +38,7 @@ comment_line  = '//' any_line new_line
 comment_multi = '/*' (!'*/' .)* '*/'
 
 
-class_names  = c1:class_name c2:more_classes* {return (c2||[]).concat([c1])}
+class_names  = c1:class_name c2:more_classes* {return (c1).concat([c2||[]])}
 more_classes = white_maybe ',' white_maybe name:class_name {return name}
 class_name   = $([A-Z] base_name?)
 prop_name    = $([a-z] base_name?)
@@ -66,31 +66,79 @@ external 'an external property'
 	= skip '@' name:prop_name define_op external_code def_end
 
 dynamic_prop 'a dynamic property'
-	= skip '.' name:prop_name  define_op type:(struct_type / core_type / ref_type) def_end
-	  {return {membership: 'property', access: 'dynamic', type, name}}
+	= skip '.' name:prop_name
+	  define_op type:(struct_type / core_type / ref_type)
+	  def_end
+	{return {membership: 'property', access: 'dynamic', type, name}}
 static_prop 'a static property'
-	= skip name:prop_name  define_op type:core_type init:default_val? def_end
-	  {return {membership: 'property', access: 'static', type, init, name}}
+	= skip name:prop_name
+	  define_op type:core_type init:default_val?
+	  def_end
+	{return {membership: 'property', access: 'static', type, init, name}}
+
+
+dynamic_func 'a dynamic method'
+	= skip '.' name:prop_name
+	  param_list
+	  func_body
+	  def_end
+	{return {membership: 'property', access: 'dynamic', type, name}}
+static_func 'a static method'
+	= skip name:prop_name
+	  param_list
+	  func_body
+	  def_end
+	{return {membership: 'property', access: 'static', type, init, name}}
+
+param_list 'a parameter list'
+	= white_symbol? '(' params? ')'
+
+params = param more_params*
+more_params = skip ',' param
+param = skip prop_name
+
+func_body = '{' skip o:operation* skip '}' {return o}
+operation = local_var / assignment / call / iteration / control
+local_var = skip (core_type / class_type) 
+one_local = skip prop_name default_val?
+more_local = skip ',' skip local_var
+
+
+
+// TODO
+
+
+
+
+
+
 
 // dynamic_func  = skip '.' name:prop_name define_op (core_type / struct_type) def_end
 // static_func   = skip name:prop_name define_op (core_type / struct_type) def_end
 
-core_type   = core_char / core_int / core_float
-core_char   = 'char'
-core_int    = 'int2' / 'int3' / 'int4' / 'int'
-core_float  = 'float2' / 'float3' / 'float4' / 'float' 
 
-struct_type = t1:sub_type t2:more_types* {return (t2||[]).concat([t1])}
-more_types  = white_maybe ',' white_maybe sub:sub_type {return sub}
-sub_type    = type:core_type white_sure name:prop_name {return {type,name}}
+core_type  = core_char / core_int / core_float
+core_char  = 'char'
+core_int   = 'int2' / 'int3' / 'int4' / 'int'
+core_float = 'float2' / 'float3' / 'float4' / 'float' 
+
+
+struct_type "struct type"
+	= type:core_type white_symbol? p1:prop_name p2:more_subs+
+	{return { type, names: ([p1]).concat(p2||[]) }}
+more_subs "struct fields"
+	= white_maybe ',' white_maybe name:prop_name
+	{return name}
+
+
 
 ref_type    = list_type / class_type
 list_type
 	= target:class_name white_symbol* '[' white_symbol* ']'
-	  {return {target, type:'list'}}
+	{return {target, type:'list'}}
 class_type
 	= target:class_name
-	  {return {target, type:'ref'}}
+	{return {target, type:'ref'}}
 
 
 default_val = default_op value:gpu_value {return value}
