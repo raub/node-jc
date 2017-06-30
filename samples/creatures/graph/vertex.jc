@@ -1,6 +1,6 @@
 Vertex {
 	
-	// Static prop, thickness coef, initial 1.0
+	// Static prop, friction coef, initial 1.0
 	frict : float = 0.9999
 	
 	.pos : float3
