@@ -6,7 +6,7 @@ imports
 	= imports:import+
 
 import
-	= skip 'import' white_sure classes:class_names white_sure 'from'
+	= __s 'import' white_sure classes:class_names white_sure 'from'
 	  white_sure path:module_path new_line 
 	  {return {classes,path}}
 
@@ -14,36 +14,49 @@ classes
 	= classes:class+
 
 class
-	= skip name:class_name
+	= __s name:class_name
 	  parent:extends? white_maybe
 	  members:class_body def_end
 	  {return {name,parent,members}}
 
 
-skip      = skip_sure?
-skip_sure = (comment / white_sure)+
+__s 'comment or whitespace'
+	= __s_sure?
+__s_sure = (comment / white_sure)+
 
 
 white_maybe  = white_sure?
 white_sure   = white_all+
-white_all    = new_line / white_symbol
-white_symbol = [\t\v\f \u00A0\uFEFF]
-new_line     = '\r'? '\n'
-any_line     = (!new_line .)*
-def_end      = (white_symbol / ';')* (comment_line / new_line)
+white_all 'any whitespace'
+	= new_line / white_symbol
+white_symbol 'a space'
+	= [\t\v\f \u00A0\uFEFF]
+new_line 'a new line'
+	= '\r'? '\n'
+any_line
+	= (!new_line .)*
+def_end 'the end of definition'
+	= (white_symbol / ';')* &'}'? (comment_line / new_line)
 
 
-comment      = comment_line / comment_multi
+comment       = comment_line / comment_multi
 comment_line  = '//' any_line new_line
 comment_multi = '/*' (!'*/' .)* '*/'
 
 
-class_names  = c1:class_name c2:more_classes* {return (c1).concat([c2||[]])}
+class_names  = c1:class_name c2:more_classes* {return ([c1]).concat(c2||[])}
 more_classes = white_maybe ',' white_maybe name:class_name {return name}
 class_name   = $([A-Z] base_name?)
 prop_name    = $([a-z] base_name?)
 dir_name     = $((base_name / [\.\- _\(\)])+)
 base_name    = $([A-Za-z0-9_]+)
+
+
+prop_chain    = dynamic_chain / static_chain
+dynamic_chain = c1:chain_next c2:chain_next* {return {type: 'dynamic', chain:([c1]).concat(c2||[])}}
+static_chain  = c1:chain_item c2:chain_next* {return {type: 'static', chain:([c1]).concat(c2||[])}}
+chain_next    = !def_end __s '.' item:chain_item {return item}
+chain_item    = name:base_name args:arg_list? {return {name, type: args? 'call' : 'access', args}}
 
 
 module_path = $(dir_dots? dir_path jc_ext?)
@@ -52,70 +65,125 @@ dir_path    = $(dir_name sub_dir*)
 sub_dir     = $('/' dir_name)
 jc_ext      = '.jc'
 
-extends    = white_sure 'extends' white_sure name:class_name {return name}
 
-class_body  = '{' skip m:members* skip '}' {return m}
-members 'a class member'
-	= properties // / methods / external
+extends = white_sure 'extends' white_sure name:class_name {return name}
+
+
+class_body  = '{' __s m:members* __s '}' {return m}
+
+members
+	= properties / methods //  / external
 properties 'a property'
 	= dynamic_prop / static_prop
-// methods 'a method'
-// = dynamic_func / static_func
+methods 'a method'
+	= dynamic_func / static_func
 
 external 'an external property'
-	= skip '@' name:prop_name define_op external_code def_end
+	= __s '@' name:prop_name define_op external_code def_end
 
 dynamic_prop 'a dynamic property'
-	= skip '.' name:prop_name
+	= __s '.' name:prop_name
 	  define_op type:(struct_type / core_type / ref_type)
 	  def_end
 	{return {membership: 'property', access: 'dynamic', type, name}}
 static_prop 'a static property'
-	= skip name:prop_name
+	= __s name:prop_name
 	  define_op type:core_type init:default_val?
 	  def_end
 	{return {membership: 'property', access: 'static', type, init, name}}
 
 
 dynamic_func 'a dynamic method'
-	= skip '.' name:prop_name
-	  param_list
-	  func_body
+	= __s '.' name:prop_name
+	  params:param_list
+	  body:func_body
 	  def_end
-	{return {membership: 'property', access: 'dynamic', type, name}}
+	{return {membership: 'method', access: 'dynamic', name, params, body}}
 static_func 'a static method'
-	= skip name:prop_name
-	  param_list
-	  func_body
+	= __s name:prop_name
+	  params:param_list
+	  body:func_body
 	  def_end
-	{return {membership: 'property', access: 'static', type, init, name}}
+	{return {membership: 'method', access: 'static', name, params, body}}
 
 param_list 'a parameter list'
-	= white_symbol? '(' params? ')'
+	= white_symbol? '(' __s p:params? __s ')' {return p}
 
-params = param more_params*
-more_params = skip ',' param
-param = skip prop_name
-
-func_body = '{' skip o:operation* skip '}' {return o}
-operation = local_var / assignment / call / iteration / control
-local_var = skip (core_type / class_type) 
-one_local = skip prop_name default_val?
-more_local = skip ',' skip local_var
+params = p1:param p2:more_params* {return ([p1]).concat(p2||[])}
+more_params = __s ',' p:param {return p}
+param = __s p:prop_name {return p}
 
 
-
-// TODO
-
-
-
-
-
+func_body  = __s '{' __s o:operation* __s '}' {return o}
+func_any  = __s '{' __s o:(!'}' .)* __s '}' {return o}
+operation  = var_def_op / no_def_op
+var_def_op = local_var
+no_def_op  = assignment / call_only / iteration / control
 
 
-// dynamic_func  = skip '.' name:prop_name define_op (core_type / struct_type) def_end
-// static_func   = skip name:prop_name define_op (core_type / struct_type) def_end
+local_var  = __s (core_type / class_type) one_local more_local? def_end
+one_local  = __s prop_name assign?
+more_local = __s ',' __s one_local
 
+
+assignment
+	= __s left:prop_chain right:assign def_end
+	{return {op:'assignment',left,right}}
+assign
+	= __s assign_op __s e:expression
+	{return e}
+
+
+call_only  = call def_end
+call       = '.'? prop_name arg_list
+arg_list 'a list of arguments'
+	= white_symbol* '(' args? ')'
+args = param more_args*
+more_args = __s ',' arg
+arg = __s expression
+
+
+iteration  = (iter_class / iter_expr / iter_list / iter_local) def_end
+iter_class = __s list_type param_list func_any//func_body
+iter_expr  = __s expression __s '[' white_symbol* ']' param_list func_any//func_body
+iter_list  = __s '[' __s '.' prop_chain __s ']' param_list func_any//func_body
+iter_local = __s '[' __s expression __s ']' param_list func_any//func_body
+
+
+control = (ctrl_branch / ctrl_loop / return) def_end
+ctrl_branch = ctrl_if / ctrl_switch
+ctrl_loop = ctrl_for / ctrl_while / ctrl_do
+
+ctrl_if = __s 'if' __s '(' expression ')' (func_body / operation) ctrl_else?
+ctrl_else = __s 'else' (func_body / operation)
+
+ctrl_switch = __s 'switch' __s '(' __s expression __s ')' switch_body
+switch_body = __s '{' switch_case* switch_default? switch_case* '}'
+switch_case = __s 'case' white_symbol+ gpu_value define_op no_def_op* 'break' def_end
+switch_default = __s 'default' define_op no_def_op* 'break' def_end
+
+ctrl_for = __s 'for' for_constrain (func_body / operation)
+for_constrain = __s '(' loop_var? ';' __s expression __s ';' __s expression __s ')'
+loop_var  = __s core_type one_local more_local? def_end
+
+ctrl_while = __s 'while' '(' __s expression __s ')' (func_body / operation)
+ctrl_do = __s 'do' (func_body / operation) 'while' '(' __s expression __s ')' 
+
+return = __s 'return' white_symbol* expression def_end
+
+
+expression = uno_expr / duo_expr
+brace_expr = '(' __s e:expression __s ')' {return e}
+uno_expr   = uno:uno_op? __s e:(brace_expr / rvalue) {return {uno,e}}
+duo_expr   = a:uno_expr __s duo:duo_op __s b:uno_expr {return {a,b,duo}}
+
+
+rvalue     = gpu_value / prop_chain
+uno_op     = '++' / '--' / '%' / '~' / '&' / '*' / '+' / '-' / '!' / 'new'
+duo_op     = '/' / '^' / '|' / '<<' / '>>' / '||' / '&&'
+assign_op  = '=' / '<<' / '+=' / '-=' / '*=' / '/=' / '&=' / '|=' / '^=' / '%=' / atomic_op
+atomic_op  = '+==' / '-==' / '*==' / '/=='
+all_op     = uno_op / duo_op / assign_op
 
 core_type  = core_char / core_int / core_float
 core_char  = 'char'
@@ -148,7 +216,7 @@ num_value   = float_value / int_value
 int_value   = $([0-9]+)
 float_value = $(int_value ('.' int_value)?)
 
-define_op  = skip ':' skip
-default_op = skip '=' skip
+define_op  = __s ':' __s
+default_op = __s '=' __s
 
 external_code = '\`'  (!'\`' .)* '\`'

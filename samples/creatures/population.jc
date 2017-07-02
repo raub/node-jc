@@ -5,10 +5,10 @@ import Body     from body
 
 Population {
 	
-	.сreatures : Creature[]
+	.creatures : Creature[]
 	
 	
-	.constructor(int n, int size) {
+	.constructor(n, size) {
 		
 		[n]() {
 			.сreatures << new Creature(new Brain(size), new Body(size))
@@ -18,7 +18,7 @@ Population {
 	
 	
 	simulate() {
-		Creature.simulate();
+		Creature.simulate()
 	}
 	
 }
