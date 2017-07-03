@@ -11,7 +11,7 @@ class Source {
 		
 		if ( ! isText ) {
 			this._path = path;
-			this._source = fs.readFileSync(__dirname + '/' + path).toString();
+			this._source = fs.readFileSync(path).toString();
 		} else {
 			this._path = '[INLINE]'+(new Error()).stack.split('\n')[2];
 			this._source = path;
@@ -43,13 +43,13 @@ class Source {
 				toString() {
 					return '\n// ----------------------------------' +
 						'\n// JC Parser ERROR:\n// ' +
-						this.message + '\n// ' +
 						`At file ${that._path}\n// At line ${this.line.number}\n// ` +
 						this.line.text + '\n// ' +
 						(()=>{
 							let t = this.line.text.replace(/[^\t]/g, ' ');
 							return t.slice(0,this.line.column-1) + '^' + t.slice(this.line.column);
 						})() +
+						'\n// ' +this.message +
 						'\n// ----------------------------------\n';
 				},
 			};

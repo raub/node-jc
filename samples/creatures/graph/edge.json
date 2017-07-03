@@ -1,0 +1,927 @@
+{
+	"imports": [
+		{
+			"classes": [
+				"Vertex"
+			],
+			"path": "vertex"
+		}
+	],
+	"classes": [
+		{
+			"name": "Edge",
+			"parent": null,
+			"members": [
+				{
+					"membership": "property",
+					"access": "static",
+					"type": "float",
+					"init": "1",
+					"name": "stiff"
+				},
+				{
+					"membership": "property",
+					"access": "dynamic",
+					"type": {
+						"target": "Vertex",
+						"type": "ref"
+					},
+					"name": "a"
+				},
+				{
+					"membership": "property",
+					"access": "dynamic",
+					"type": {
+						"target": "Vertex",
+						"type": "ref"
+					},
+					"name": "b"
+				},
+				{
+					"membership": "property",
+					"access": "dynamic",
+					"type": "float",
+					"name": "dist"
+				},
+				{
+					"membership": "property",
+					"access": "dynamic",
+					"type": {
+						"type": "float3",
+						"names": [
+							"a",
+							"b"
+						]
+					},
+					"name": "pos"
+				},
+				{
+					"membership": "method",
+					"access": "dynamic",
+					"name": "constructor",
+					"params": [
+						"a",
+						"b",
+						"dist"
+					],
+					"body": [
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "a",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "static",
+									"chain": [
+										{
+											"name": "a",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						},
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "b",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "static",
+									"chain": [
+										{
+											"name": "b",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						},
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "c",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "static",
+									"chain": [
+										{
+											"name": "c",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						},
+						{
+							"callee": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "update",
+										"type": "lvalue"
+									}
+								]
+							},
+							"args": null
+						}
+					]
+				},
+				{
+					"membership": "method",
+					"access": "dynamic",
+					"name": "update",
+					"params": null,
+					"body": [
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "pos",
+										"type": "access",
+										"args": null
+									},
+									{
+										"name": "a",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "dynamic",
+									"chain": [
+										{
+											"name": "a",
+											"type": "access",
+											"args": null
+										},
+										{
+											"name": "pos",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						},
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "pos",
+										"type": "access",
+										"args": null
+									},
+									{
+										"name": "b",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "dynamic",
+									"chain": [
+										{
+											"name": "b",
+											"type": "access",
+											"args": null
+										},
+										{
+											"name": "pos",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"membership": "method",
+					"access": "dynamic",
+					"name": "pull",
+					"params": null,
+					"body": [
+						{
+							"callee": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "update",
+										"type": "lvalue"
+									}
+								]
+							},
+							"args": null
+						},
+						[
+							[
+								[
+									[
+										null,
+										"\n"
+									],
+									"\t",
+									"\t",
+									[
+										null,
+										"\n"
+									],
+									"\t",
+									"\t"
+								],
+								[
+									"//",
+									[
+										[
+											null,
+											" "
+										],
+										[
+											null,
+											"C"
+										],
+										[
+											null,
+											"a"
+										],
+										[
+											null,
+											"l"
+										],
+										[
+											null,
+											"c"
+										],
+										[
+											null,
+											"u"
+										],
+										[
+											null,
+											"l"
+										],
+										[
+											null,
+											"a"
+										],
+										[
+											null,
+											"t"
+										],
+										[
+											null,
+											"e"
+										],
+										[
+											null,
+											" "
+										],
+										[
+											null,
+											"a"
+										],
+										[
+											null,
+											"c"
+										],
+										[
+											null,
+											"c"
+										],
+										[
+											null,
+											"e"
+										],
+										[
+											null,
+											"l"
+										],
+										[
+											null,
+											"e"
+										],
+										[
+											null,
+											"r"
+										],
+										[
+											null,
+											"a"
+										],
+										[
+											null,
+											"t"
+										],
+										[
+											null,
+											"i"
+										],
+										[
+											null,
+											"o"
+										],
+										[
+											null,
+											"n"
+										],
+										[
+											null,
+											" "
+										],
+										[
+											null,
+											"f"
+										],
+										[
+											null,
+											"o"
+										],
+										[
+											null,
+											"r"
+										],
+										[
+											null,
+											" "
+										],
+										[
+											null,
+											"v"
+										],
+										[
+											null,
+											"e"
+										],
+										[
+											null,
+											"r"
+										],
+										[
+											null,
+											"t"
+										],
+										[
+											null,
+											"i"
+										],
+										[
+											null,
+											"c"
+										],
+										[
+											null,
+											"e"
+										],
+										[
+											null,
+											"s"
+										]
+									],
+									[
+										null,
+										"\n"
+									]
+								],
+								[
+									"\t",
+									"\t"
+								]
+							],
+							"float",
+							[
+								[
+									[
+										" "
+									]
+								],
+								"dist",
+								{
+									"op": "=",
+									"e": {
+										"uno": null,
+										"e": {
+											"type": "static",
+											"chain": [
+												{
+													"name": "distance",
+													"type": "call",
+													"args": [
+														{
+															"uno": null,
+															"e": {
+																"type": "dynamic",
+																"chain": [
+																	{
+																		"name": "pos",
+																		"type": "access",
+																		"args": null
+																	},
+																	{
+																		"name": "a",
+																		"type": "access",
+																		"args": null
+																	}
+																]
+															}
+														},
+														{
+															"uno": null,
+															"e": {
+																"type": "dynamic",
+																"chain": [
+																	{
+																		"name": "pos",
+																		"type": "access",
+																		"args": null
+																	},
+																	{
+																		"name": "b",
+																		"type": "access",
+																		"args": null
+																	}
+																]
+															}
+														}
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							null,
+							[
+								null,
+								";"
+							]
+						],
+						[
+							[
+								[
+									[
+										null,
+										"\n"
+									],
+									"\t",
+									"\t"
+								]
+							],
+							"float",
+							[
+								[
+									[
+										" "
+									]
+								],
+								"force",
+								{
+									"op": "=",
+									"e": {
+										"a": {
+											"uno": null,
+											"e": {
+												"type": "dynamic",
+												"chain": [
+													{
+														"name": "stiff",
+														"type": "access",
+														"args": null
+													}
+												]
+											}
+										},
+										"b": {
+											"uno": null,
+											"e": {
+												"a": {
+													"uno": null,
+													"e": {
+														"type": "dynamic",
+														"chain": [
+															{
+																"name": "dist",
+																"type": "access",
+																"args": null
+															}
+														]
+													}
+												},
+												"b": {
+													"uno": null,
+													"e": {
+														"type": "static",
+														"chain": [
+															{
+																"name": "dist",
+																"type": "access",
+																"args": null
+															}
+														]
+													}
+												},
+												"duo": "-"
+											}
+										},
+										"duo": "*"
+									}
+								}
+							],
+							null,
+							[
+								null,
+								";"
+							]
+						],
+						[
+							[
+								[
+									[
+										null,
+										"\n"
+									],
+									"\t",
+									"\t",
+									[
+										null,
+										"\n"
+									],
+									"\t",
+									"\t"
+								]
+							],
+							"float3",
+							[
+								[
+									[
+										" "
+									]
+								],
+								"mid",
+								{
+									"op": "=",
+									"e": {
+										"a": {
+											"uno": null,
+											"e": {
+												"a": {
+													"uno": null,
+													"e": {
+														"type": "dynamic",
+														"chain": [
+															{
+																"name": "pos",
+																"type": "access",
+																"args": null
+															},
+															{
+																"name": "a",
+																"type": "access",
+																"args": null
+															}
+														]
+													}
+												},
+												"b": {
+													"uno": null,
+													"e": {
+														"type": "dynamic",
+														"chain": [
+															{
+																"name": "pos",
+																"type": "access",
+																"args": null
+															},
+															{
+																"name": "b",
+																"type": "access",
+																"args": null
+															}
+														]
+													}
+												},
+												"duo": "+"
+											}
+										},
+										"b": {
+											"uno": null,
+											"e": "0.5"
+										},
+										"duo": "*"
+									}
+								}
+							],
+							null,
+							[
+								null,
+								";"
+							]
+						],
+						[
+							[
+								[
+									[
+										null,
+										"\n"
+									],
+									"\t",
+									"\t",
+									[
+										null,
+										"\n"
+									],
+									"\t",
+									"\t"
+								]
+							],
+							"float3",
+							[
+								[
+									[
+										" "
+									]
+								],
+								"toA",
+								{
+									"op": "=",
+									"e": {
+										"uno": null,
+										"e": {
+											"type": "static",
+											"chain": [
+												{
+													"name": "normalize",
+													"type": "call",
+													"args": [
+														{
+															"a": {
+																"uno": null,
+																"e": {
+																	"type": "dynamic",
+																	"chain": [
+																		{
+																			"name": "pos",
+																			"type": "access",
+																			"args": null
+																		},
+																		{
+																			"name": "a",
+																			"type": "access",
+																			"args": null
+																		}
+																	]
+																}
+															},
+															"b": {
+																"uno": null,
+																"e": {
+																	"type": "static",
+																	"chain": [
+																		{
+																			"name": "mid",
+																			"type": "access",
+																			"args": null
+																		}
+																	]
+																}
+															},
+															"duo": "-"
+														}
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							null,
+							[
+								null,
+								";"
+							]
+						],
+						[
+							[
+								[
+									[
+										null,
+										"\n"
+									],
+									"\t",
+									"\t"
+								]
+							],
+							"float3",
+							[
+								[
+									[
+										" "
+									]
+								],
+								"toB",
+								{
+									"op": "=",
+									"e": {
+										"uno": null,
+										"e": {
+											"type": "static",
+											"chain": [
+												{
+													"name": "normalize",
+													"type": "call",
+													"args": [
+														{
+															"a": {
+																"uno": null,
+																"e": {
+																	"type": "dynamic",
+																	"chain": [
+																		{
+																			"name": "pos",
+																			"type": "access",
+																			"args": null
+																		},
+																		{
+																			"name": "b",
+																			"type": "access",
+																			"args": null
+																		}
+																	]
+																}
+															},
+															"b": {
+																"uno": null,
+																"e": {
+																	"type": "static",
+																	"chain": [
+																		{
+																			"name": "mid",
+																			"type": "access",
+																			"args": null
+																		}
+																	]
+																}
+															},
+															"duo": "-"
+														}
+													]
+												}
+											]
+										}
+									}
+								}
+							],
+							null,
+							[
+								null,
+								";"
+							]
+						],
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "a",
+										"type": "access",
+										"args": null
+									},
+									{
+										"name": "vel",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "+==",
+							"right": {
+								"a": {
+									"uno": null,
+									"e": {
+										"type": "static",
+										"chain": [
+											{
+												"name": "toA",
+												"type": "access",
+												"args": null
+											}
+										]
+									}
+								},
+								"b": {
+									"uno": null,
+									"e": {
+										"type": "static",
+										"chain": [
+											{
+												"name": "force",
+												"type": "access",
+												"args": null
+											}
+										]
+									}
+								},
+								"duo": "*"
+							}
+						},
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "b",
+										"type": "access",
+										"args": null
+									},
+									{
+										"name": "vel",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "+==",
+							"right": {
+								"a": {
+									"uno": null,
+									"e": {
+										"type": "static",
+										"chain": [
+											{
+												"name": "toB",
+												"type": "access",
+												"args": null
+											}
+										]
+									}
+								},
+								"b": {
+									"uno": null,
+									"e": {
+										"type": "static",
+										"chain": [
+											{
+												"name": "force",
+												"type": "access",
+												"args": null
+											}
+										]
+									}
+								},
+								"duo": "*"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

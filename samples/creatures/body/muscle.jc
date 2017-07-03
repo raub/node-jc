@@ -4,17 +4,17 @@ import Edge from ../graph
 
 Muscle extends Edge {
 	
-	.constructor(Cell a, Cell b, float dist) {
-		.super(a, b, dist)
+	.constructor(a, b, dist) {
+		.super(a, b, dist);
 	}
 	
 	
-	.set(dist) { .dist = dist }
+	.set(dist) { .dist = dist; }
 	
 	
 	.contract() {
 		
-		.pull()
+		.pull();
 		
 		// TODO: muscle business
 		

@@ -1,0 +1,191 @@
+{
+	"imports": [],
+	"classes": [
+		{
+			"name": "Vertex",
+			"parent": null,
+			"members": [
+				{
+					"membership": "property",
+					"access": "static",
+					"type": "float",
+					"init": "0.9999",
+					"name": "frict"
+				},
+				{
+					"membership": "property",
+					"access": "dynamic",
+					"type": "float3",
+					"name": "pos"
+				},
+				{
+					"membership": "property",
+					"access": "dynamic",
+					"type": "float3",
+					"name": "rgb"
+				},
+				{
+					"membership": "property",
+					"access": "dynamic",
+					"type": "float3",
+					"name": "vel"
+				},
+				{
+					"membership": "method",
+					"access": "dynamic",
+					"name": "constructor",
+					"params": [
+						"pos",
+						"rgb",
+						"vel"
+					],
+					"body": [
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "pos",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "static",
+									"chain": [
+										{
+											"name": "pos",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						},
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "rgb",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "static",
+									"chain": [
+										{
+											"name": "rgb",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						},
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "vel",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "static",
+									"chain": [
+										{
+											"name": "vel",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"membership": "method",
+					"access": "dynamic",
+					"name": "move",
+					"params": null,
+					"body": [
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "pos",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "+=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "dynamic",
+									"chain": [
+										{
+											"name": "vel",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						},
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "vel",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "*=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "static",
+									"chain": [
+										{
+											"name": "frict",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

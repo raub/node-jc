@@ -7,18 +7,18 @@ Synapse extends Edge {
 	.weight : float
 	
 	
-	.constructor(Neuron a, Neuron b, weight) {
+	.constructor(a, b, weight) {
 		
-		.super(a, b, 2.0 - 2.0 * weight)
+		.super(a, b, 2.0 - 2.0 * weight);
 		
-		.weight = weight
+		.weight = weight;
 		
 	}
 	
 	
 	.transmit() {
 		
-		.pull()
+		.pull();
 		
 		// TODO: synaptic activity
 		

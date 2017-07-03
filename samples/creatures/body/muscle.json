@@ -1,0 +1,145 @@
+{
+	"imports": [
+		{
+			"classes": [
+				"Cell"
+			],
+			"path": "cell"
+		},
+		{
+			"classes": [
+				"Edge"
+			],
+			"path": "../graph"
+		}
+	],
+	"classes": [
+		{
+			"name": "Muscle",
+			"parent": "Edge",
+			"members": [
+				{
+					"membership": "method",
+					"access": "dynamic",
+					"name": "constructor",
+					"params": [
+						"a",
+						"b",
+						"dist"
+					],
+					"body": [
+						{
+							"callee": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "super",
+										"type": "lvalue"
+									}
+								]
+							},
+							"args": [
+								{
+									"uno": null,
+									"e": {
+										"type": "static",
+										"chain": [
+											{
+												"name": "a",
+												"type": "access",
+												"args": null
+											}
+										]
+									}
+								},
+								{
+									"uno": null,
+									"e": {
+										"type": "static",
+										"chain": [
+											{
+												"name": "b",
+												"type": "access",
+												"args": null
+											}
+										]
+									}
+								},
+								{
+									"uno": null,
+									"e": {
+										"type": "static",
+										"chain": [
+											{
+												"name": "dist",
+												"type": "access",
+												"args": null
+											}
+										]
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"membership": "method",
+					"access": "dynamic",
+					"name": "set",
+					"params": [
+						"dist"
+					],
+					"body": [
+						{
+							"type": "assignment",
+							"left": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "dist",
+										"type": "access",
+										"args": null
+									}
+								]
+							},
+							"operator": "=",
+							"right": {
+								"uno": null,
+								"e": {
+									"type": "static",
+									"chain": [
+										{
+											"name": "dist",
+											"type": "access",
+											"args": null
+										}
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"membership": "method",
+					"access": "dynamic",
+					"name": "contract",
+					"params": null,
+					"body": [
+						{
+							"callee": {
+								"type": "dynamic",
+								"chain": [
+									{
+										"name": "pull",
+										"type": "lvalue"
+									}
+								]
+							},
+							"args": null
+						}
+					]
+				}
+			]
+		}
+	]
+}

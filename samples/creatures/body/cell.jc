@@ -7,13 +7,13 @@ Cell extends Vertex {
 	
 	
 	.constructor(pos, rgb, vel) {
-		.super(pos, rgb, vel)
+		.super(pos, rgb, vel);
 	}
 	
 	
 	.live() {
 		
-		.move()
+		.move();
 		
 		// TODO: cell business
 		

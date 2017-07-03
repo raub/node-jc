@@ -8,19 +8,19 @@ Body extends Graph {
 	.muscles : .edges
 	
 	
-	.constructor(int size) {
+	.constructor(size) {
 		
 		[size]() {
-			.cells   << new Cell()
-			.muscles << new Muscle()
+			.cells   << new Cell();
+			.muscles << new Muscle();
 		}
 		
 	}
 	
 	
 	live() {
-		Cell[]   { .live()     }
-		Muscle[] { .contract() }
+		Cell[]   { .live();     }
+		Muscle[] { .contract(); }
 	}
 	
 }

@@ -1,6 +1,6 @@
 jc
 	= imps:imports? cls:classes .*
-	  {return { imports: imps || [], classes: cls }}
+	{return { imports: imps || [], classes: cls }}
 
 imports
 	= imports:import+
@@ -8,7 +8,7 @@ imports
 import
 	= __s 'import' white_sure classes:class_names white_sure 'from'
 	  white_sure path:module_path new_line 
-	  {return {classes,path}}
+	{return {classes,path}}
 
 classes
 	= classes:class+
@@ -17,7 +17,7 @@ class
 	= __s name:class_name
 	  parent:extends? white_maybe
 	  members:class_body def_end
-	  {return {name,parent,members}}
+	{return {name,parent,members}}
 
 
 __s 'comment or whitespace'
@@ -37,7 +37,7 @@ any_line
 	= (!new_line .)*
 def_end 'the end of definition'
 	= (white_symbol / ';')* &'}'? (comment_line / new_line)
-op_end
+op_end 'the end of operation'
 	= __s ';'
 
 comment       = comment_line / comment_multi
@@ -106,7 +106,7 @@ class_body  = '{' __s m:members* __s '}' {return m}
 members
 	= properties / methods / external
 properties 'a property'
-	= dynamic_prop / static_prop
+	= dynamic_prop/ dynamic_alias / static_prop / static_alias
 methods 'a method'
 	= dynamic_func / static_func
 
@@ -118,11 +118,18 @@ dynamic_prop 'a dynamic property'
 	  define_op type:(struct_type / core_type / ref_type)
 	  def_end
 	{return {membership: 'property', access: 'dynamic', type, name}}
+dynamic_alias
+	= __s '.' name:prop_name define_op '.' target:prop_name def_end
+	{return {membership: 'alias', access: 'dynamic', type, name}}
+	
 static_prop 'a static property'
 	= __s name:prop_name
 	  define_op type:core_type init:default_val?
 	  def_end
 	{return {membership: 'property', access: 'static', type, init, name}}
+static_alias
+	= __s name:prop_name define_op target:prop_name def_end
+	{return {membership: 'alias', access: 'dynamic', type, name}}
 
 
 dynamic_func 'a dynamic method'
@@ -160,20 +167,31 @@ more_local = __s ',' __s one_local
 
 assignment
 	= __s left:prop_chain right:assign op_end
-	{return {op:'assignment',left,right}}
+	{return {type:'assignment',left,operator:right.op,right:right.e}}
 assign
-	= __s assign_op __s e:expression
-	{return e}
+	= __s op:assign_op __s e:expression
+	{return {op,e}}
 
 
-call_only  = __s call op_end
-call       = lvalue_prop_chain arg_list
+call_only
+	= __s c:call op_end
+	{return c}
+call
+	= callee:lvalue_prop_chain args:arg_list
+	{return {callee,args}}
 
 arg_list 'a list of arguments'
-	= white_symbol* '(' __s args? __s ')'
-args = arg more_args*
-more_args = __s ',' arg
-arg = __s expression
+	= white_symbol* '(' __s a:args? __s ')'
+	{return a}
+args
+	= a1:arg a2:more_args*
+	{return ([a1]).concat(a2||[])}
+more_args
+	= __s ',' a:arg
+	{return a}
+arg
+	= __s e:expression
+	{return e}
 
 
 iteration

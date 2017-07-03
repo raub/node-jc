@@ -8,21 +8,21 @@ Neuron extends Vertex {
 	
 	.constructor(value, pos, rgb, vel) {
 		
-		.super(pos, rgb, vel)
+		.super(pos, rgb, vel);
 		
-		.value = value
+		.value = value;
 		
 	}
 	
 	
-	.get() { return 1 }
+	.get() { return 1; }
 	
-	.set(value) { .value = value }
+	.set(value) { .value = value; }
 	
 	
 	.think() {
 		
-		.move()
+		.move();
 		
 		// TODO: neuron activity
 		
