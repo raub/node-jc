@@ -19,16 +19,16 @@ Edge {
 	
 	// Constructor, uses init-params
 	.constructor(a, b, dist) {
-		.a = a
-		.b = b
-		.c = c
-		.update()
+		.a = a;
+		.b = b;
+		.c = c;
+		.update();
 	}
 	
 	
 	.update() {
-		.pos.a = .a.pos
-		.pos.b = .b.pos
+		.pos.a = .a.pos;
+		.pos.b = .b.pos;
 	}
 	
 	

@@ -20,14 +20,18 @@ class Source {
 		try {
 			this._compiled = Source._parser.parse(this._source);
 		} catch (ex) {
+			this._compiled = null;
+			
 			if (ex.name !== 'SyntaxError') {
 				return this._error = {
 					name: ex.name,
 					message: ex.message,
 				};
 			}
+			
 			const splitted = this._source.split('\n');
 			const that = this;
+			
 			this._error = {
 				name: ex.name,
 				line: {
@@ -37,14 +41,16 @@ class Source {
 				},
 				message: ex.message,
 				toString() {
-					return '\nJC Parser ERROR:\n' +
-						this.message + '\n' +
-						`At file ${that._path}\nAt line ${this.line.number}\n` +
-						this.line.text + '\n' +
+					return '\n// ----------------------------------' +
+						'\n// JC Parser ERROR:\n// ' +
+						this.message + '\n// ' +
+						`At file ${that._path}\n// At line ${this.line.number}\n// ` +
+						this.line.text + '\n// ' +
 						(()=>{
 							let t = this.line.text.replace(/[^\t]/g, ' ');
 							return t.slice(0,this.line.column-1) + '^' + t.slice(this.line.column);
-						})();
+						})() +
+						'\n// ----------------------------------\n';
 				},
 			};
 		}

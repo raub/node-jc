@@ -11,8 +11,8 @@ Graph {
 	
 	// It moves as they go
 	simulate() {
-		Vertex[]() { .move() }
-		Edge[]()   { .pull() }
+		Vertex[]() { .move(); }
+		Edge[]()   { .pull(); }
 	}
 	
 }

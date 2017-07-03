@@ -11,14 +11,15 @@ Population {
 	.constructor(n, size) {
 		
 		[n]() {
-			.сreatures << new Creature(new Brain(size), new Body(size))
+			// .creatures();
+			.creatures << new Creature(new Brain(size), new Body(size));
 		}
 		
 	}
 	
 	
 	simulate() {
-		Creature.simulate()
+		Creature.simulate();
 	}
 	
 }

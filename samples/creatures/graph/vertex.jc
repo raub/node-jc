@@ -10,16 +10,16 @@ Vertex {
 	
 	// Constructor, uses init-params
 	.constructor(pos, rgb, vel) {
-		.pos = pos
-		.rgb = rgb
-		.vel = vel
+		.pos = pos;
+		.rgb = rgb;
+		.vel = vel;
 	}
 	
 	
 	// Move: simply apply velocity and friction
 	.move() {
-		.pos += .vel
-		.vel *= frict
+		.pos += .vel;
+		.vel *= frict;
 	}
 	
 }
