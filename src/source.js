@@ -19,18 +19,26 @@ class Source {
 		
 		try {
 			this._compiled = Source._parser.parse(this._source);
-		} catch (ex) {
+		} catch (ex) { (()=>{
+			
+			const that = this;
 			this._compiled = null;
 			
 			if (ex.name !== 'SyntaxError') {
 				return this._error = {
 					name: ex.name,
 					message: ex.message,
+					toString() {
+						return '\n// ----------------------------------' +
+						'\n// JC Parser ERROR:\n// ' +
+						`At file ${that._path}\n// ` +
+						ex.toString() +
+						'\n// ----------------------------------\n';
+					},
 				};
 			}
 			
 			const splitted = this._source.split('\n');
-			const that = this;
 			
 			this._error = {
 				name: ex.name,
@@ -53,7 +61,8 @@ class Source {
 						'\n// ----------------------------------\n';
 				},
 			};
-		}
+			
+		})(); }
 		
 		if (this._error) {
 			console.log(this._error.toString());
@@ -63,10 +72,14 @@ class Source {
 	
 	get compiled() { return this._compiled; }
 	
-	get error() { return this._error; }
+	get error() { return this._error.toString(); }
 	
 }
 
-Source._parser = peg.generate(fs.readFileSync(__dirname + '/grammar.pegjs').toString());
+try {
+	Source._parser = peg.generate(fs.readFileSync(__dirname + '/grammar.pegjs').toString());
+} catch (ex) {
+	Source._parser = ()=>{throw ex};
+}
 
 module.exports = Source;

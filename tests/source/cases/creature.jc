@@ -1,0 +1,44 @@
+import Brain  from ../brain
+import Neuron from ../brain
+import Body   from ../body
+import Muscle from ../body
+import Cell   from ../body
+import Edge   from ../graph
+
+import NeuronToMuscle from neuron-to-muscle
+import CellToNeuron   from cell-to-neuron
+
+
+Creature {
+	
+	.brain : Brain
+	.body  : Body
+	
+	.ntms  : NeuronToMuscle[]
+	.ctns  : CellToNeuron[]
+	
+	
+	.constructor(brain, body) {
+		
+		.brain = brain
+		.body  = body
+		
+		[.body.muscles](m, i) {
+			.ntms.push << new NeuronToMuscle(.brain.outputs[%i], m)
+		}
+		
+		[.brain.inputs](n, i) {
+			.ctns.push << new CellToNeuron(.body.outputs[%i], n)
+		}
+		
+	}
+	
+	
+	simulate() {
+		NeuronToMuscle.send()
+		CellToNeuron.send()
+		Brain.think()
+		Body.move()
+	}
+	
+}

@@ -6,7 +6,7 @@
 	const _class    = (name,parent,members) => ({name,parent,members});
 	
 	const _property = (name,access,type)        => ({type:'property',name,access,type});
-	const _method   = (name,access,params,body) => ({type:'method',  name,access,body});
+	const _method   = (name,access,params,body) => ({type:'method',  name,access,params,body});
 	const _external = (name,content)            => ({type:'external',name,content});
 	const _alias    = (name,access,target)      => ({type:'alias',   name,access,target});
 }
@@ -156,13 +156,13 @@ dynamic_func 'a dynamic method'
 	  params:param_list
 	  body:func_body
 	  def_end
-	{return _method(name,'dynamic',paramas,body)}
+	{return _method(name,'dynamic',params,body)}
 static_func 'a static method'
 	= __ name:prop_name
 	  params:param_list
 	  body:func_body
 	  def_end
-	{return _method(name,'static',paramas,body)}
+	{return _method(name,'static',params,body)}
 
 param_list 'a parameter list'
 	= white_symbol? '(' __ p:params? __ ')' {return p || []}
@@ -258,9 +258,9 @@ ctrl_while = __ 'while' '(' __ expression __ ')' (func_body / operation)
 ctrl_do = __ 'do' (func_body / operation) 'while' '(' __ expression __ ')' 
 
 return
-	= __ 'return' (white_symbol+ value:expression)? op_end
+	= __ 'return' value:return_value? op_end
 	{return {type:'return', value}}
-
+return_value = white_symbol+ value:expression {return value}
 
 expression = duo_expr / uno_expr
 brace_expr = '(' __ e:expression __ ')' {return e}
@@ -312,7 +312,9 @@ default_op = __ '=' __
 
 // JS
 
-js_value = $( (def_end  js_any)+ )
+js_value = $( (!js_end js_any)+ )
+
+js_end = def_end (class_body_end / members)
 
 js_any = js_round / js_curly / js_curly / js_double / js_single / js_biased / js_normal
 js_round  = '('  (!')'  js_any)* ')'
@@ -325,5 +327,4 @@ js_normal = .
 
 // ----------- DEBUG ----------- //
 
-func_any  = __ '{' __ o:op_any __ '}' {return o}
-op_any    = $(!'}' .)*
+func_any  = __ '{' __ o:$(!'}' .)* __ '}' {return o}

@@ -2,6 +2,7 @@
 
 const jc = require('node-jc');
 jc.verbose = true;
+jc.libs('../libs');
 
 const Population = require('./population').Population;
 

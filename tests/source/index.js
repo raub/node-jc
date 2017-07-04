@@ -1,10 +1,22 @@
 'use strict';
 
-const Source = require('./source');
+const Source = require('../../src/source');
 
 console.log('START');
 
 const fs = require('fs');
+
+const ok = fn => (err, res) => err ? console.log(err) : fn(res);
+
+new Promise(res => fs.readDir(ok(res)))
+	.then(dir => Promise.all(
+		dir.map(file => new Promise(res => fs.readFile(file, ok(res))))
+	))
+	.then(files => Promise.all(
+		files.map(file => new Promise(res => fs.readFile(file, ok(res))))
+	))
+
+
 
 // const _source = require('fs').readFileSync(__dirname + '/' + '../samples/creatures/population.jc').toString();
 // const s1 = new Source(_source, true);
