@@ -1,28 +1,36 @@
-jc
-	= imps:imports? cls:classes .*
-	{return { imports: imps || [], classes: cls }}
+{
+	const enlist = (elem, array) => ([elem]).concat(array || []);
+	
+	const _jc       = (imports, classes)    => ({imports, classes});
+	const _import   = (classes, path)       => ({classes, path});
+	const _class    = (name,parent,members) => ({name,parent,members});
+	
+	const _property = (name,access,type)        => ({type:'property',name,access,type});
+	const _method   = (name,access,params,body) => ({type:'method',  name,access,body});
+	const _external = (name,content)            => ({type:'external',name,content});
+	const _alias    = (name,access,target)      => ({type:'alias',   name,access,target});
+}
 
-imports
-	= imports:import+
+
+jc
+	= imps:import* cls:class+ __
+	{return _jc(imps, cls)}
 
 import
-	= __s 'import' white_sure classes:class_names white_sure 'from'
-	  white_sure path:module_path new_line 
-	{return {classes,path}}
-
-classes
-	= classes:class+
+	= __ 'import' white_sure classes:class_names white_sure 'from'
+	  white_sure path:module_path new_line
+	{return _import(classes, path)}
 
 class
-	= __s name:class_name
+	= __ name:class_name
 	  parent:extends? white_maybe
 	  members:class_body def_end
-	{return {name,parent,members}}
+	{return _class(name,parent,members)}
 
 
-__s 'comment or whitespace'
-	= __s_sure?
-__s_sure = (comment / white_sure)+
+__ 'comment or whitespace'
+	= ___sure?
+___sure = (comment / white_sure)+
 
 
 white_maybe  = white_sure?
@@ -38,14 +46,14 @@ any_line
 def_end 'the end of definition'
 	= (white_symbol / ';')* &'}'? (comment_line / new_line)
 op_end 'the end of operation'
-	= __s ';'
+	= __ ';'
 
 comment       = comment_line / comment_multi
 comment_line  = '//' any_line new_line
 comment_multi = '/*' (!'*/' .)* '*/'
 
 
-class_names  = c1:class_name c2:more_classes* {return ([c1]).concat(c2||[])}
+class_names  = a:class_name b:more_classes* {return enlist(a, b)}
 more_classes = white_maybe ',' white_maybe name:class_name {return name}
 class_name   = $([A-Z] base_name?)
 prop_name    = $([a-z] base_name?)
@@ -56,34 +64,34 @@ base_name    = $([A-Za-z0-9_]+)
 lvalue_prop_chain = lvalue_dynamic_chain / lvalue_static_chain
 
 lvalue_dynamic_chain
-	= c1:lvalue_chain_next c2:lvalue_chain_next*
-	{return {type: 'dynamic', chain:([c1]).concat(c2||[])}}
+	= a:lvalue_chain_next b:lvalue_chain_next*
+	{return {type: 'lvalue', access: 'dynamic', chain: enlist(a, b)}}
 
 lvalue_static_chain
-	= c1:lvalue_chain_item c2:lvalue_chain_next*
-	{return {type: 'static', chain:([c1]).concat(c2||[])}}
+	= a:lvalue_chain_item b:lvalue_chain_next*
+	{return {type: 'lvalue', access: 'static', chain: enlist(a, b)}}
 
 lvalue_chain_next
-	= !def_end __s '.' item:lvalue_chain_item
+	= !def_end __ '.' item:lvalue_chain_item
 	{return item}
 
 lvalue_chain_item
 	= name:base_name
-	{return {name, type: 'lvalue'}}
+	{return name}
 
 
 prop_chain = dynamic_chain / static_chain
 
 dynamic_chain
-	= c1:chain_next c2:chain_next*
-	{return {type: 'dynamic', chain:([c1]).concat(c2||[])}}
+	= a:chain_next b:chain_next*
+	{return {type: 'dynamic', chain: enlist(a, b)}}
 
 static_chain
-	= c1:chain_item c2:chain_next*
-	{return {type: 'static', chain:([c1]).concat(c2||[])}}
+	= a:chain_item b:chain_next*
+	{return {type: 'static', chain: enlist(a, b)}}
 
 chain_next
-	= !def_end __s '.' item:chain_item
+	= !def_end __ '.' item:chain_item
 	{return item}
 
 chain_item
@@ -101,8 +109,15 @@ jc_ext      = '.jc'
 extends = white_sure 'extends' white_sure name:class_name {return name}
 
 
-class_body  = '{' __s m:members* __s '}' {return m}
-
+class_body  = class_empty / class_not_empty
+class_not_empty
+	= __ '{' __ m:members+ __ '}'
+	{return m}
+class_empty 'an empty class body'
+	= __ '{' __ '}'
+	{return []}
+	
+	
 members
 	= properties / methods / external
 properties 'a property'
@@ -111,132 +126,139 @@ methods 'a method'
 	= dynamic_func / static_func
 
 external 'an external property'
-	= __s '@' name:prop_name define_op external_code def_end
+	= __ '@' name:prop_name define_op content:js_value def_end
+	{return _external(name,content)}
 
 dynamic_prop 'a dynamic property'
-	= __s '.' name:prop_name
+	= __ '.' name:prop_name
 	  define_op type:(struct_type / core_type / ref_type)
 	  def_end
-	{return {membership: 'property', access: 'dynamic', type, name}}
+	{return _property(name,'dynamic',type)}
 dynamic_alias
-	= __s '.' name:prop_name define_op '.' target:prop_name def_end
-	{return {membership: 'alias', access: 'dynamic', type, name}}
+	= __ '.' name:prop_name define_op '.' target:prop_name def_end
+	{return _alias(name,'dynamic',target)}
 	
 static_prop 'a static property'
-	= __s name:prop_name
+	= __ name:prop_name
 	  define_op type:core_type init:default_val?
 	  def_end
-	{return {membership: 'property', access: 'static', type, init, name}}
+	{return _property(name,'static',type)}
 static_alias
-	= __s name:prop_name define_op target:prop_name def_end
-	{return {membership: 'alias', access: 'dynamic', type, name}}
+	= __ name:prop_name define_op target:prop_name def_end
+	{return _alias(name,'static',target)}
 
 
 dynamic_func 'a dynamic method'
-	= __s '.' name:prop_name
+	= __ '.' name:prop_name
 	  params:param_list
 	  body:func_body
 	  def_end
-	{return {membership: 'method', access: 'dynamic', name, params, body}}
+	{return _method(name,'dynamic',paramas,body)}
 static_func 'a static method'
-	= __s name:prop_name
+	= __ name:prop_name
 	  params:param_list
 	  body:func_body
 	  def_end
-	{return {membership: 'method', access: 'static', name, params, body}}
+	{return _method(name,'static',paramas,body)}
 
 param_list 'a parameter list'
-	= white_symbol? '(' __s p:params? __s ')' {return p}
+	= white_symbol? '(' __ p:params? __ ')' {return p || []}
 
-params = p1:param p2:more_params* {return ([p1]).concat(p2||[])}
-more_params = __s ',' p:param {return p}
-param = __s p:prop_name {return p}
+params = a:param b:more_params* {return enlist(a, b)}
+more_params = __ ',' p:param {return p}
+param = __ p:prop_name {return p}
 
 
-func_body  = __s '{' __s o:operation* __s '}' {return o}
+func_body  = func_empty / func_not_empty
+func_not_empty
+	= __ '{' __ o:operation+ __ '}'
+	{return o}
+func_empty 'an empty function body'
+	= __ '{' __ '}'
+	{return []}
 
 operation  = var_def_op / no_def_op
 var_def_op = local_var
 no_def_op  = assignment / call_only / iteration / control
 
 
-local_var  = __s (core_type / class_type) one_local more_local? op_end
-one_local  = __s prop_name assign?
-more_local = __s ',' __s one_local
+local_var  = __ (core_type / class_type) one_local more_local? op_end
+one_local  = __ prop_name assign?
+more_local = __ ',' __ one_local
 
 
 assignment
-	= __s left:prop_chain right:assign op_end
+	= __ left:prop_chain right:assign op_end
 	{return {type:'assignment',left,operator:right.op,right:right.e}}
 assign
-	= __s op:assign_op __s e:expression
+	= __ op:assign_op __ e:expression
 	{return {op,e}}
 
 
 call_only
-	= __s c:call op_end
+	= __ c:call op_end
 	{return c}
 call
 	= callee:lvalue_prop_chain args:arg_list
-	{return {callee,args}}
+	{return {type: 'call', callee, args}}
 
 arg_list 'a list of arguments'
-	= white_symbol* '(' __s a:args? __s ')'
-	{return a}
+	= white_symbol* '(' __ a:args? __ ')'
+	{return a || []}
 args
-	= a1:arg a2:more_args*
-	{return ([a1]).concat(a2||[])}
+	= a:arg b:more_args*
+	{return enlist(a, b)}
 more_args
-	= __s ',' a:arg
+	= __ ',' a:arg
 	{return a}
 arg
-	= __s e:expression
+	= __ e:expression
 	{return e}
 
 
 iteration
 	= iter:(iter_expr / iter_local) def_end
 	{return iter}
-//iter_class = __s list_type param_list func_body
 iter_expr
-	= __s target:expression __s '[' white_symbol* ']'
+	= __ target:expression __ '[' white_symbol* ']'
 	  params:param_list
 	  body:func_body
 	{return {type: 'iter_kernel', target, params, body}}
-//iter_list  = __s '[' __s '.' prop_chain __s ']' param_list func_body
 iter_local
-	= __s '[' __s target:expression __s ']'
+	= __ '[' __ target:expression __ ']'
 	  params:param_list
 	  body:func_body
 	{return {type: 'iter_local', target, params, body}}
 
 
-control = (ctrl_branch / ctrl_loop / return) def_end
-ctrl_branch = ctrl_if / ctrl_switch
-ctrl_loop = ctrl_for / ctrl_while / ctrl_do
+control = return / ctrl_branch / ctrl_loop
+ctrl_branch = (ctrl_if / ctrl_switch) def_end
+ctrl_loop = (ctrl_for / ctrl_while / ctrl_do) def_end
 
-ctrl_if = __s 'if' __s '(' expression ')' (func_body / operation) ctrl_else?
-ctrl_else = __s 'else' (func_body / operation)
+ctrl_if = __ 'if' __ '(' expression ')' (func_body / operation) ctrl_else?
+ctrl_else = __ 'else' (func_body / operation)
 
-ctrl_switch = __s 'switch' __s '(' __s expression __s ')' switch_body
-switch_body = __s '{' switch_case* switch_default? switch_case* '}'
-switch_case = __s 'case' white_symbol+ gpu_value define_op no_def_op* 'break' def_end
-switch_default = __s 'default' define_op no_def_op* 'break' def_end
+ctrl_switch = __ 'switch' __ '(' __ expression __ ')' switch_body
+switch_body = __ '{' switch_case* switch_default? switch_case* '}'
+switch_case = __ 'case' white_symbol+ gpu_value define_op no_def_op* 'break' op_end
+switch_default = __ 'default' define_op no_def_op* 'break' op_end
 
-ctrl_for = __s 'for' for_constrain (func_body / operation)
-for_constrain = __s '(' loop_var? ';' __s expression __s ';' __s expression __s ')'
-loop_var  = __s core_type one_local more_local? def_end
+ctrl_for = __ 'for' for_constrain (func_body / operation)
+for_constrain = __ '(' loop_var? ';' __ expression __ ';' __ expression __ ')'
+loop_var  = __ core_type one_local more_local? def_end
 
-ctrl_while = __s 'while' '(' __s expression __s ')' (func_body / operation)
-ctrl_do = __s 'do' (func_body / operation) 'while' '(' __s expression __s ')' 
+ctrl_while = __ 'while' '(' __ expression __ ')' (func_body / operation)
+ctrl_do = __ 'do' (func_body / operation) 'while' '(' __ expression __ ')' 
 
-return = __s 'return' white_symbol* expression def_end
+return
+	= __ 'return' (white_symbol+ value:expression)? op_end
+	{return {type:'return', value}}
 
 
 expression = duo_expr / uno_expr
-brace_expr = '(' __s e:expression __s ')' {return e}
-uno_expr   = uno:uno_op? __s e:(brace_expr / rvalue) {return {uno,e}}
-duo_expr   = a:uno_expr __s duo:duo_op __s b:uno_expr {return {a,b,duo}}
+brace_expr = '(' __ e:expression __ ')' {return e}
+uno_expr   = uno:uno_op? __ e:(brace_expr / rvalue) {return {uno,e}}
+duo_expr   = a:uno_expr __ duo:duo_op __ b:expression {return {a,b,duo}}
 
 
 rvalue     = gpu_value / prop_chain
@@ -254,8 +276,8 @@ core_float = 'float2' / 'float3' / 'float4' / 'float'
 
 
 struct_type "struct type"
-	= type:core_type white_symbol? p1:prop_name p2:more_subs+
-	{return { type, names: ([p1]).concat(p2||[]) }}
+	= type:core_type white_symbol? a:prop_name b:more_subs+
+	{return { type, names: enlist(a, b) }}
 more_subs "struct fields"
 	= white_maybe ',' white_maybe name:prop_name
 	{return name}
@@ -278,12 +300,22 @@ num_value   = float_value / int_value
 int_value   = $([0-9]+)
 float_value = $(int_value ('.' int_value)?)
 
-define_op  = __s ':' __s
-default_op = __s '=' __s
+define_op  = __ ':' __
+default_op = __ '=' __
 
-external_code = '\`'  (!'\`' .)* '\`'
+// JS
 
+js_value = $( (def_end  js_any)+ )
+
+js_any = js_round / js_curly / js_curly / js_double / js_single / js_biased / js_normal
+js_round  = '('  (!')'  js_any)* ')'
+js_square = '['  (!']'  js_any)* ']'
+js_curly  = '{'  (!'}'  js_any)* '}'
+js_double = '"'  (!'"'  js_any)* '"'
+js_single = '\'' (!'\'' js_any)* '\''
+js_biased = '`'  (!'`'  js_any)* '`'
+js_normal = .
 
 // ----------- DEBUG ----------- //
 
-func_any  = __s '{' __s o:$(!'}' .)* __s '}' {return o}
+func_any  = __ '{' __ o:$(!'}' .)* __ '}' {return o}
