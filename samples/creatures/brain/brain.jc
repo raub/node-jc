@@ -8,11 +8,11 @@ Brain extends Graph {
 	.synapses : .edges
 	
 	
-	.constructor(int size) {
+	.constructor(size) {
 		
 		[size]() {
-			.neurons  << new Neuron()
-			.synapses << new Synapse()
+			.neurons = 1// << new Neuron
+			// .synapses << new Synapse()
 		}
 		
 	}

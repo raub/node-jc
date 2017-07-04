@@ -111,12 +111,15 @@ extends = white_sure 'extends' white_sure name:class_name {return name}
 
 class_body  = class_empty / class_not_empty
 class_not_empty
-	= __ '{' __ m:members+ __ '}'
+	= __ class_body_start __ m:members+ __ class_body_end
 	{return m}
 class_empty 'an empty class body'
-	= __ '{' __ '}'
+	= __ class_body_start __ class_body_end
 	{return []}
-	
+class_body_start 'a { before class body'
+	= '{'
+class_body_end 'a } after class body'
+	= '}'
 	
 members
 	= properties / methods / external
@@ -169,13 +172,17 @@ more_params = __ ',' p:param {return p}
 param = __ p:prop_name {return p}
 
 
-func_body  = func_empty / func_not_empty
+func_body = func_empty / func_not_empty
 func_not_empty
-	= __ '{' __ o:operation+ __ '}'
+	= __ func_body_start __ o:operation+ __ func_body_end
 	{return o}
 func_empty 'an empty function body'
-	= __ '{' __ '}'
+	= __ func_body_start __ func_body_end
 	{return []}
+func_body_start 'a { before function body'
+	= '{'
+func_body_end 'a } after function body'
+	= '}'
 
 operation  = var_def_op / no_def_op
 var_def_op = local_var
@@ -318,4 +325,5 @@ js_normal = .
 
 // ----------- DEBUG ----------- //
 
-func_any  = __ '{' __ o:$(!'}' .)* __ '}' {return o}
+func_any  = __ '{' __ o:op_any __ '}' {return o}
+op_any    = $(!'}' .)*
