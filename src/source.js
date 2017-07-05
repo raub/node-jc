@@ -4,6 +4,7 @@ const peg = require('pegjs');
 const fs = require('fs');
 
 
+// An abstraction for JC source file, also compiles the file
 class Source {
 	
 	constructor(path, isText) {
@@ -80,8 +81,26 @@ class Source {
 	
 }
 
+
+// Resolve '#include file.pegjs' lines
+const include = (str, ban) => {
+	
+	// Do not repeat inclusion
+	if (ban[str]) {
+		return '';
+	}
+	ban[str] = true;
+	
+	// Read file and resolve its includes
+	const text = fs.readFileSync(__dirname + '/peg/' + str).toString();
+	return text.replace(/^\s*\#include\s+(.*)\s*$/gm, function (_, name) {
+		return include(name, ban);
+	});
+	
+};
+
 try {
-	Source._parser = peg.generate(fs.readFileSync(__dirname + '/peg/index.pegjs').toString());
+	Source._parser = peg.generate( include('index.pegjs', {}) );
 } catch (ex) {
 	Source._parser = ()=>{throw ex};
 }
