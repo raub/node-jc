@@ -22,11 +22,11 @@ class Source {
 		}
 		
 		try {
-			this._compiled = Source._parser.parse(this._source);
+			this._parsed = Source._parser.parse(this._source);
 		} catch (ex) { (()=>{
 			
 			const that = this;
-			this._compiled = null;
+			this._parsed = null;
 			
 			if (ex.name !== 'SyntaxError') {
 				return this._error = {
@@ -70,14 +70,29 @@ class Source {
 		
 		if (this._error) {
 			console.log(this._error.toString());
+			this._compiled = {};
+		} else {
+			this._compiled = this._compile();
 		}
+		
+		
 		
 	}
 	
 	get file() { return this._path; }
+	get parsed() { return this._parsed; }
 	get compiled() { return this._compiled; }
 	
 	get error() { return this._error.toString(); }
+	
+	
+	_compile() {
+		this._compiled = {};
+		const imported = {};
+		this._parsed.imports.forEach(item =>
+			// item.fo
+		);
+	}
 	
 }
 

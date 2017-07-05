@@ -36,7 +36,7 @@ Promise.resolve()
 		sources.map(source => new Promise(
 			res => fs.writeFile(
 				__dirname + '/out/' + source.file.replace(/jc$/, 'json'),
-				JSON.stringify(source.compiled, null, '  '),
+				JSON.stringify(source.parsed, null, '  '),
 				ok(res)
 			)
 		))
