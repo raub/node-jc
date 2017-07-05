@@ -1,0 +1,102 @@
+{
+  "imports": [
+    {
+      "classes": [
+        "Vertex"
+      ],
+      "path": "../graph"
+    }
+  ],
+  "classes": [
+    {
+      "name": "Cell",
+      "parent": "Vertex",
+      "members": [
+        {
+          "type": "float",
+          "name": "value",
+          "access": "dynamic"
+        },
+        {
+          "type": "method",
+          "name": "constructor",
+          "access": "dynamic",
+          "params": [
+            "pos",
+            "rgb",
+            "vel"
+          ],
+          "body": [
+            {
+              "type": "call",
+              "callee": {
+                "type": "lvalue",
+                "access": "dynamic",
+                "chain": [
+                  "super"
+                ]
+              },
+              "args": [
+                {
+                  "uno": null,
+                  "e": {
+                    "type": "static",
+                    "chain": [
+                      {
+                        "name": "pos",
+                        "type": "access"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "uno": null,
+                  "e": {
+                    "type": "static",
+                    "chain": [
+                      {
+                        "name": "rgb",
+                        "type": "access"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "uno": null,
+                  "e": {
+                    "type": "static",
+                    "chain": [
+                      {
+                        "name": "vel",
+                        "type": "access"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "method",
+          "name": "live",
+          "access": "dynamic",
+          "params": [],
+          "body": [
+            {
+              "type": "call",
+              "callee": {
+                "type": "lvalue",
+                "access": "dynamic",
+                "chain": [
+                  "move"
+                ]
+              },
+              "args": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

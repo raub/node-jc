@@ -1,0 +1,138 @@
+{
+  "imports": [
+    {
+      "classes": [
+        "Cell"
+      ],
+      "path": "cell"
+    },
+    {
+      "classes": [
+        "Edge"
+      ],
+      "path": "../graph"
+    }
+  ],
+  "classes": [
+    {
+      "name": "Muscle",
+      "parent": "Edge",
+      "members": [
+        {
+          "type": "method",
+          "name": "constructor",
+          "access": "dynamic",
+          "params": [
+            "a",
+            "b",
+            "dist"
+          ],
+          "body": [
+            {
+              "type": "call",
+              "callee": {
+                "type": "lvalue",
+                "access": "dynamic",
+                "chain": [
+                  "super"
+                ]
+              },
+              "args": [
+                {
+                  "uno": null,
+                  "e": {
+                    "type": "static",
+                    "chain": [
+                      {
+                        "name": "a",
+                        "type": "access"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "uno": null,
+                  "e": {
+                    "type": "static",
+                    "chain": [
+                      {
+                        "name": "b",
+                        "type": "access"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "uno": null,
+                  "e": {
+                    "type": "static",
+                    "chain": [
+                      {
+                        "name": "dist",
+                        "type": "access"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "method",
+          "name": "set",
+          "access": "dynamic",
+          "params": [
+            "dist"
+          ],
+          "body": [
+            {
+              "type": "assignment",
+              "left": {
+                "type": "dynamic",
+                "chain": [
+                  {
+                    "name": "dist",
+                    "type": "access"
+                  }
+                ]
+              },
+              "operator": "=",
+              "right": {
+                "uno": null,
+                "e": {
+                  "type": "static",
+                  "chain": [
+                    {
+                      "name": "dist",
+                      "type": "access"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "method",
+          "name": "contract",
+          "access": "dynamic",
+          "params": [],
+          "body": [
+            {
+              "type": "call",
+              "callee": {
+                "type": "lvalue",
+                "access": "dynamic",
+                "chain": [
+                  "pull"
+                ]
+              },
+              "args": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

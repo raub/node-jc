@@ -1,0 +1,399 @@
+{
+  "imports": [
+    {
+      "classes": [
+        "Brain"
+      ],
+      "path": "../brain"
+    },
+    {
+      "classes": [
+        "Neuron"
+      ],
+      "path": "../brain"
+    },
+    {
+      "classes": [
+        "Body"
+      ],
+      "path": "../body"
+    },
+    {
+      "classes": [
+        "Muscle"
+      ],
+      "path": "../body"
+    },
+    {
+      "classes": [
+        "Cell"
+      ],
+      "path": "../body"
+    },
+    {
+      "classes": [
+        "Edge"
+      ],
+      "path": "../graph"
+    },
+    {
+      "classes": [
+        "NeuronToMuscle"
+      ],
+      "path": "neuron-to-muscle"
+    },
+    {
+      "classes": [
+        "CellToNeuron"
+      ],
+      "path": "cell-to-neuron"
+    }
+  ],
+  "classes": [
+    {
+      "name": "Creature",
+      "parent": null,
+      "members": [
+        {
+          "type": {
+            "target": "Brain",
+            "type": "ref"
+          },
+          "name": "brain",
+          "access": "dynamic"
+        },
+        {
+          "type": {
+            "target": "Body",
+            "type": "ref"
+          },
+          "name": "body",
+          "access": "dynamic"
+        },
+        {
+          "type": {
+            "target": "NeuronToMuscle",
+            "type": "list"
+          },
+          "name": "ntms",
+          "access": "dynamic"
+        },
+        {
+          "type": {
+            "target": "CellToNeuron",
+            "type": "list"
+          },
+          "name": "ctns",
+          "access": "dynamic"
+        },
+        {
+          "type": "method",
+          "name": "constructor",
+          "access": "dynamic",
+          "params": [
+            "brain",
+            "body"
+          ],
+          "body": [
+            {
+              "type": "assignment",
+              "left": {
+                "type": "dynamic",
+                "chain": [
+                  {
+                    "name": "brain",
+                    "type": "access"
+                  }
+                ]
+              },
+              "operator": "=",
+              "right": {
+                "uno": null,
+                "e": {
+                  "type": "static",
+                  "chain": [
+                    {
+                      "name": "brain",
+                      "type": "access"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "assignment",
+              "left": {
+                "type": "dynamic",
+                "chain": [
+                  {
+                    "name": "body",
+                    "type": "access"
+                  }
+                ]
+              },
+              "operator": "=",
+              "right": {
+                "uno": null,
+                "e": {
+                  "type": "static",
+                  "chain": [
+                    {
+                      "name": "body",
+                      "type": "access"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "iter_local",
+              "target": {
+                "uno": null,
+                "e": {
+                  "type": "dynamic",
+                  "chain": [
+                    {
+                      "name": "body",
+                      "type": "access"
+                    },
+                    {
+                      "name": "muscles",
+                      "type": "access"
+                    }
+                  ]
+                }
+              },
+              "params": [
+                "m",
+                "i"
+              ],
+              "body": [
+                {
+                  "type": "assignment",
+                  "left": {
+                    "type": "dynamic",
+                    "chain": [
+                      {
+                        "name": "ntms",
+                        "type": "access"
+                      }
+                    ]
+                  },
+                  "operator": "<<",
+                  "right": {
+                    "uno": "new",
+                    "e": {
+                      "type": "static",
+                      "chain": [
+                        {
+                          "name": "NeuronToMuscle",
+                          "type": "call",
+                          "args": [
+                            {
+                              "uno": null,
+                              "e": {
+                                "type": "dynamic",
+                                "chain": [
+                                  {
+                                    "name": "brain",
+                                    "type": "access"
+                                  },
+                                  {
+                                    "name": "outputs",
+                                    "type": "index",
+                                    "index": {
+                                      "round": true,
+                                      "i": {
+                                        "uno": null,
+                                        "e": {
+                                          "type": "static",
+                                          "chain": [
+                                            {
+                                              "name": "i",
+                                              "type": "access"
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "uno": null,
+                              "e": {
+                                "type": "static",
+                                "chain": [
+                                  {
+                                    "name": "m",
+                                    "type": "access"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "iter_local",
+              "target": {
+                "uno": null,
+                "e": {
+                  "type": "dynamic",
+                  "chain": [
+                    {
+                      "name": "brain",
+                      "type": "access"
+                    },
+                    {
+                      "name": "inputs",
+                      "type": "access"
+                    }
+                  ]
+                }
+              },
+              "params": [
+                "n",
+                "i"
+              ],
+              "body": [
+                {
+                  "type": "assignment",
+                  "left": {
+                    "type": "dynamic",
+                    "chain": [
+                      {
+                        "name": "ctns",
+                        "type": "access"
+                      }
+                    ]
+                  },
+                  "operator": "<<",
+                  "right": {
+                    "uno": "new",
+                    "e": {
+                      "type": "static",
+                      "chain": [
+                        {
+                          "name": "CellToNeuron",
+                          "type": "call",
+                          "args": [
+                            {
+                              "uno": null,
+                              "e": {
+                                "type": "dynamic",
+                                "chain": [
+                                  {
+                                    "name": "body",
+                                    "type": "access"
+                                  },
+                                  {
+                                    "name": "outputs",
+                                    "type": "index",
+                                    "index": {
+                                      "round": true,
+                                      "i": {
+                                        "uno": null,
+                                        "e": {
+                                          "type": "static",
+                                          "chain": [
+                                            {
+                                              "name": "i",
+                                              "type": "access"
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "uno": null,
+                              "e": {
+                                "type": "static",
+                                "chain": [
+                                  {
+                                    "name": "n",
+                                    "type": "access"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "method",
+          "name": "simulate",
+          "access": "static",
+          "params": [],
+          "body": [
+            {
+              "type": "call",
+              "callee": {
+                "type": "lvalue",
+                "access": "static",
+                "chain": [
+                  "NeuronToMuscle",
+                  "send"
+                ]
+              },
+              "args": []
+            },
+            {
+              "type": "call",
+              "callee": {
+                "type": "lvalue",
+                "access": "static",
+                "chain": [
+                  "CellToNeuron",
+                  "send"
+                ]
+              },
+              "args": []
+            },
+            {
+              "type": "call",
+              "callee": {
+                "type": "lvalue",
+                "access": "static",
+                "chain": [
+                  "Brain",
+                  "think"
+                ]
+              },
+              "args": []
+            },
+            {
+              "type": "call",
+              "callee": {
+                "type": "lvalue",
+                "access": "static",
+                "chain": [
+                  "Body",
+                  "move"
+                ]
+              },
+              "args": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

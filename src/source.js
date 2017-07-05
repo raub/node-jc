@@ -3,7 +3,6 @@
 const peg = require('pegjs');
 const fs = require('fs');
 
-// const fill = (n,c) => { let s=''; while(--n)s+=c; return s };
 
 class Source {
 	
@@ -13,7 +12,11 @@ class Source {
 			this._path = path;
 			this._source = fs.readFileSync(path).toString();
 		} else {
-			this._path = '[INLINE]'+(new Error()).stack.split('\n')[2];
+			if (typeof isText === 'string') {
+				this._path = isText;
+			} else {
+				this._path = '[INLINE]'+(new Error()).stack.split('\n')[2];
+			}
 			this._source = path;
 		}
 		
@@ -70,6 +73,7 @@ class Source {
 		
 	}
 	
+	get file() { return this._path; }
 	get compiled() { return this._compiled; }
 	
 	get error() { return this._error.toString(); }
@@ -77,7 +81,7 @@ class Source {
 }
 
 try {
-	Source._parser = peg.generate(fs.readFileSync(__dirname + '/grammar.pegjs').toString());
+	Source._parser = peg.generate(fs.readFileSync(__dirname + '/peg/index.pegjs').toString());
 } catch (ex) {
 	Source._parser = ()=>{throw ex};
 }

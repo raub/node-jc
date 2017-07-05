@@ -8,14 +8,14 @@ NeuronToMuscle {
 	
 	
 	.constructor(neuron, muscle) {
-		.neuron = neuron
-		.muscle = muscle
+		.neuron = neuron;
+		.muscle = muscle;
 	}
 	
 	
 	send() {
-		NeuronToMuscle[] {
-			.muscle.set(.neuron.get())
+		NeuronToMuscle[]() {
+			.muscle.set(.neuron.get());
 		}
 	}
 	

@@ -9,14 +9,14 @@ CellToNeuron {
 	
 	
 	.constructor(cell, neuron) {
-		.cell   = cell
-		.neuron = neuron
+		.cell   = cell;
+		.neuron = neuron;
 	}
 	
 	
 	send() {
-		CellToNeuron[] {
-			.neuron.set(.cell.get())
+		CellToNeuron[]() {
+			.neuron.set(.cell.get());
 		}
 	}
 	

@@ -94,9 +94,23 @@ chain_next
 	= !def_end __ '.' item:chain_item
 	{return item}
 
-chain_item
-	= name:base_name args:arg_list?
-	{return {name, type: args? 'call' : 'access', args}}
+chain_item = chain_call / chain_index / chain_access
+
+chain_access
+	= name:base_name
+	{return {name, type: 'access'}}
+
+chain_call
+	= name:base_name args:arg_list
+	{return {name, type: 'call', args}}
+
+chain_index
+	= name:base_name index:indexation
+	{return {name, type: 'index', index}}
+
+indexation
+	= __ '[' __ r:'%'? i:expression __ ']'
+	{return {round:r!==null,i}}
 
 
 module_path = $(dir_dots? dir_path jc_ext?)
@@ -189,9 +203,15 @@ var_def_op = local_var
 no_def_op  = assignment / call_only / iteration / control
 
 
-local_var  = __ (core_type / class_type) one_local more_local? op_end
-one_local  = __ prop_name assign?
-more_local = __ ',' __ one_local
+local_var
+	= __ type:(core_type / class_type) a:one_local b:more_local? op_end
+	{return {type,vars:enlist(a,b)}}
+one_local
+	= __ name:prop_name value:assign?
+	{return {name,value}}
+more_local
+	= __ ',' __ v:one_local
+	{return v}
 
 
 assignment

@@ -20,25 +20,25 @@ Creature {
 	
 	.constructor(brain, body) {
 		
-		.brain = brain
-		.body  = body
+		.brain = brain;
+		.body  = body;
 		
 		[.body.muscles](m, i) {
-			.ntms.push << new NeuronToMuscle(.brain.outputs[%i], m)
+			.ntms << new NeuronToMuscle(.brain.outputs[%i], m);
 		}
 		
 		[.brain.inputs](n, i) {
-			.ctns.push << new CellToNeuron(.body.outputs[%i], n)
+			.ctns << new CellToNeuron(.body.outputs[%i], n);
 		}
 		
 	}
 	
 	
 	simulate() {
-		NeuronToMuscle.send()
-		CellToNeuron.send()
-		Brain.think()
-		Body.move()
+		NeuronToMuscle.send();
+		CellToNeuron.send();
+		Brain.think();
+		Body.move();
 	}
 	
 }

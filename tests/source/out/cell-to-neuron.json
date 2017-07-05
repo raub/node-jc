@@ -1,0 +1,157 @@
+{
+  "imports": [
+    {
+      "classes": [
+        "Neuron"
+      ],
+      "path": "../brain"
+    },
+    {
+      "classes": [
+        "Cell"
+      ],
+      "path": "../body"
+    }
+  ],
+  "classes": [
+    {
+      "name": "CellToNeuron",
+      "parent": null,
+      "members": [
+        {
+          "type": {
+            "target": "Cell",
+            "type": "ref"
+          },
+          "name": "cell",
+          "access": "dynamic"
+        },
+        {
+          "type": {
+            "target": "Neuron",
+            "type": "ref"
+          },
+          "name": "neuron",
+          "access": "dynamic"
+        },
+        {
+          "type": "method",
+          "name": "constructor",
+          "access": "dynamic",
+          "params": [
+            "cell",
+            "neuron"
+          ],
+          "body": [
+            {
+              "type": "assignment",
+              "left": {
+                "type": "dynamic",
+                "chain": [
+                  {
+                    "name": "cell",
+                    "type": "access"
+                  }
+                ]
+              },
+              "operator": "=",
+              "right": {
+                "uno": null,
+                "e": {
+                  "type": "static",
+                  "chain": [
+                    {
+                      "name": "cell",
+                      "type": "access"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "assignment",
+              "left": {
+                "type": "dynamic",
+                "chain": [
+                  {
+                    "name": "neuron",
+                    "type": "access"
+                  }
+                ]
+              },
+              "operator": "=",
+              "right": {
+                "uno": null,
+                "e": {
+                  "type": "static",
+                  "chain": [
+                    {
+                      "name": "neuron",
+                      "type": "access"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "method",
+          "name": "send",
+          "access": "static",
+          "params": [],
+          "body": [
+            {
+              "type": "iter_kernel",
+              "target": {
+                "uno": null,
+                "e": {
+                  "type": "static",
+                  "chain": [
+                    {
+                      "name": "CellToNeuron",
+                      "type": "access"
+                    }
+                  ]
+                }
+              },
+              "params": [],
+              "body": [
+                {
+                  "type": "call",
+                  "callee": {
+                    "type": "lvalue",
+                    "access": "dynamic",
+                    "chain": [
+                      "neuron",
+                      "set"
+                    ]
+                  },
+                  "args": [
+                    {
+                      "uno": null,
+                      "e": {
+                        "type": "dynamic",
+                        "chain": [
+                          {
+                            "name": "cell",
+                            "type": "access"
+                          },
+                          {
+                            "name": "get",
+                            "type": "call",
+                            "args": []
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
