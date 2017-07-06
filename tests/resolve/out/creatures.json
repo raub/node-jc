@@ -1,1 +1,12 @@
-null
+[
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/body/body.jc",
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/body/cell.jc",
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/body/muscle.jc",
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/brain/brain.jc",
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/brain/neuron.jc",
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/brain/synapse.jc",
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/creature/cell-to-neuron.jc",
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/creature/creature.jc",
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/creature/neuron-to-muscle.jc",
+  "C:/Users/blanco/_git/node-jc/tests/resolve/creatures/population.jc"
+]

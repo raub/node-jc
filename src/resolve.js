@@ -22,9 +22,9 @@ const listFiles = (fullPath) => {
 	
 	const isFile = fs.statSync(fullPath).isFile();
 	
-	if (isFile && /\.jс$/) {
+	if (isFile && /\.jc$/.test(fullPath)) {
 		
-		return [fullPath];
+		return [fullPath.replace(/\\\\?/g,'/')];
 		
 	} else if ( ! isFile ) {
 		
@@ -32,7 +32,8 @@ const listFiles = (fullPath) => {
 			.map( name => listFiles(path.join(fullPath, name)) )
 			.filter(list=>list);
 			
-		return Array.prototype.concat.apply([], files);
+		return Array.prototype.concat.apply([], files)
+			.map(f=>f.replace(/\\\\?/g,'/'));
 		
 	} else {
 		
@@ -43,14 +44,14 @@ const listFiles = (fullPath) => {
 
 
 const checkPath = (fullBase) => {
-	let fullPath = null;
-	const found = exts.some(ext => {
+	let list = null;
+	exts.some(ext => {
 		if (fs.existsSync(fullBase + ext)) {
-			fullPath = fullBase + ext;
+			list = listFiles(fullBase + ext);
 			return true;
 		}
 	});
-	return fullPath;
+	return list;
 };
 
 
@@ -61,7 +62,7 @@ const tryLibs = (name, libs) => {
 	}
 	
 	let fullPath = null;
-	const part = file.slice(5);
+	const part = name.slice(5);
 	
 	libs.some(dir => {
 		fullPath = checkPath(path.resolve(mainDir, dir, part));
@@ -81,12 +82,9 @@ const tryNode = (name) => {
 	let fullPath = null;
 	const part = name.slice(5);
 	
-	this.libs.some(dir => {
-		fullPath = checkPath(path.resolve(nodeDir, part));
-		return fullPath && true || false;
-	});
+	fullPath = checkPath(path.resolve(nodeDir, part));
 	
-	return null;
+	return fullPath;
 	
 };
 
@@ -100,7 +98,7 @@ const tryLocal = (name) => {
 		return fullPath && true || false;
 	});
 	
-	return null;
+	return fullPath;
 	
 };
 
