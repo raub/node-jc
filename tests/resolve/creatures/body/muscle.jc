@@ -1,0 +1,23 @@
+import Cell from cell
+import Edge from ../graph
+
+
+Muscle extends Edge {
+	
+	.constructor(a, b, dist) {
+		.super(a, b, dist);
+	}
+	
+	
+	.set(dist) { .dist = dist; }
+	
+	
+	.contract() {
+		
+		.pull();
+		
+		// TODO: muscle business
+		
+	}
+	
+}

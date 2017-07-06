@@ -1,0 +1,22 @@
+import Neuron from ../brain
+import Muscle from ../body
+
+NeuronToMuscle {
+	
+	.neuron : Neuron
+	.muscle : Muscle
+	
+	
+	.constructor(neuron, muscle) {
+		.neuron = neuron;
+		.muscle = muscle;
+	}
+	
+	
+	send() {
+		NeuronToMuscle[]() {
+			.muscle.set(.neuron.get());
+		}
+	}
+	
+}
