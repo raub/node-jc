@@ -96,6 +96,8 @@ class Source {
 	
 	_compile() {
 		
+		console.log('Compile:', this.name);
+		
 		this._compiled = {};
 		
 		const imported = {};
@@ -113,8 +115,56 @@ class Source {
 		});
 		
 		const exported = {};
-		this._parsed.classes.forEach(item => {
-			exported[item.name] = item;
+		this._parsed.classes.forEach(cdata => {
+			
+			exported[cdata.name] = cdata.members.reduce((compiled, item) => {
+				
+				switch (item.type) {
+					
+					case 'property':
+						switch (item.access) {
+							case 'dynamic':
+								
+								break;
+							
+							case 'static':
+								
+								break;
+							
+							case 'external':
+								compiled[item.name] = global.eval(item.content);
+								break;
+							
+							default: break;
+						}
+						break;
+					
+					case 'method':
+						switch (item.access) {
+							case 'dynamic':
+								
+								break;
+							
+							case 'static':
+								compiled[item.name] = function () {};
+								break;
+							
+							default: break;
+						}
+						break;
+					
+					case 'alias':
+						
+						break;
+					
+					default: break;
+					
+				}
+				
+				return compiled;
+				
+			},{});
+			
 		});
 		
 		return exported;

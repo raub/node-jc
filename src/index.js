@@ -16,12 +16,12 @@ module.exports = {
 		const resolved = resolve(name, libs, _dir);
 		
 		if ( ! resolved ) {
-			throw new Error(`Can't locate sources for "${name}".`);
+			throw new Error(`Can't locate sources for "${name}"${_dir ? ` in "${_dir}"` : ''}.`);
 		}
 		
 		return resolved.reduce((prev, file) => {
 			
-			const source = new Source(file);
+			const source = cache[file] || (new Source(file));
 			
 			if (source.error) {
 				throw new Error(source.error.toString());

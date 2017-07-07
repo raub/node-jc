@@ -1,5 +1,5 @@
 import Cell from cell
-import Edge from ../graph
+import Edge from libs:graph
 
 
 Muscle extends Edge {

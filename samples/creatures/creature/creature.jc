@@ -3,7 +3,7 @@ import Neuron from ../brain
 import Body   from ../body
 import Muscle from ../body
 import Cell   from ../body
-import Edge   from ../graph
+import Edge   from libs:graph
 
 import NeuronToMuscle from neuron-to-muscle
 import CellToNeuron   from cell-to-neuron

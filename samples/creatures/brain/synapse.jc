@@ -1,4 +1,4 @@
-import Edge   from ../graph
+import Edge   from libs:graph
 import Neuron from neuron
 
 

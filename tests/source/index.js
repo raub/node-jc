@@ -42,9 +42,6 @@ Promise.resolve()
 	.then(dir => Promise.all(
 		dir.map(name => new Promise(
 			res => res(new Source(__dirname + '/cases/' + name))
-			// res => fs.readFile(__dirname + '/cases/' + name, ok(
-			// 	data => res({name,data:data.toString(),full:__dirname + '/cases/' + name})
-			// ))
 		))
 	))
 	

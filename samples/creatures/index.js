@@ -1,10 +1,18 @@
 'use strict';
 
-const jc = require('node-jc');
+const jc = require('../../src'); // require('node-jc');
 jc.libs('../libs');
 
-const Population = jc.require('./population').Population;
 
-const population = new Population(1000, 100);
+console.log('Require.');
+const t0 = Date.now();
 
-setInterval(() => population.simulate(), 10);
+const Population = jc.require('population').Population;
+Population.create(1000, 100);
+
+
+console.log('Start sim.', Date.now() - t0);
+
+const sim = setInterval(() => Population.simulate(), 10);
+
+setTimeout(() => clearInterval(sim), 1000);
