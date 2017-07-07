@@ -1,0 +1,23 @@
+{
+  "MyClass": {
+    "name": "MyClass",
+    "parent": null,
+    "members": [
+      {
+        "type": "float",
+        "name": "x",
+        "access": "dynamic"
+      },
+      {
+        "type": "float",
+        "name": "y",
+        "access": "static"
+      },
+      {
+        "type": "external",
+        "name": "z",
+        "content": "'z'\n"
+      }
+    ]
+  }
+}

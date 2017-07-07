@@ -1,0 +1,61 @@
+{
+  "imports": [],
+  "classes": [
+    {
+      "name": "MyClass",
+      "parent": null,
+      "members": [
+        {
+          "type": "external",
+          "name": "a",
+          "content": "1"
+        },
+        {
+          "type": "external",
+          "name": "b",
+          "content": "1.2"
+        },
+        {
+          "type": "external",
+          "name": "c",
+          "content": "'a'"
+        },
+        {
+          "type": "external",
+          "name": "d",
+          "content": "\"a\""
+        },
+        {
+          "type": "external",
+          "name": "e",
+          "content": "`x = ${12+3}`"
+        },
+        {
+          "type": "external",
+          "name": "f",
+          "content": "[]"
+        },
+        {
+          "type": "external",
+          "name": "g",
+          "content": "{}"
+        },
+        {
+          "type": "external",
+          "name": "h",
+          "content": "3 * 2"
+        },
+        {
+          "type": "external",
+          "name": "i",
+          "content": "(1+2) * 3"
+        },
+        {
+          "type": "external",
+          "name": "j",
+          "content": "require('fs')\n"
+        }
+      ]
+    }
+  ]
+}

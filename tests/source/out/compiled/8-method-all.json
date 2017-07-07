@@ -1,0 +1,27 @@
+{
+  "MyClass": {
+    "name": "MyClass",
+    "parent": null,
+    "members": [
+      {
+        "type": "method",
+        "name": "f",
+        "access": "dynamic",
+        "params": [],
+        "body": []
+      },
+      {
+        "type": "method",
+        "name": "f",
+        "access": "static",
+        "params": [],
+        "body": []
+      },
+      {
+        "type": "external",
+        "name": "f",
+        "content": "() => {\n\t\t\n\t}\n\t\n"
+      }
+    ]
+  }
+}

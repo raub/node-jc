@@ -1,0 +1,6 @@
+import MyClass1, MyClass2 from 14-class-multi
+import MyClass from 1-just-class
+
+MyClass3 {
+	
+}

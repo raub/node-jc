@@ -1,0 +1,6 @@
+
+MyClass {
+	
+	.xyz : float x, y, z
+	
+}

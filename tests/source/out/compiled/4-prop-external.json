@@ -1,0 +1,13 @@
+{
+  "MyClass": {
+    "name": "MyClass",
+    "parent": null,
+    "members": [
+      {
+        "type": "external",
+        "name": "hello",
+        "content": "'world'\n"
+      }
+    ]
+  }
+}

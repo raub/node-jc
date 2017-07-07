@@ -4,20 +4,27 @@ const peg = require('pegjs');
 const fs = require('fs');
 
 
+const mainDir = process.mainModule.filename.replace(/\\\\?/g,'/').match(/^.*(?=\/)/)[0];
+
 // An abstraction for JC source file, also compiles the file
 class Source {
 	
 	constructor(path, isText) {
 		
 		if ( ! isText ) {
-			this._path = path;
-			this._source = fs.readFileSync(path).toString();
+			this._path   = path.replace(/\\\\?/g,'/');
+			this._dir    = this._path.match(/^.*(?=\/)/)[0];
+			this._source = fs.readFileSync(this._path).toString();
+			this._name   = this._path.match(/[^\/]*$/)[0];
 		} else {
 			if (typeof isText === 'string') {
 				this._path = isText;
+				this._name = this._path.match(/[^\/]*$/)[0];
 			} else {
 				this._path = '[INLINE]'+(new Error()).stack.split('\n')[2];
+				this._name = this._path;
 			}
+			this._dir    = mainDir;
 			this._source = path;
 		}
 		
@@ -80,18 +87,38 @@ class Source {
 	}
 	
 	get file() { return this._path; }
+	get name() { return this._name; }
 	get parsed() { return this._parsed; }
 	get compiled() { return this._compiled; }
 	
-	get error() { return this._error.toString(); }
+	get error() { return this._error && this._error.toString() || null; }
 	
 	
 	_compile() {
+		
 		this._compiled = {};
+		
 		const imported = {};
-		this._parsed.imports.forEach(item =>
-			// item.fo
-		);
+		this._parsed.imports.forEach(item => {
+			
+			const classes = (require('./index.js')).require(item.path, this._dir);
+			
+			item.classes.forEach(name => {
+				if ( ! classes[name] ) {
+					throw new Error(`Class ${name} not found in ${item.path}.`);
+				}
+				imported[name] = classes[name];
+			});
+			
+		});
+		
+		const exported = {};
+		this._parsed.classes.forEach(item => {
+			exported[item.name] = item;
+		});
+		
+		return exported;
+		
 	}
 	
 }

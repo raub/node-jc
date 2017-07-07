@@ -1,0 +1,8 @@
+
+MyClass {
+	
+	.x : float
+	y  : float
+	@z : 'z'
+	
+}

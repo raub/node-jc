@@ -1,0 +1,6 @@
+
+MyClass {
+	
+	@hello   : 'world'
+	
+}

@@ -1,0 +1,23 @@
+{
+  "imports": [],
+  "classes": [
+    {
+      "name": "MyClass",
+      "parent": null,
+      "members": [
+        {
+          "type": {
+            "type": "float",
+            "names": [
+              "x",
+              "y",
+              "z"
+            ]
+          },
+          "name": "xyz",
+          "access": "dynamic"
+        }
+      ]
+    }
+  ]
+}

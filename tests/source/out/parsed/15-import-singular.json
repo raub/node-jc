@@ -1,0 +1,17 @@
+{
+  "imports": [
+    {
+      "classes": [
+        "MyClass"
+      ],
+      "path": "1-just-class"
+    }
+  ],
+  "classes": [
+    {
+      "name": "MyClass1",
+      "parent": null,
+      "members": []
+    }
+  ]
+}

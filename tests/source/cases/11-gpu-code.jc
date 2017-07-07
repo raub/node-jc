@@ -1,0 +1,26 @@
+
+MyClass {
+	
+	// Accelerate vertices to desired positions
+	.pull() {
+		
+		// TODO: iterate vertices?
+		
+		.update();
+		
+		// Calculate acceleration for vertices
+		float dist  = distance(.pos.a, .pos.b);
+		float force = .stiff * (.dist - dist);
+		
+		float3 mid  = (.pos.a +.pos.b) * 0.5;
+		
+		float3 toA  = normalize(.pos.a - mid);
+		float3 toB  = normalize(.pos.b - mid);
+		
+		// Atomic add acceleration
+		.a.vel +== toA * force;
+		.b.vel +== toB * force;
+		
+	}
+	
+}

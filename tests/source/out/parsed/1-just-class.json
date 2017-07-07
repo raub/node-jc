@@ -1,0 +1,10 @@
+{
+  "imports": [],
+  "classes": [
+    {
+      "name": "MyClass",
+      "parent": null,
+      "members": []
+    }
+  ]
+}

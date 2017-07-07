@@ -89,11 +89,11 @@ const tryNode = (name) => {
 };
 
 
-const tryLocal = (name) => {
+const tryLocal = (name, dir) => {
 	
 	let fullPath = null;
 	
-	[mainDir, ''].some(dir => {
+	[dir, ''].some(dir => {
 		fullPath = checkPath(path.resolve(dir,name));
 		return fullPath && true || false;
 	});
@@ -103,8 +103,8 @@ const tryLocal = (name) => {
 };
 
 
-module.exports = (name, libs) => {
+module.exports = (name, libs, dir) => {
 	
-	return tryLibs(name, libs) || tryNode(name) || tryLocal(name);
+	return tryLibs(name, libs) || tryNode(name) || tryLocal(name, dir || mainDir);
 	
 };

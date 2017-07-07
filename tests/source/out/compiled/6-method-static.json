@@ -1,0 +1,15 @@
+{
+  "MyClass": {
+    "name": "MyClass",
+    "parent": null,
+    "members": [
+      {
+        "type": "method",
+        "name": "f",
+        "access": "static",
+        "params": [],
+        "body": []
+      }
+    ]
+  }
+}

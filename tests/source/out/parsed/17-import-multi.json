@@ -1,0 +1,24 @@
+{
+  "imports": [
+    {
+      "classes": [
+        "MyClass1",
+        "MyClass2"
+      ],
+      "path": "14-class-multi"
+    },
+    {
+      "classes": [
+        "MyClass"
+      ],
+      "path": "1-just-class"
+    }
+  ],
+  "classes": [
+    {
+      "name": "MyClass3",
+      "parent": null,
+      "members": []
+    }
+  ]
+}

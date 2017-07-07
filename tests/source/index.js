@@ -7,6 +7,29 @@ const Source = require('../../src/source');
 
 const ok = fn => (err, res) => err ? console.log(err) : fn(res);
 
+/** Cases:
+ * 
+ * 1.  just-class      : an empty class
+ * 2.  prop-dynamic    : a class with a dynamic property
+ * 3.  prop-static     : a class with a static property
+ * 4.  prop-external   : a class with an external property
+ * 5.  method-dynamic  : a class with a dynamic method (empty)
+ * 6.  method-static   : a class with a static method (empty)
+ * 7.  prop-all        : a class with all kinds of properties
+ * 8.  method-all      : a class with all kinds of methods (empty)
+ * 9.  external-data   : external data of all kinds
+ * 10. external-func   : external functions of all kinds
+ * 11. gpu-code        : a gpu method with code
+ * 12. static-default  : use of defaults for static props
+ * 13. dynamic-struct  : use of struct types for dynamic structs
+ * 14. multi-class     : multiple classes
+ * 15. import-singular : singular import
+ * 16. import-dual     : dual import
+ * 17. import-multi    : multiple imports
+ * 
+ */
+
+
 
 Promise.resolve()
 	
@@ -18,16 +41,21 @@ Promise.resolve()
 	// Read all files from 'cases' directory
 	.then(dir => Promise.all(
 		dir.map(name => new Promise(
-			res => fs.readFile(__dirname + '/cases/' + name, ok(
-				data => res({name,data:data.toString()})
-			))
+			res => res(new Source(__dirname + '/cases/' + name))
+			// res => fs.readFile(__dirname + '/cases/' + name, ok(
+			// 	data => res({name,data:data.toString(),full:__dirname + '/cases/' + name})
+			// ))
 		))
 	))
 	
-	// Compile all sources
-	.then(files => Promise.all(
-		files.map(file => new Promise(
-			res => res(new Source(file.data, file.name))
+	// Write parsed files to 'out' directory
+	.then(sources => Promise.all(
+		sources.map(source => new Promise(
+			res => fs.writeFile(
+				__dirname + '/out/parsed/' + source.name.replace(/jc$/, 'json'),
+				JSON.stringify(source.parsed, null, '  '),
+				ok(() => res(source))
+			)
 		))
 	))
 	
@@ -35,9 +63,9 @@ Promise.resolve()
 	.then(sources => Promise.all(
 		sources.map(source => new Promise(
 			res => fs.writeFile(
-				__dirname + '/out/' + source.file.replace(/jc$/, 'json'),
-				JSON.stringify(source.parsed, null, '  '),
-				ok(res)
+				__dirname + '/out/compiled/' + source.name.replace(/jc$/, 'json'),
+				JSON.stringify(source.compiled, null, '  '),
+				ok(() => res(source))
 			)
 		))
 	))
