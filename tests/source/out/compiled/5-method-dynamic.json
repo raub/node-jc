@@ -1,15 +1,3 @@
 {
-  "MyClass": {
-    "name": "MyClass",
-    "parent": null,
-    "members": [
-      {
-        "type": "method",
-        "name": "f",
-        "access": "dynamic",
-        "params": [],
-        "body": []
-      }
-    ]
-  }
+  "MyClass": {}
 }

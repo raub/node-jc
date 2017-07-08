@@ -1,12 +1,4 @@
 {
-  "MyClass1": {
-    "name": "MyClass1",
-    "parent": null,
-    "members": []
-  },
-  "MyClass2": {
-    "name": "MyClass2",
-    "parent": null,
-    "members": []
-  }
+  "MyClass1": {},
+  "MyClass2": {}
 }

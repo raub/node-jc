@@ -1,38 +1,3 @@
 {
-  "MyClass": {
-    "name": "MyClass",
-    "parent": null,
-    "members": [
-      {
-        "type": "external",
-        "name": "a",
-        "content": "function () { return 1; }"
-      },
-      {
-        "type": "external",
-        "name": "b",
-        "content": "() => {}"
-      },
-      {
-        "type": "external",
-        "name": "c",
-        "content": "() => 42"
-      },
-      {
-        "type": "external",
-        "name": "d",
-        "content": "(function () { return 1; })"
-      },
-      {
-        "type": "external",
-        "name": "e",
-        "content": "(() => {})"
-      },
-      {
-        "type": "external",
-        "name": "f",
-        "content": "(() => 42)\n"
-      }
-    ]
-  }
+  "MyClass": {}
 }

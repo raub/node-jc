@@ -1,58 +1,36 @@
 {
   "MyClass": {
-    "name": "MyClass",
-    "parent": null,
-    "members": [
-      {
-        "type": "external",
-        "name": "a",
-        "content": "1"
+    "a": 1,
+    "b": 1.2,
+    "c": "a",
+    "d": "a",
+    "e": "x = 15",
+    "f": [],
+    "h": 6,
+    "i": 9,
+    "j": {
+      "constants": {
+        "O_RDONLY": 0,
+        "O_WRONLY": 1,
+        "O_RDWR": 2,
+        "S_IFMT": 61440,
+        "S_IFREG": 32768,
+        "S_IFDIR": 16384,
+        "S_IFCHR": 8192,
+        "S_IFLNK": 40960,
+        "O_CREAT": 256,
+        "O_EXCL": 1024,
+        "O_TRUNC": 512,
+        "O_APPEND": 8,
+        "F_OK": 0,
+        "R_OK": 4,
+        "W_OK": 2,
+        "X_OK": 1
       },
-      {
-        "type": "external",
-        "name": "b",
-        "content": "1.2"
-      },
-      {
-        "type": "external",
-        "name": "c",
-        "content": "'a'"
-      },
-      {
-        "type": "external",
-        "name": "d",
-        "content": "\"a\""
-      },
-      {
-        "type": "external",
-        "name": "e",
-        "content": "`x = ${12+3}`"
-      },
-      {
-        "type": "external",
-        "name": "f",
-        "content": "[]"
-      },
-      {
-        "type": "external",
-        "name": "g",
-        "content": "{}"
-      },
-      {
-        "type": "external",
-        "name": "h",
-        "content": "3 * 2"
-      },
-      {
-        "type": "external",
-        "name": "i",
-        "content": "(1+2) * 3"
-      },
-      {
-        "type": "external",
-        "name": "j",
-        "content": "require('fs')\n"
-      }
-    ]
+      "F_OK": 0,
+      "R_OK": 4,
+      "W_OK": 2,
+      "X_OK": 1
+    }
   }
 }

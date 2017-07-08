@@ -1,13 +1,3 @@
 {
-  "MyClass": {
-    "name": "MyClass",
-    "parent": null,
-    "members": [
-      {
-        "type": "float",
-        "name": "x",
-        "access": "static"
-      }
-    ]
-  }
+  "MyClass": {}
 }

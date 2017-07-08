@@ -1,7 +1,3 @@
 {
-  "MyClass1": {
-    "name": "MyClass1",
-    "parent": null,
-    "members": []
-  }
+  "MyClass1": {}
 }

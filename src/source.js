@@ -3,6 +3,7 @@
 const peg = require('pegjs');
 const fs = require('fs');
 
+const subsys = require('./subsys/opencl');
 
 const mainDir = process.mainModule.filename.replace(/\\\\?/g,'/').match(/^.*(?=\/)/)[0];
 
@@ -118,43 +119,31 @@ class Source {
 		this._parsed.classes.forEach(cdata => {
 			
 			exported[cdata.name] = cdata.members.reduce((compiled, item) => {
-				
+				console.log('COM', item.type, item.access, item.name);
 				switch (item.type) {
 					
-					case 'property':
-						switch (item.access) {
-							case 'dynamic':
+					case 'external':
+								console.log('ISEE');
+								
+								try {
+									compiled[item.name] = eval(item.content);
+									// compiled[item.name] = (function(t){
+									// 	eval.apply(global, t);
+									// }(item.content));
+									
+									// eval.call(global, item.content);
+								} catch (ex) {
+									console.log('EX', cdata.name, '::', item.name);
+									console.log('EX', ex);
+								}
 								
 								break;
-							
-							case 'static':
-								
-								break;
-							
-							case 'external':
-								compiled[item.name] = global.eval(item.content);
-								break;
-							
-							default: break;
-						}
-						break;
-					
-					case 'method':
-						switch (item.access) {
-							case 'dynamic':
-								
-								break;
-							
-							case 'static':
-								compiled[item.name] = function () {};
-								break;
-							
-							default: break;
-						}
-						break;
 					
 					case 'alias':
-						
+						Object.defineProperty(compiled, item.name, {
+							get() { return compiled[item.target]; },
+							set(v) { compiled[item.target] = v; },
+						});
 						break;
 					
 					default: break;
@@ -163,10 +152,10 @@ class Source {
 				
 				return compiled;
 				
-			},{});
+			}, subsys.compileClass(cdata));
 			
 		});
-		
+		console.log('exported', exported);
 		return exported;
 		
 	}
