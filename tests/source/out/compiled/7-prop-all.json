@@ -1,5 +1,3 @@
 {
-  "MyClass": {
-    "z": "z"
-  }
+  "MyClass": "\n// Class MyClass header\n\n\n\n// Class MyClass code\n\n"
 }

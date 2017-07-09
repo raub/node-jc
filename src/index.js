@@ -31,8 +31,12 @@ module.exports = {
 				cache[file] = source;
 			}
 			
-			Object.keys(source.compiled).forEach(k => {
-				prev[k] = source.compiled[k];
+			if ( ! source.exported ) {
+				return prev;
+			}
+			
+			Object.keys(source.exported).forEach(k => {
+				prev[k] = source.exported[k];
 			});
 			
 			return prev;

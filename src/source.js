@@ -29,14 +29,39 @@ class Source {
 			this._source = path;
 		}
 		
+		this._exported = {};
+		
+		
 		try {
-			this._parsed = Source._parser.parse(this._source);
-		} catch (ex) { (()=>{
 			
+			this._parsed = Source._parser.parse(this._source);
+			
+			this._imported = {};
+			this._parsed.imports.forEach(item => {
+				
+				const classes = (require('./index.js')).require(item.path, this._dir);
+				
+				item.classes.forEach(name => {
+					if ( ! classes[name] ) {
+						throw new Error(`Class ${name} not found in ${item.path}.`);
+					}
+					this._imported[name] = classes[name];
+				});
+				
+			});
+			
+			this._exported = {};
+			this._parsed.classes.forEach(cdata => {
+				this._exported[cdata.name] = new subsys.Class(cdata, this._imported, this._path);
+			});
+			
+		} catch (ex) { (()=>{
+			console.log('NULL', ex);
 			const that = this;
 			this._parsed = null;
 			
 			if (ex.name !== 'SyntaxError') {
+				console.log(ex);
 				return this._error = {
 					name: ex.name,
 					message: ex.message,
@@ -73,92 +98,18 @@ class Source {
 						'\n// ----------------------------------\n';
 				},
 			};
+			console.log(this._error.toString());
 			
 		})(); }
 		
-		if (this._error) {
-			console.log(this._error.toString());
-			this._compiled = {};
-		} else {
-			this._compiled = this._compile();
-		}
-		
-		
-		
 	}
 	
-	get file() { return this._path; }
-	get name() { return this._name; }
-	get parsed() { return this._parsed; }
-	get compiled() { return this._compiled; }
+	get file()     { return this._path;     }
+	get name()     { return this._name;     }
+	get parsed()   { return this._parsed;   }
+	get exported() { return this._exported; }
 	
 	get error() { return this._error && this._error.toString() || null; }
-	
-	
-	_compile() {
-		
-		console.log('Compile:', this.name);
-		
-		this._compiled = {};
-		
-		const imported = {};
-		this._parsed.imports.forEach(item => {
-			
-			const classes = (require('./index.js')).require(item.path, this._dir);
-			
-			item.classes.forEach(name => {
-				if ( ! classes[name] ) {
-					throw new Error(`Class ${name} not found in ${item.path}.`);
-				}
-				imported[name] = classes[name];
-			});
-			
-		});
-		
-		const exported = {};
-		this._parsed.classes.forEach(cdata => {
-			
-			exported[cdata.name] = cdata.members.reduce((compiled, item) => {
-				console.log('COM', item.type, item.access, item.name);
-				switch (item.type) {
-					
-					case 'external':
-								console.log('ISEE');
-								
-								try {
-									compiled[item.name] = eval(item.content);
-									// compiled[item.name] = (function(t){
-									// 	eval.apply(global, t);
-									// }(item.content));
-									
-									// eval.call(global, item.content);
-								} catch (ex) {
-									console.log('EX', cdata.name, '::', item.name);
-									console.log('EX', ex);
-								}
-								
-								break;
-					
-					case 'alias':
-						Object.defineProperty(compiled, item.name, {
-							get() { return compiled[item.target]; },
-							set(v) { compiled[item.target] = v; },
-						});
-						break;
-					
-					default: break;
-					
-				}
-				
-				return compiled;
-				
-			}, subsys.compileClass(cdata));
-			
-		});
-		console.log('exported', exported);
-		return exported;
-		
-	}
 	
 }
 

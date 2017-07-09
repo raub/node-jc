@@ -6,14 +6,15 @@ const types = require('./types');
 
 class Attribute {
 	
-	get buffer()    { return this._buffer;      }
+	get name()   { return this._name; }
+	get buffer() { return this._buffer; }
 	
-	get attrItems() { return this._attrItems;   }
-	get attrBytes() { return this._attrBytes;   }
-	get attrType()  { return this._attrType;    }
+	get attrItems() { return this._attrItems; }
+	get attrBytes() { return this._attrBytes; }
+	get attrType()  { return this._attrType;  }
 	
-	get limit()     { return types.CLASS_SIZE; }
-	get count()     { return this._count;       }
+	get limit() { return types.CLASS_SIZE; }
+	get count() { return this._count;      }
 	
 	get bytes() {
 		return this._count * this._attrBytes;
@@ -21,6 +22,8 @@ class Attribute {
 	
 	
 	constructor(desc) {
+		
+		this._name = desc.name;
 		
 		this._attrItems = 1;
 		this._attrBytes = 4;

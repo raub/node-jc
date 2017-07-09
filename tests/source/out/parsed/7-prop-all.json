@@ -13,7 +13,8 @@
         {
           "type": "float",
           "name": "y",
-          "access": "static"
+          "access": "static",
+          "init": null
         },
         {
           "type": "external",

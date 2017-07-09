@@ -45,22 +45,22 @@ dynamic_prop 'a dynamic property'
 	= __ '.' name:prop_name
 	  define_op type:(struct_type / core_type / ref_type)
 	  def_end
-	{return _property(name,'dynamic',type)}
+	{return _property(name, 'dynamic', type)}
 
 static_prop 'a static property'
 	= __ name:prop_name
 	  define_op type:core_type init:default_val?
 	  def_end
-	{return _property(name,'static',type)}
+	{return _property(name, 'static', type, init)}
 
 
 dynamic_alias
 	= __ '.' name:prop_name define_op '.' target:prop_name def_end
-	{return _alias(name,'dynamic',target)}
+	{return _alias(name, 'dynamic', target)}
 
 static_alias
 	= __ name:prop_name define_op target:prop_name def_end
-	{return _alias(name,'static',target)}
+	{return _alias(name, 'static', target)}
 
 
 dynamic_func 'a dynamic method'

@@ -1,4 +1,4 @@
 {
-  "MyClass1": {},
-  "MyClass2": {}
+  "MyClass1": "\n// Class MyClass1 header\n\n\n\n// Class MyClass1 code\n\n",
+  "MyClass2": "\n// Class MyClass2 header\n\n\n\n// Class MyClass2 code\n\n"
 }

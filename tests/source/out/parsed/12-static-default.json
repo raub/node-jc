@@ -8,7 +8,8 @@
         {
           "type": "float",
           "name": "x",
-          "access": "static"
+          "access": "static",
+          "init": "10"
         }
       ]
     }
