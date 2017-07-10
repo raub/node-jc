@@ -27,6 +27,24 @@ class Class {
 		
 		desc.members.forEach(member => {
 			
+			switch (member.access) {
+				case 'dynamic':
+					this._scope.set(
+						`.${member.name}`,
+						`_${this._name}_dynamic_${member.type === 'alias' ? member.target : member.name}`
+					);
+					break;
+				
+				case 'static':
+					this._scope.set(
+						`${member.name}`,
+						`_${this._name}_static_${member.type === 'alias' ? member.target : member.name}`
+					);
+					break;
+				
+				default: break;
+			}
+			
 			switch (member.type) {
 				
 				case 'external':

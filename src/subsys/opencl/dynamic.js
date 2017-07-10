@@ -11,13 +11,13 @@ class Dynamic {
 	get code()   { return `${this._signature} {\n${this._body}\n}`; }
 	
 	
-	constructor(desc) {
+	constructor(desc, scope) {
 		
 		this._name = desc.name;
 		
-		this._signature = `void ${this._name}()`;
+		this._scope = scope.clone();
 		
-		const scope = {};
+		this._signature = `void ${this._name}()`;
 		
 		this._body = desc.body.map(statement => {
 			const method = `__${statement.type}`;
@@ -28,10 +28,11 @@ class Dynamic {
 	}
 	
 	
-	__vars(desc, scope) {
+	__vars(desc) {
 		
 		return desc.list.map(v => {
-			return `${desc.typeName} ${v.name};`;
+			this._scope.set(v.name, 'local_' + v.name);
+			return `${desc.typeName} ${this._scope.get(v.name)};`;
 		}).join('\n');
 		
 	}
@@ -39,16 +40,8 @@ class Dynamic {
 	
 	__call(desc, scope) {
 		// console.log('CL:', JSON.stringify(desc, null, '\t'));
-		return `${this.__lvalue(desc.callee, scope)}${this.__args(desc.args, scope)};`;
+		return `${this._scope.chain(desc.callee)}${this.__args(desc.args, scope)};`;
 		
-	}
-	
-	
-	__lvalue(desc, scope) {
-		// console.log('LV:', JSON.stringify(desc, null, '\t'));
-		const dot = desc.access === 'dynamic' ? '.' : '';
-		const chain = desc.chain.join('.');
-		return `${dot}${chain}`;
 	}
 	
 	
@@ -63,13 +56,13 @@ class Dynamic {
 	
 	
 	__assign(desc, scope) {
-		return `${this.__lvalue(desc.callee, scope)} ${desc.operator} ${this.__expression(desc.right, scope)};`;
+		return `${this._scope.chain(desc.left)} ${desc.operator} ${this.__expression(desc.right, scope)};`;
 	}
 	
 	
 	__atomic(desc, scope) {
 		const op = ({ '+==': 'add', '-==': 'sub' })[desc.operator];
-		return `atomic_${op}(&${this.__lvalue(desc.callee, scope)}, ${this.__expression(desc.right, scope)});`;
+		return `atomic_${op}(&${this._scope.chain(desc.left)}, ${this.__expression(desc.right, scope)});`;
 	}
 	
 };

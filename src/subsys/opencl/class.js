@@ -48,7 +48,7 @@ class Class extends base.Class {
 				case 'method':
 					switch (member.access) {
 						case 'dynamic':
-							this._cl['dm_' + member.name] = new Dynamic(member);
+							this._cl['dm_' + member.name] = new Dynamic(member, this.scope);
 							break;
 						
 						case 'static':

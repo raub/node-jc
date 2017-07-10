@@ -7,10 +7,10 @@ void pull();
 // Class MyClass code
 
 void pull() {
-.update();
-float dist;
-float force;
-float3 mid;
-float3 toA;
-float3 toB;
+undefined();
+float local_dist;
+float local_force;
+float3 local_mid;
+float3 local_toA;
+float3 local_toB;
 }
