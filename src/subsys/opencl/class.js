@@ -20,8 +20,8 @@ class Class extends base.Class {
 		
 		super(desc, imported, location);
 		
-		this._classes = Object.keys(imported).map(k => imported[k]);
 		this._cl = {};
+		
 		
 		desc.members.forEach(member => {
 			
@@ -73,21 +73,24 @@ class Class extends base.Class {
 		
 		
 		// Pull code from methods
-		this._source = this._classes.map(item => item.header).concat(
+		this._source = this.classes.map(item => item.header).concat(
 			[this._header, `\n// Class ${this.name} code\n`],
 			Object.keys(this._cl).filter(k => /^.m_/.test(k)).map(
 				name => this._cl[name].code
 			)
 		).join('\n') + '\n';
 		
-		this._program = device.cl.createProgramWithSource(device.context, this._source);
-		device.cl.compileProgram(this._program);
-		
-		this._linked = device.cl.linkProgram(
-			device.context, null, null,
-			[this._program].concat(this._classes.map(item => item.program))
-		);
-		
+		try {
+			this._program = device.cl.createProgramWithSource(device.context, this._source);
+			device.cl.compileProgram(this._program);
+			
+			this._linked = device.cl.linkProgram(
+				device.context, null, null,
+				[this._program].concat(this.classes.map(item => item.program))
+			);
+		} catch (ex) {
+			console.log(`\nClass ${this._name} (${location}):\n`,ex);
+		}
 		
 	}
 	

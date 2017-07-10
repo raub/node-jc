@@ -8,9 +8,16 @@ operation  = var_def_op / no_def_op
 var_def_op = local_var
 no_def_op  = assignment / call_only / iteration / control
 
-assignment
-	= __ left:prop_chain right:assign op_end
-	{return {type:'assignment',left,operator:right.op,right:right.e}}
+assignment = assign_atomic / assign_local
+
 assign
 	= __ op:assign_op __ e:expression
 	{return {op,e}}
+
+assign_local
+	= __ left:prop_chain __ operator:assign_op __ right:expression op_end
+	{return {type:'assign',left,operator,right}}
+
+assign_atomic
+	= __ left:prop_chain __ operator:atomic_op __ right:expression op_end
+	{return {type:'atomic',left,operator,right}}

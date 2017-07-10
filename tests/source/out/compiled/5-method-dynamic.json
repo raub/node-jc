@@ -1,3 +1,0 @@
-{
-  "MyClass": "\n// Class MyClass header\nvoid f();\n\n\n// Class MyClass code\n\nvoid f() {\n\n}\n"
-}

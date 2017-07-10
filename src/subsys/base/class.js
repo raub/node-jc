@@ -1,9 +1,14 @@
 'use strict';
 
+const Scope = require('./scope');
+
+
 class Class {
 	
-	get name()   { return this._name;   }
-	get parent() { return this._parent; }
+	get name()    { return this._name;    }
+	get parent()  { return this._parent;  }
+	get scope()   { return this._scope;   }
+	get classes() { return this._classes; }
 	
 	
 	constructor(desc, imported, location) {
@@ -11,6 +16,14 @@ class Class {
 		this._name     = desc.name;
 		this._imported = desc.imported;
 		this._parent   = imported[desc.parent];
+		
+		this._classes = Object.keys(imported).map(k => imported[k]);
+		
+		// Init scope with imports
+		this._scope = new Scope();
+		this._classes.forEach(c => {
+			this._scope.set(c.name, c.scope);
+		});
 		
 		desc.members.forEach(member => {
 			

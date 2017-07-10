@@ -30,7 +30,7 @@ class Source {
 		}
 		
 		this._exported = {};
-		
+		this._parsed = null;
 		
 		try {
 			
@@ -53,12 +53,12 @@ class Source {
 			this._exported = {};
 			this._parsed.classes.forEach(cdata => {
 				this._exported[cdata.name] = new subsys.Class(cdata, this._imported, this._path);
+				this._imported[cdata.name] = this._exported[cdata.name];
 			});
 			
 		} catch (ex) { (()=>{
-			console.log('NULL', ex);
+			
 			const that = this;
-			this._parsed = null;
 			
 			if (ex.name !== 'SyntaxError') {
 				console.log(ex);

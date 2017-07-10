@@ -60,8 +60,12 @@ Promise.resolve()
 	.then(sources => Promise.all(
 		sources.map(source => new Promise(
 			res => fs.writeFile(
-				__dirname + '/out/compiled/' + source.name.replace(/jc$/, 'json'),
-				JSON.stringify(source.exported, null, '  '),
+				__dirname + '/out/compiled/' + source.name.replace(/jc$/, 'cl'),
+				(() => {
+					return Object.keys(source.exported).map(k => {
+						return `// ----> ${k} <---- //\n` + source.exported[k].toJSON();
+					}).join('\n\n');
+				})(),
 				ok(() => res(source))
 			)
 		))

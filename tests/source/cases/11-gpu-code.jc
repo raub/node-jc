@@ -18,8 +18,8 @@ MyClass {
 		float3 toB  = normalize(.pos.b - mid);
 		
 		// Atomic add acceleration
-		.a.vel +== toA * force;
-		.b.vel +== toB * force;
+		// .a.vel +== toA * force;
+		// .b.vel +== toB * force;
 		
 	}
 	
