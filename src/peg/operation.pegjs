@@ -11,8 +11,12 @@ no_def_op  = assignment / call_only / iteration / control
 assignment = assign_atomic / assign_local
 
 assign
-	= __ op:assign_op __ e:expression
+	= __ op:assign_op __ value:expression
 	{return {op,e}}
+	
+assign_only
+	= default_op value:expression
+	{return value}
 
 assign_local
 	= __ left:prop_chain __ operator:assign_op __ right:expression op_end

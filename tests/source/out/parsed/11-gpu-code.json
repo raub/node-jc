@@ -29,10 +29,11 @@
                 {
                   "name": "dist",
                   "value": {
-                    "op": "=",
-                    "e": {
-                      "uno": null,
-                      "e": {
+                    "type": "uno",
+                    "uno": null,
+                    "a": {
+                      "type": "rvalue",
+                      "a": {
                         "type": "static",
                         "chain": [
                           {
@@ -40,35 +41,43 @@
                             "type": "call",
                             "args": [
                               {
+                                "type": "uno",
                                 "uno": null,
-                                "e": {
-                                  "type": "dynamic",
-                                  "chain": [
-                                    {
-                                      "name": "pos",
-                                      "type": "access"
-                                    },
-                                    {
-                                      "name": "a",
-                                      "type": "access"
-                                    }
-                                  ]
+                                "a": {
+                                  "type": "rvalue",
+                                  "a": {
+                                    "type": "dynamic",
+                                    "chain": [
+                                      {
+                                        "name": "pos",
+                                        "type": "access"
+                                      },
+                                      {
+                                        "name": "a",
+                                        "type": "access"
+                                      }
+                                    ]
+                                  }
                                 }
                               },
                               {
+                                "type": "uno",
                                 "uno": null,
-                                "e": {
-                                  "type": "dynamic",
-                                  "chain": [
-                                    {
-                                      "name": "pos",
-                                      "type": "access"
-                                    },
-                                    {
-                                      "name": "b",
-                                      "type": "access"
-                                    }
-                                  ]
+                                "a": {
+                                  "type": "rvalue",
+                                  "a": {
+                                    "type": "dynamic",
+                                    "chain": [
+                                      {
+                                        "name": "pos",
+                                        "type": "access"
+                                      },
+                                      {
+                                        "name": "b",
+                                        "type": "access"
+                                      }
+                                    ]
+                                  }
                                 }
                               }
                             ]
@@ -87,11 +96,13 @@
                 {
                   "name": "force",
                   "value": {
-                    "op": "=",
-                    "e": {
+                    "type": "duo",
+                    "a": {
+                      "type": "uno",
+                      "uno": null,
                       "a": {
-                        "uno": null,
-                        "e": {
+                        "type": "rvalue",
+                        "a": {
                           "type": "dynamic",
                           "chain": [
                             {
@@ -100,13 +111,19 @@
                             }
                           ]
                         }
-                      },
-                      "b": {
-                        "uno": null,
-                        "e": {
+                      }
+                    },
+                    "b": {
+                      "type": "uno",
+                      "uno": null,
+                      "a": {
+                        "type": "duo",
+                        "a": {
+                          "type": "uno",
+                          "uno": null,
                           "a": {
-                            "uno": null,
-                            "e": {
+                            "type": "rvalue",
+                            "a": {
                               "type": "dynamic",
                               "chain": [
                                 {
@@ -115,10 +132,14 @@
                                 }
                               ]
                             }
-                          },
-                          "b": {
-                            "uno": null,
-                            "e": {
+                          }
+                        },
+                        "b": {
+                          "type": "uno",
+                          "uno": null,
+                          "a": {
+                            "type": "rvalue",
+                            "a": {
                               "type": "static",
                               "chain": [
                                 {
@@ -127,12 +148,12 @@
                                 }
                               ]
                             }
-                          },
-                          "duo": "-"
-                        }
-                      },
-                      "duo": "*"
-                    }
+                          }
+                        },
+                        "duo": "-"
+                      }
+                    },
+                    "duo": "*"
                   }
                 }
               ]
@@ -144,14 +165,18 @@
                 {
                   "name": "mid",
                   "value": {
-                    "op": "=",
-                    "e": {
+                    "type": "duo",
+                    "a": {
+                      "type": "uno",
+                      "uno": null,
                       "a": {
-                        "uno": null,
-                        "e": {
+                        "type": "duo",
+                        "a": {
+                          "type": "uno",
+                          "uno": null,
                           "a": {
-                            "uno": null,
-                            "e": {
+                            "type": "rvalue",
+                            "a": {
                               "type": "dynamic",
                               "chain": [
                                 {
@@ -164,10 +189,14 @@
                                 }
                               ]
                             }
-                          },
-                          "b": {
-                            "uno": null,
-                            "e": {
+                          }
+                        },
+                        "b": {
+                          "type": "uno",
+                          "uno": null,
+                          "a": {
+                            "type": "rvalue",
+                            "a": {
                               "type": "dynamic",
                               "chain": [
                                 {
@@ -180,16 +209,20 @@
                                 }
                               ]
                             }
-                          },
-                          "duo": "+"
-                        }
-                      },
-                      "b": {
-                        "uno": null,
-                        "e": "0.5"
-                      },
-                      "duo": "*"
-                    }
+                          }
+                        },
+                        "duo": "+"
+                      }
+                    },
+                    "b": {
+                      "type": "uno",
+                      "uno": null,
+                      "a": {
+                        "type": "rvalue",
+                        "a": "0.5"
+                      }
+                    },
+                    "duo": "*"
                   }
                 }
               ]
@@ -201,10 +234,11 @@
                 {
                   "name": "toA",
                   "value": {
-                    "op": "=",
-                    "e": {
-                      "uno": null,
-                      "e": {
+                    "type": "uno",
+                    "uno": null,
+                    "a": {
+                      "type": "rvalue",
+                      "a": {
                         "type": "static",
                         "chain": [
                           {
@@ -212,32 +246,41 @@
                             "type": "call",
                             "args": [
                               {
+                                "type": "duo",
                                 "a": {
+                                  "type": "uno",
                                   "uno": null,
-                                  "e": {
-                                    "type": "dynamic",
-                                    "chain": [
-                                      {
-                                        "name": "pos",
-                                        "type": "access"
-                                      },
-                                      {
-                                        "name": "a",
-                                        "type": "access"
-                                      }
-                                    ]
+                                  "a": {
+                                    "type": "rvalue",
+                                    "a": {
+                                      "type": "dynamic",
+                                      "chain": [
+                                        {
+                                          "name": "pos",
+                                          "type": "access"
+                                        },
+                                        {
+                                          "name": "a",
+                                          "type": "access"
+                                        }
+                                      ]
+                                    }
                                   }
                                 },
                                 "b": {
+                                  "type": "uno",
                                   "uno": null,
-                                  "e": {
-                                    "type": "static",
-                                    "chain": [
-                                      {
-                                        "name": "mid",
-                                        "type": "access"
-                                      }
-                                    ]
+                                  "a": {
+                                    "type": "rvalue",
+                                    "a": {
+                                      "type": "static",
+                                      "chain": [
+                                        {
+                                          "name": "mid",
+                                          "type": "access"
+                                        }
+                                      ]
+                                    }
                                   }
                                 },
                                 "duo": "-"
@@ -258,10 +301,11 @@
                 {
                   "name": "toB",
                   "value": {
-                    "op": "=",
-                    "e": {
-                      "uno": null,
-                      "e": {
+                    "type": "uno",
+                    "uno": null,
+                    "a": {
+                      "type": "rvalue",
+                      "a": {
                         "type": "static",
                         "chain": [
                           {
@@ -269,32 +313,41 @@
                             "type": "call",
                             "args": [
                               {
+                                "type": "duo",
                                 "a": {
+                                  "type": "uno",
                                   "uno": null,
-                                  "e": {
-                                    "type": "dynamic",
-                                    "chain": [
-                                      {
-                                        "name": "pos",
-                                        "type": "access"
-                                      },
-                                      {
-                                        "name": "b",
-                                        "type": "access"
-                                      }
-                                    ]
+                                  "a": {
+                                    "type": "rvalue",
+                                    "a": {
+                                      "type": "dynamic",
+                                      "chain": [
+                                        {
+                                          "name": "pos",
+                                          "type": "access"
+                                        },
+                                        {
+                                          "name": "b",
+                                          "type": "access"
+                                        }
+                                      ]
+                                    }
                                   }
                                 },
                                 "b": {
+                                  "type": "uno",
                                   "uno": null,
-                                  "e": {
-                                    "type": "static",
-                                    "chain": [
-                                      {
-                                        "name": "mid",
-                                        "type": "access"
-                                      }
-                                    ]
+                                  "a": {
+                                    "type": "rvalue",
+                                    "a": {
+                                      "type": "static",
+                                      "chain": [
+                                        {
+                                          "name": "mid",
+                                          "type": "access"
+                                        }
+                                      ]
+                                    }
                                   }
                                 },
                                 "duo": "-"

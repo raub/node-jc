@@ -51,12 +51,31 @@ class Dynamic {
 	
 	
 	__expression(desc, scope) {
-		return '1';
+		
+		return (function _recurse(subexpr) {
+			
+			// FIXME: add braces ( ) if needed
+			
+			if (subexpr.type === 'duo') {
+				return `${_recurse(subexpr.a)} ${subexpr.duo} ${_recurse(subexpr.b)}`;
+			} else if (subexpr.type === 'uno') {
+				return `${subexpr.uno || ''}${_recurse(subexpr.a)}`;
+			} else if (subexpr.type === 'rvalue') {
+				return `${typeof a === 'string' ? a : this._scope.chain(desc.left)}`;
+			} else {
+				throw new Error(
+					`Unknown subexpression:\n${JSON.stringify(subexpr, null, '\t')}`
+				);
+			}
+			
+		})(desc);
+		
 	}
 	
 	
 	__assign(desc, scope) {
-		return `${this._scope.chain(desc.left)} ${desc.operator} ${this.__expression(desc.right, scope)};`;
+		return `${this._scope.chain(desc.left)} ${desc.operator
+			} ${this.__expression(desc.right, scope)};`;
 	}
 	
 	

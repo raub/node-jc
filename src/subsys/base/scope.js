@@ -56,11 +56,21 @@ class Scope {
 				return;
 			}
 			
-			const next = subscope.get(`${( ! i && dot ) || ''}${chain[i]}`);
+			const next = (() => {
+				if (i === 0) {
+					return subscope.get(`${dot}${chain[i]}`);
+				} else {
+					try {
+						return subscope.get(`.${chain[i]}`);
+					} catch (ex) {
+						return subscope.get(`${chain[i]}`);
+					}
+				}
+			})();
 			
 			if (typeof next === 'object') {
-				fullName += `${(i && '.') || ''}${next.key}`;
-				_recurse(next.scope, chain, i+1)
+				fullName += `${i ? '.' : ''}${next.key}`;
+				_recurse(next.scope, chain, i+1);
 			} else {
 				fullName += next;
 			}
