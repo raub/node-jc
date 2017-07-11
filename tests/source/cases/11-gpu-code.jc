@@ -6,7 +6,7 @@ MyClass {
 		
 		// TODO: iterate vertices?
 		
-		.update();
+		.pull();
 		
 		// Calculate acceleration for vertices
 		float dist  = distance(.pos.a, .pos.b);

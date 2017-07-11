@@ -14,16 +14,21 @@ class Class {
 	constructor(desc, imported, location) {
 		
 		this._name     = desc.name;
-		this._imported = desc.imported;
-		this._parent   = imported[desc.parent];
 		
+		if (desc.parent) {
+			this._parent = imported[desc.parent];
+			this._scope  = this._parent.scope.clone(this._name);
+		} else {
+			this._parent = null;
+			this._scope  = new Scope(this._name);
+		}
+		
+		this._imported = desc.imported;
 		this._classes = Object.keys(imported).map(k => imported[k]);
 		
-		// Init scope with imports
-		this._scope = new Scope();
-		this._classes.forEach(c => {
-			this._scope.set(c.name, c.scope);
-		});
+		// Put imports into the scope
+		this._classes.forEach(c => this._scope.set(c.name, c.scope));
+		
 		
 		desc.members.forEach(member => {
 			

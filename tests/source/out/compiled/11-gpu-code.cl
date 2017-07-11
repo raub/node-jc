@@ -1,13 +1,13 @@
 // ----> MyClass <---- //
 
 // Class MyClass header
-void pull();
+void _MyClass_dynamic_pull();
 
 
 // Class MyClass code
 
-void pull() {
-undefined();
+void _MyClass_dynamic_pull() {
+_MyClass_dynamic_pull();
 float local_dist;
 float local_force;
 float3 local_mid;

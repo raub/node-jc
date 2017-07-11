@@ -1,11 +1,11 @@
 // ----> MyClass <---- //
 
 // Class MyClass header
-void f();
+void _MyClass_dynamic_f();
 
 
 // Class MyClass code
 
-void f() {
+void _MyClass_dynamic_f() {
 
 }
