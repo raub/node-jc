@@ -29,12 +29,15 @@ class Scope {
 	
 	
 	get(k) {
+		
 		if ( ! this._keys[k] ) {
+			console.log('!', k.indexOf('.') === 0, JSON.stringify(k, null, '\t'));
 			if (k.indexOf('.') === 0) {
 				throw new Error(`Dynamic property not found in scope "${this._name}".`);
 			}
 			return k;
 		}
+		console.log('GET', k, JSON.stringify(this._keys[k], null, '\t'));
 		return this._keys[k];
 	}
 	
@@ -58,25 +61,30 @@ class Scope {
 			
 			const next = (() => {
 				if (i === 0) {
+					console.log('g1', subscope.get(`${dot}${chain[i]}`));
 					return subscope.get(`${dot}${chain[i]}`);
 				} else {
 					try {
+						console.log('g2');
 						return subscope.get(`.${chain[i]}`);
 					} catch (ex) {
+						console.log('g3');
 						return subscope.get(`${chain[i]}`);
 					}
 				}
 			})();
 			
 			if (typeof next === 'object') {
+				console.log('NK', next.key);
 				fullName += `${i ? '.' : ''}${next.key}`;
 				_recurse(next.scope, chain, i+1);
 			} else {
+				console.log('ELS', JSON.stringify(next, null, '\t'));
 				fullName += next;
 			}
 			
 		})(this, desc.chain, 0);
-		
+		console.log('RET',fullName);
 		return fullName;
 	}
 	

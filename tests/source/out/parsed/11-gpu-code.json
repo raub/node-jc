@@ -34,7 +34,8 @@
                     "a": {
                       "type": "rvalue",
                       "a": {
-                        "type": "static",
+                        "type": "rvalue",
+                        "access": "static",
                         "chain": [
                           {
                             "name": "distance",
@@ -46,7 +47,8 @@
                                 "a": {
                                   "type": "rvalue",
                                   "a": {
-                                    "type": "dynamic",
+                                    "type": "rvalue",
+                                    "access": "dynamic",
                                     "chain": [
                                       {
                                         "name": "pos",
@@ -66,7 +68,8 @@
                                 "a": {
                                   "type": "rvalue",
                                   "a": {
-                                    "type": "dynamic",
+                                    "type": "rvalue",
+                                    "access": "dynamic",
                                     "chain": [
                                       {
                                         "name": "pos",
@@ -103,7 +106,8 @@
                       "a": {
                         "type": "rvalue",
                         "a": {
-                          "type": "dynamic",
+                          "type": "rvalue",
+                          "access": "dynamic",
                           "chain": [
                             {
                               "name": "stiff",
@@ -124,7 +128,8 @@
                           "a": {
                             "type": "rvalue",
                             "a": {
-                              "type": "dynamic",
+                              "type": "rvalue",
+                              "access": "dynamic",
                               "chain": [
                                 {
                                   "name": "dist",
@@ -140,7 +145,8 @@
                           "a": {
                             "type": "rvalue",
                             "a": {
-                              "type": "static",
+                              "type": "rvalue",
+                              "access": "static",
                               "chain": [
                                 {
                                   "name": "dist",
@@ -177,7 +183,8 @@
                           "a": {
                             "type": "rvalue",
                             "a": {
-                              "type": "dynamic",
+                              "type": "rvalue",
+                              "access": "dynamic",
                               "chain": [
                                 {
                                   "name": "pos",
@@ -197,7 +204,8 @@
                           "a": {
                             "type": "rvalue",
                             "a": {
-                              "type": "dynamic",
+                              "type": "rvalue",
+                              "access": "dynamic",
                               "chain": [
                                 {
                                   "name": "pos",
@@ -239,7 +247,8 @@
                     "a": {
                       "type": "rvalue",
                       "a": {
-                        "type": "static",
+                        "type": "rvalue",
+                        "access": "static",
                         "chain": [
                           {
                             "name": "normalize",
@@ -253,7 +262,8 @@
                                   "a": {
                                     "type": "rvalue",
                                     "a": {
-                                      "type": "dynamic",
+                                      "type": "rvalue",
+                                      "access": "dynamic",
                                       "chain": [
                                         {
                                           "name": "pos",
@@ -273,7 +283,8 @@
                                   "a": {
                                     "type": "rvalue",
                                     "a": {
-                                      "type": "static",
+                                      "type": "rvalue",
+                                      "access": "static",
                                       "chain": [
                                         {
                                           "name": "mid",
@@ -306,7 +317,8 @@
                     "a": {
                       "type": "rvalue",
                       "a": {
-                        "type": "static",
+                        "type": "rvalue",
+                        "access": "static",
                         "chain": [
                           {
                             "name": "normalize",
@@ -320,7 +332,8 @@
                                   "a": {
                                     "type": "rvalue",
                                     "a": {
-                                      "type": "dynamic",
+                                      "type": "rvalue",
+                                      "access": "dynamic",
                                       "chain": [
                                         {
                                           "name": "pos",
@@ -340,7 +353,8 @@
                                   "a": {
                                     "type": "rvalue",
                                     "a": {
-                                      "type": "static",
+                                      "type": "rvalue",
+                                      "access": "static",
                                       "chain": [
                                         {
                                           "name": "mid",

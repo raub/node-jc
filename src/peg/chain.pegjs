@@ -22,11 +22,11 @@ prop_chain = dynamic_chain / static_chain
 
 dynamic_chain
 	= a:chain_next b:chain_next*
-	{return {type: 'dynamic', chain: enlist(a, b)}}
+	{return {type: 'rvalue', access: 'dynamic', chain: enlist(a, b)}}
 
 static_chain
 	= a:chain_item b:chain_next*
-	{return {type: 'static', chain: enlist(a, b)}}
+	{return {type: 'rvalue', access: 'static', chain: enlist(a, b)}}
 
 chain_next
 	= !def_end __ '.' item:chain_item

@@ -32,25 +32,31 @@ class Dynamic {
 		
 		return desc.list.map(v => {
 			this._scope.set(v.name, 'local_' + v.name);
-			return `${desc.typeName} ${this._scope.get(v.name)};`;
+			if (v.value) {
+				return `${desc.typeName} ${this._scope.get(v.name)} = ${this.__expression(v.value)};`;
+			} else {
+				return `${desc.typeName} ${this._scope.get(v.name)};`;
+			}
 		}).join('\n');
 		
 	}
 	
 	
-	__call(desc, scope) {
+	__call(desc) {
 		// console.log('CL:', JSON.stringify(desc, null, '\t'));
-		return `${this._scope.chain(desc.callee)}${this.__args(desc.args, scope)};`;
+		return `${this._scope.chain(desc.callee)}${this.__args(desc.args)};`;
 		
 	}
 	
 	
-	__args(desc, scope) {
+	__args(desc) {
 		return `(${desc.map(e => this.__expression(e)).join(', ')})`;
 	}
 	
 	
-	__expression(desc, scope) {
+	__expression(desc) {
+		
+		const that = this;
 		
 		return (function _recurse(subexpr) {
 			
@@ -61,7 +67,11 @@ class Dynamic {
 			} else if (subexpr.type === 'uno') {
 				return `${subexpr.uno || ''}${_recurse(subexpr.a)}`;
 			} else if (subexpr.type === 'rvalue') {
-				return `${typeof a === 'string' ? a : this._scope.chain(desc.left)}`;
+				if (that._name === 'pull') {
+					console.log('RVAL', JSON.stringify(subexpr.a, null, '\t'),that._scope.chain(subexpr.a));
+				}
+				
+				return `${typeof subexpr.a === 'string' ? subexpr.a : that._scope.chain(subexpr.a)}`;
 			} else {
 				throw new Error(
 					`Unknown subexpression:\n${JSON.stringify(subexpr, null, '\t')}`
@@ -73,15 +83,15 @@ class Dynamic {
 	}
 	
 	
-	__assign(desc, scope) {
+	__assign(desc) {
 		return `${this._scope.chain(desc.left)} ${desc.operator
-			} ${this.__expression(desc.right, scope)};`;
+			} ${this.__expression(desc.right)};`;
 	}
 	
 	
-	__atomic(desc, scope) {
+	__atomic(desc) {
 		const op = ({ '+==': 'add', '-==': 'sub' })[desc.operator];
-		return `atomic_${op}(&${this._scope.chain(desc.left)}, ${this.__expression(desc.right, scope)});`;
+		return `atomic_${op}(&${this._scope.chain(desc.left)}, ${this.__expression(desc.right)});`;
 	}
 	
 };
