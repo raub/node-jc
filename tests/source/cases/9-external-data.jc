@@ -1,15 +1,15 @@
 
 MyClass {
 	
-	@a: 1
-	@b: 1.2
-	@c: 'a'
-	@d: "a"
-	@e: `x = ${12+3}`
-	@f: []
-	@g: {}
-	@h: 3 * 2
-	@i: (1+2) * 3
-	@j: require('fs')
+	js a = 1
+	js b = 1.2
+	js c = 'a'
+	js d = "a"
+	js e = `x = ${12+3}`
+	js f = []
+	js g = {}
+	js h = 3 * 2
+	js i = (1+2) * 3
+	js j = require('fs')
 	
 }

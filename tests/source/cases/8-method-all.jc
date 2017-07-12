@@ -1,18 +1,12 @@
 
 MyClass {
 	
-	.f() {
+	float .f(int x, char z) {
 		
 	}
 	
-	f() {
+	f(a, b) {
 		
 	}
-	
-	
-	@f: () => {
-		
-	}
-	
 	
 }

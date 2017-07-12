@@ -6,21 +6,53 @@
       "parent": null,
       "members": [
         {
+          "type": "float",
+          "name": "stiff",
+          "access": "static",
+          "init": "1"
+        },
+        {
+          "type": "float",
+          "name": "dist",
+          "access": "dynamic"
+        },
+        {
+          "type": {
+            "type": "float3",
+            "names": [
+              "a",
+              "b"
+            ]
+          },
+          "name": "pos",
+          "access": "dynamic"
+        },
+        {
+          "type": "method",
+          "name": "update",
+          "access": "dynamic",
+          "params": [],
+          "body": []
+        },
+        {
           "type": "method",
           "name": "pull",
           "access": "dynamic",
           "params": [],
           "body": [
             {
-              "type": "call",
-              "callee": {
-                "type": "lvalue",
+              "type": "action",
+              "chain": {
+                "type": "rvalue",
                 "access": "dynamic",
                 "chain": [
-                  "pull"
+                  {
+                    "name": "update",
+                    "type": "call",
+                    "args": []
+                  }
                 ]
-              },
-              "args": []
+              }
             },
             {
               "type": "vars",
@@ -107,7 +139,7 @@
                         "type": "rvalue",
                         "a": {
                           "type": "rvalue",
-                          "access": "dynamic",
+                          "access": "static",
                           "chain": [
                             {
                               "name": "stiff",

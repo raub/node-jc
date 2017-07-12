@@ -1,7 +1,7 @@
 
 MyClass {
 	
-	.f() {
+	float .f(int x, char z) {
 		
 	}
 	

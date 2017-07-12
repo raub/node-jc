@@ -1,8 +1,8 @@
 
 MyClass {
 	
-	.x : float
-	y  : float
-	@z : 'z'
+	float .x
+	float  y
+	js     z = 'z'
 	
 }

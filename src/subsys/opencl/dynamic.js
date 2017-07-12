@@ -31,9 +31,10 @@ class Dynamic {
 	__vars(desc) {
 		
 		return desc.list.map(v => {
-			this._scope.set(v.name, 'local_' + v.name);
+			this._scope.set(v.name, `_${this._name}_local_${v.name}`);
 			if (v.value) {
-				return `${desc.typeName} ${this._scope.get(v.name)} = ${this.__expression(v.value)};`;
+				return `${desc.typeName} ${this._scope.get(v.name)
+					} = ${this.__expression(v.value)};`;
 			} else {
 				return `${desc.typeName} ${this._scope.get(v.name)};`;
 			}
@@ -42,9 +43,49 @@ class Dynamic {
 	}
 	
 	
+	_chain(desc) {
+		const dot = desc.access === 'dynamic' ? '.' : '';
+		
+		let fullName = '';
+		(function _recurse(subscope, chain, i) {
+			
+			if (i === chain.length) {
+				return;
+			}
+			
+			const next = (() => {
+				// console.log('CHA', JSON.stringify(chain, null, '\t'));
+				if (i === 0) {
+					return subscope.get(`${dot}${chain[i].name}`);
+				} else {
+					try {
+						return subscope.get(`.${chain[i].name}`);
+					} catch (ex) {
+						return subscope.get(`${chain[i].name}`);
+					}
+				}
+			})();
+			
+			if (typeof next === 'object') {
+				fullName += `${i ? '.' : ''}${next.key}`;
+				_recurse(next.scope, chain, i+1);
+			} else {
+				fullName += next;
+			}
+			
+		})(this._scope, desc.chain, 0);
+		return fullName;
+	}
+	
+	
+	__action(desc) {
+		return this._chain(desc.chain);
+	}
+	
+	
 	__call(desc) {
 		// console.log('CL:', JSON.stringify(desc, null, '\t'));
-		return `${this._scope.chain(desc.callee)}${this.__args(desc.args)};`;
+		return `${this._chain(desc.callee)}${this.__args(desc.args)};`;
 		
 	}
 	
@@ -67,11 +108,7 @@ class Dynamic {
 			} else if (subexpr.type === 'uno') {
 				return `${subexpr.uno || ''}${_recurse(subexpr.a)}`;
 			} else if (subexpr.type === 'rvalue') {
-				if (that._name === 'pull') {
-					console.log('RVAL', JSON.stringify(subexpr.a, null, '\t'),that._scope.chain(subexpr.a));
-				}
-				
-				return `${typeof subexpr.a === 'string' ? subexpr.a : that._scope.chain(subexpr.a)}`;
+				return `${typeof subexpr.a === 'string' ? subexpr.a : that._chain(subexpr.a)}`;
 			} else {
 				throw new Error(
 					`Unknown subexpression:\n${JSON.stringify(subexpr, null, '\t')}`
@@ -84,14 +121,15 @@ class Dynamic {
 	
 	
 	__assign(desc) {
-		return `${this._scope.chain(desc.left)} ${desc.operator
+		return `${this._chain(desc.left)} ${desc.operator
 			} ${this.__expression(desc.right)};`;
 	}
 	
 	
 	__atomic(desc) {
 		const op = ({ '+==': 'add', '-==': 'sub' })[desc.operator];
-		return `atomic_${op}(&${this._scope.chain(desc.left)}, ${this.__expression(desc.right)});`;
+		return `atomic_${op}(&${this._chain(desc.left)
+			}, ${this.__expression(desc.right)});`;
 	}
 	
 };

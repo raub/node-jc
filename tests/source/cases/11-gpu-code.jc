@@ -1,16 +1,27 @@
 
 MyClass {
 	
+	float stiff = 1
+	
+	float .dist
+	float3{a, b} .pos
+	
+	static() {
+		console.log(1);
+	}
+	
+	void .update() {}
+	
 	// Accelerate vertices to desired positions
-	.pull() {
+	void .pull() {
 		
 		// TODO: iterate vertices?
 		
-		.pull();
+		update();
 		
 		// Calculate acceleration for vertices
 		float dist  = distance(.pos.a, .pos.b);
-		float force = .stiff * (.dist - dist);
+		float force = stiff * (.dist - dist);
 		
 		float3 mid  = (.pos.a +.pos.b) * 0.5;
 		

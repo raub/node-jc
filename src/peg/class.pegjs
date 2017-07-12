@@ -12,7 +12,6 @@ class
 	  members:class_body def_end
 	{return _class(name,parent,members)}
 
-
 extends = extends_op name:class_name {return name}
 
 
@@ -34,52 +33,35 @@ class_body_end 'a } after class body'
 
 
 members
-	= properties / methods / external
-properties 'a property'
-	= dynamic_prop/ dynamic_alias / static_prop / static_alias
-methods 'a method'
+	= properties / methods / aliases
+
+
+properties 'a property definition'
+	= __ type:prop_type ___ dyn:'.'? name:prop_name init:default_val? def_end
+	{return _property(name, dyn && 'dynamic' || 'static', type, init)}
+
+
+aliases 'an alias difinition'
+	= __ dyn:'.'? name:prop_name default_op '.' target:prop_name def_end
+	{return _alias(name, dyn && 'dynamic' || 'static', target)}
+
+
+methods 'a method definition'
 	= dynamic_func / static_func
 
-
-dynamic_prop 'a dynamic property'
-	= __ '.' name:prop_name
-	  define_op type:(struct_type / core_type / ref_type)
-	  def_end
-	{return _property(name, 'dynamic', type)}
-
-static_prop 'a static property'
-	= __ name:prop_name
-	  define_op type:core_type init:default_val?
-	  def_end
-	{return _property(name, 'static', type, init)}
-
-
-dynamic_alias
-	= __ '.' name:prop_name define_op '.' target:prop_name def_end
-	{return _alias(name, 'dynamic', target)}
-
-static_alias
-	= __ name:prop_name define_op target:prop_name def_end
-	{return _alias(name, 'static', target)}
-
-
 dynamic_func 'a dynamic method'
-	= __ '.' name:prop_name
-	  params:param_list
+	= __ type:prop_type ___ '.' name:prop_name
+	  params:param_list_dynamic
 	  body:func_body
 	  def_end
 	{return _method(name,'dynamic',params,body)}
+
 static_func 'a static method'
 	= __ name:prop_name
 	  params:param_list
 	  body:func_body
 	  def_end
 	{return _method(name,'static',params,body)}
-
-
-external 'an external property'
-	= __ '@' name:prop_name define_op content:js_value def_end
-	{return _external(name,content)}
 
 
 default_val = default_op value:gpu_value {return value}

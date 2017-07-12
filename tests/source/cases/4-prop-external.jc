@@ -1,6 +1,6 @@
 
 MyClass {
 	
-	@hello   : 'world'
+	js hello = 'world'
 	
 }

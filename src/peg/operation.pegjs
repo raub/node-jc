@@ -6,7 +6,11 @@
 
 operation  = var_def_op / no_def_op
 var_def_op = local_var
-no_def_op  = assignment / call_only / iteration / control
+no_def_op  = assignment / iteration / control / action_only
+
+action_only
+	= __ chain:prop_chain op_end
+	{return {type: 'action', chain}}
 
 assignment = assign_atomic / assign_local
 

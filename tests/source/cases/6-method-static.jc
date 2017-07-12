@@ -1,7 +1,7 @@
 
 MyClass {
 	
-	f() {
+	f(a, b) {
 		
 	}
 	

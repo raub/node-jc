@@ -4,6 +4,7 @@ __ 'comment or whitespace'
 	= ___sure?
 ___sure = (comment / white_sure)+
 
+___ = white_symbol
 
 white_maybe  = white_sure?
 white_sure   = white_all+

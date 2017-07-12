@@ -1,11 +1,11 @@
 
 MyClass {
 	
-	@a: function () { return 1; }
-	@b: () => {}
-	@c: () => 42
-	@d: (function () { return 1; })
-	@e: (() => {})
-	@f: (() => 42)
+	js a = function () { return 1; }
+	js b = () => {}
+	js c = () => 42
+	js d = (function () { return 1; })
+	js e = (() => {})
+	js f = (() => 42)
 	
 }

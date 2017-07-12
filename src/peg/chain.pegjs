@@ -1,23 +1,4 @@
 
-lvalue_prop_chain = lvalue_dynamic_chain / lvalue_static_chain
-
-lvalue_dynamic_chain
-	= a:lvalue_chain_next b:lvalue_chain_next*
-	{return {type: 'lvalue', access: 'dynamic', chain: enlist(a, b)}}
-
-lvalue_static_chain
-	= a:lvalue_chain_item b:lvalue_chain_next*
-	{return {type: 'lvalue', access: 'static', chain: enlist(a, b)}}
-
-lvalue_chain_next
-	= !def_end __ '.' item:lvalue_chain_item
-	{return item}
-
-lvalue_chain_item
-	= name:base_name
-	{return name}
-
-
 prop_chain = dynamic_chain / static_chain
 
 dynamic_chain

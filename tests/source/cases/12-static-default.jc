@@ -1,6 +1,6 @@
 
 MyClass {
 	
-	x : float = 10
+	float x = 10
 	
 }
