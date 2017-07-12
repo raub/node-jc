@@ -6,54 +6,64 @@
       "parent": null,
       "members": [
         {
-          "type": "external",
+          "type": "js",
           "name": "a",
-          "content": "1"
+          "access": "static",
+          "init": "1"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "b",
-          "content": "1.2"
+          "access": "static",
+          "init": "1.2"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "c",
-          "content": "'a'"
+          "access": "static",
+          "init": "'a'"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "d",
-          "content": "\"a\""
+          "access": "static",
+          "init": "\"a\""
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "e",
-          "content": "`x = ${12+3}`"
+          "access": "static",
+          "init": "`x = ${12+3}`"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "f",
-          "content": "[]"
+          "access": "static",
+          "init": "[]"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "g",
-          "content": "{}"
+          "access": "static",
+          "init": "{}"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "h",
-          "content": "3 * 2"
+          "access": "static",
+          "init": "3 * 2"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "i",
-          "content": "(1+2) * 3"
+          "access": "static",
+          "init": "(1+2) * 3"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "j",
-          "content": "require('fs')\n"
+          "access": "static",
+          "init": "require('fs')\n"
         }
       ]
     }

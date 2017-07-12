@@ -12,7 +12,9 @@ more_subs 'struct fields'
 	{return name}
 
 
-core_type  = core_char / core_uchar / core_int / core_uint / core_float
+core_type  = core_void / core_char / core_uchar / core_int / core_uint / core_float
+
+core_void  = 'void'
 
 core_char  = 'char2'  / 'char3'  / 'char4'  / 'char'
 core_uchar = 'uchar2' / 'uchar3' / 'uchar4' / 'uchar'

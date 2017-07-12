@@ -4,7 +4,9 @@
 
 
 
+
 // Class MyClass2 header
+
 
 
 
@@ -12,5 +14,5 @@
 
 
 
-// Class MyClass code
 
+// Class MyClass code

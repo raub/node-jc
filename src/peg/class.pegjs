@@ -32,12 +32,16 @@ class_body_end 'a } after class body'
 	= '}'
 
 
-members
-	= properties / methods / aliases
+members 'class member declaration'
+	= property_js / properties / methods / aliases
 
+
+property_js 'a property definition'
+	= __ type:js_type ___+ name:prop_name init:default_val_js? def_end
+	{return _property(name, 'static', type, init)}
 
 properties 'a property definition'
-	= __ type:prop_type ___ dyn:'.'? name:prop_name init:default_val? def_end
+	= __ type:prop_type ___+ dyn:'.'? name:prop_name init:default_val? def_end
 	{return _property(name, dyn && 'dynamic' || 'static', type, init)}
 
 
@@ -50,7 +54,7 @@ methods 'a method definition'
 	= dynamic_func / static_func
 
 dynamic_func 'a dynamic method'
-	= __ type:prop_type ___ '.' name:prop_name
+	= __ type:prop_type ___+ '.' name:prop_name
 	  params:param_list_dynamic
 	  body:func_body
 	  def_end
@@ -59,9 +63,10 @@ dynamic_func 'a dynamic method'
 static_func 'a static method'
 	= __ name:prop_name
 	  params:param_list
-	  body:func_body
+	  body:func_body_static
 	  def_end
 	{return _method(name,'static',params,body)}
 
 
 default_val = default_op value:gpu_value {return value}
+default_val_js = default_op value:js_value {return value}

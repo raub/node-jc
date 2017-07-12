@@ -14,7 +14,8 @@
         {
           "type": "float",
           "name": "dist",
-          "access": "dynamic"
+          "access": "dynamic",
+          "init": null
         },
         {
           "type": {
@@ -25,7 +26,101 @@
             ]
           },
           "name": "pos",
-          "access": "dynamic"
+          "access": "dynamic",
+          "init": null
+        },
+        {
+          "type": "method",
+          "name": "static",
+          "access": "static",
+          "params": [],
+          "body": [
+            "{",
+            [
+              [
+                null,
+                "\n"
+              ],
+              [
+                null,
+                "\t"
+              ],
+              [
+                null,
+                "\t"
+              ],
+              [
+                null,
+                "c"
+              ],
+              [
+                null,
+                "o"
+              ],
+              [
+                null,
+                "n"
+              ],
+              [
+                null,
+                "s"
+              ],
+              [
+                null,
+                "o"
+              ],
+              [
+                null,
+                "l"
+              ],
+              [
+                null,
+                "e"
+              ],
+              [
+                null,
+                "."
+              ],
+              [
+                null,
+                "l"
+              ],
+              [
+                null,
+                "o"
+              ],
+              [
+                null,
+                "g"
+              ],
+              [
+                null,
+                [
+                  "(",
+                  [
+                    [
+                      null,
+                      "1"
+                    ]
+                  ],
+                  ")"
+                ]
+              ],
+              [
+                null,
+                ";"
+              ],
+              [
+                null,
+                "\n"
+              ],
+              [
+                null,
+                "\t"
+              ]
+            ],
+            "}"
+          ]
         },
         {
           "type": "method",
@@ -44,7 +139,7 @@
               "type": "action",
               "chain": {
                 "type": "rvalue",
-                "access": "dynamic",
+                "access": "static",
                 "chain": [
                   {
                     "name": "update",

@@ -28,5 +28,5 @@ chain_index
 	{return {name, type: 'index', index}}
 
 indexation
-	= __ '[' __ r:'%'? i:expression __ ']'
+	= __ '[' __ r:'%'? __ i:expression __ ']'
 	{return {round:r!==null,i}}

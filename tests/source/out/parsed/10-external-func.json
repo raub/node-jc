@@ -6,34 +6,40 @@
       "parent": null,
       "members": [
         {
-          "type": "external",
+          "type": "js",
           "name": "a",
-          "content": "function () { return 1; }"
+          "access": "static",
+          "init": "function () { return 1; }"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "b",
-          "content": "() => {}"
+          "access": "static",
+          "init": "() => {}"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "c",
-          "content": "() => 42"
+          "access": "static",
+          "init": "() => 42"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "d",
-          "content": "(function () { return 1; })"
+          "access": "static",
+          "init": "(function () { return 1; })"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "e",
-          "content": "(() => {})"
+          "access": "static",
+          "init": "(() => {})"
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "f",
-          "content": "(() => 42)\n"
+          "access": "static",
+          "init": "(() => 42)\n"
         }
       ]
     }

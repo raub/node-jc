@@ -44,6 +44,7 @@ class Dynamic {
 	
 	
 	_chain(desc) {
+		const that = this;
 		const dot = desc.access === 'dynamic' ? '.' : '';
 		
 		let fullName = '';
@@ -53,24 +54,36 @@ class Dynamic {
 				return;
 			}
 			
+			const item = chain[i];
+			
 			const next = (() => {
 				// console.log('CHA', JSON.stringify(chain, null, '\t'));
 				if (i === 0) {
-					return subscope.get(`${dot}${chain[i].name}`);
+					return subscope.get(`${dot}${item.name}`);
 				} else {
 					try {
-						return subscope.get(`.${chain[i].name}`);
+						return subscope.get(`.${item.name}`);
 					} catch (ex) {
-						return subscope.get(`${chain[i].name}`);
+						return subscope.get(`${item.name}`);
 					}
 				}
 			})();
 			
 			if (typeof next === 'object') {
 				fullName += `${i ? '.' : ''}${next.key}`;
-				_recurse(next.scope, chain, i+1);
 			} else {
 				fullName += next;
+			}
+			
+			if (item.type === 'call') {
+				fullName += that._args(item.args);
+			} else if (item.type === 'index') {
+				fullName += that._index(item.index, fullName);
+			}
+			
+			
+			if (typeof next === 'object') {
+				_recurse(next.scope, chain, i+1);
 			}
 			
 		})(this._scope, desc.chain, 0);
@@ -79,7 +92,7 @@ class Dynamic {
 	
 	
 	__action(desc) {
-		return this._chain(desc.chain);
+		return `${this._chain(desc.chain)};`;
 	}
 	
 	
@@ -90,10 +103,19 @@ class Dynamic {
 	}
 	
 	
-	__args(desc) {
+	_args(desc) {
 		return `(${desc.map(e => this.__expression(e)).join(', ')})`;
 	}
 	
+	
+	_index(desc, fullName) {
+		const idx = this.__expression(desc.i);
+		if ( ! desc.round ) {
+			return `[${idx}]`;
+		} else {
+			return `[(${idx}) % ${fullName}]`;
+		}
+	}
 	
 	__expression(desc) {
 		

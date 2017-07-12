@@ -134,7 +134,8 @@ const include = (str, ban) => {
 try {
 	Source._parser = peg.generate( include('index.pegjs', {}) );
 } catch (ex) {
-	Source._parser = ()=>{throw ex};
+	console.log(ex);
+	Source._parser = {parse(){throw ex}};
 }
 
 module.exports = Source;

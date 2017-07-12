@@ -9,14 +9,16 @@ param = __ p:prop_name {return p}
 
 
 param_list_dynamic 'a dynamic parameter list'
-	= white_symbol? '(' __ p:params_dynamic? __ ')' {return p || []}
+	= ___* '(' __ p:params_dynamic? __ ')' {return p || []}
 
 params_dynamic = a:param_dynamic b:more_params_dynamic* {return enlist(a, b)}
 more_params_dynamic = __ ',' p:param_dynamic {return p}
-param_dynamic = __ type:prop_type name:prop_name {return {type,name}}
+param_dynamic = __ type:prop_type ___+ name:prop_name {return {type,name}}
 
 
 func_body = func_empty / func_not_empty
+
+func_body_static = func_empty / func_not_empty_static
 
 func_not_empty
 	= __ func_body_start __ o:operation+ __ func_body_end
@@ -43,3 +45,8 @@ args
 more_args
 	= __ ',' __ e:expression
 	{return e}
+
+
+func_not_empty_static
+	= __ o:js_curly
+	{return o}

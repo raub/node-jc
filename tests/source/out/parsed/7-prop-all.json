@@ -8,7 +8,8 @@
         {
           "type": "float",
           "name": "x",
-          "access": "dynamic"
+          "access": "dynamic",
+          "init": null
         },
         {
           "type": "float",
@@ -17,9 +18,10 @@
           "init": null
         },
         {
-          "type": "external",
+          "type": "js",
           "name": "z",
-          "content": "'z'\n"
+          "access": "static",
+          "init": "'z'\n"
         }
       ]
     }

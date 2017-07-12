@@ -9,7 +9,16 @@
           "type": "method",
           "name": "f",
           "access": "dynamic",
-          "params": [],
+          "params": [
+            {
+              "type": "int",
+              "name": "x"
+            },
+            {
+              "type": "char",
+              "name": "z"
+            }
+          ],
           "body": []
         }
       ]

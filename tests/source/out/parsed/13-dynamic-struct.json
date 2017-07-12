@@ -15,7 +15,8 @@
             ]
           },
           "name": "xyz",
-          "access": "dynamic"
+          "access": "dynamic",
+          "init": null
         }
       ]
     }

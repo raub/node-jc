@@ -6,9 +6,10 @@
       "parent": null,
       "members": [
         {
-          "type": "external",
+          "type": "js",
           "name": "hello",
-          "content": "'world'\n"
+          "access": "static",
+          "init": "'world'\n"
         }
       ]
     }

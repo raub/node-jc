@@ -74,11 +74,11 @@ class Class extends base.Class {
 		
 		// Pull code from methods
 		this._source = this.classes.map(item => item.header).concat(
-			[this._header, `\n// Class ${this.name} code\n`],
-			Object.keys(this._cl).filter(k => /^.m_/.test(k)).map(
+			[this._header, `\n// Class ${this.name} code`],
+			Object.keys(this._cl).filter(k => /^dm_/.test(k)).map(
 				name => this._cl[name].code
 			)
-		).join('\n') + '\n';
+		).join('\n\n') + '\n';
 		
 		try {
 			this._program = device.cl.createProgramWithSource(device.context, this._source);
