@@ -73,9 +73,16 @@ class Class extends base.Class {
 		
 		
 		// Pull code from methods
-		this._source = this.classes.map(item => item.header).concat(
+		this._source = [].concat(
+			// Imported headers
+			this.classes.map(item => item.header),
+			// Own header
 			[this._header, `\n// Class ${this.name} code`],
+			// Own dynamic methods
 			Object.keys(this._cl).filter(k => /^dm_/.test(k)).map(
+				name => this._cl[name].code
+			),
+			Object.keys(this._cl).filter(k => /^sm_/.test(k)).map(
 				name => this._cl[name].code
 			)
 		).join('\n\n') + '\n';

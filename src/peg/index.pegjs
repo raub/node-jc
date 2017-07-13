@@ -6,11 +6,13 @@ jc
 	= imps:import* cls:class+ __
 	{return _jc(imps, cls)}
 
+#include names.pegjs
+
 #include import.pegjs
 #include class.pegjs
 
-#include whitespace.pegjs
+#include __.pegjs
+#include comment.pegjs
 #include punctuation.pegjs
-#include names.pegjs
 
 #include debug.pegjs

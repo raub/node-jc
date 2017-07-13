@@ -36,4 +36,7 @@ class_type
 	{return {target, type:'ref'}}
 
 
+types_js = 'js'
 js_type = 'js'
+
+types_gpu = core_type

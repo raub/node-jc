@@ -7,11 +7,16 @@
 class Dynamic {
 	
 	get name()   { return this._name; }
+	get code()   { return `${this._kernels}`; }
 	
 	
-	constructor(desc) {
+	constructor(desc, scope) {
 		
 		this._name = desc.name;
+		
+		this._scope = scope.clone(this._name);
+		
+		this._kernels = '';
 		
 		
 	}

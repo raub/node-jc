@@ -17,7 +17,7 @@ class Dynamic {
 		
 		this._scope = scope.clone(this._name);
 		
-		this._signature = `void ${this._scope.get(`.${this._name}`)}()`;
+		this._signature = `${desc.type} ${this._scope.get(`.${this._name}`)}()`;
 		
 		this._body = desc.body.map(statement => {
 			const method = `__${statement.type}`;

@@ -1,17 +1,1 @@
-{
-  "imports": [],
-  "classes": [
-    {
-      "name": "MyClass",
-      "parent": null,
-      "members": [
-        {
-          "type": "js",
-          "name": "hello",
-          "access": "static",
-          "init": "'world'\n"
-        }
-      ]
-    }
-  ]
-}
+null

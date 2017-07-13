@@ -32,44 +32,12 @@ class Class {
 		
 		desc.members.forEach(member => {
 			
-			switch (member.access) {
-				case 'dynamic':
-					this._scope.set(
-						`.${member.name}`,
-						`_${this._name}_dynamic_${member.type === 'alias' ? member.target : member.name}`
-					);
-					break;
-				
-				case 'static':
-					this._scope.set(
-						`${member.name}`,
-						`_${this._name}_static_${member.type === 'alias' ? member.target : member.name}`
-					);
-					break;
-				
-				default: break;
-			}
+			const target = member.type === 'alias' ? member.target : member.name;
 			
-			switch (member.type) {
-				
-				case 'external':
-					try {
-						this[member.name] = eval(`(${member.content})`);
-					} catch (ex) {
-						console.log('EX', location, desc.name, '::', member.name, '\n', ex);
-					}
-					break;
-				
-				case 'alias':
-					Object.defineProperty(this, member.name, {
-						get() { return this[member.target]; },
-						set(v) { this[member.target] = v; },
-					});
-					break;
-				
-				default: break;
-				
-			}
+			this._scope.set(
+				`${member.name}`,
+				`_${this._name}_${member.access}_${target}`
+			);
 			
 		});
 		
