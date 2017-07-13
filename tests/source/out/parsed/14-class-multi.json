@@ -1,1 +1,15 @@
-null
+{
+  "imports": [],
+  "classes": [
+    {
+      "name": "MyClass1",
+      "parent": null,
+      "members": []
+    },
+    {
+      "name": "MyClass2",
+      "parent": null,
+      "members": []
+    }
+  ]
+}

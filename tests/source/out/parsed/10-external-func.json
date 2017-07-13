@@ -1,1 +1,47 @@
-null
+{
+  "imports": [],
+  "classes": [
+    {
+      "name": "MyClass",
+      "parent": null,
+      "members": [
+        {
+          "spec": "uniform",
+          "type": "js",
+          "name": "a",
+          "init": " function () { return 1; }"
+        },
+        {
+          "spec": "uniform",
+          "type": "js",
+          "name": "b",
+          "init": " () => {}"
+        },
+        {
+          "spec": "uniform",
+          "type": "js",
+          "name": "c",
+          "init": " () => 42"
+        },
+        {
+          "spec": "uniform",
+          "type": "js",
+          "name": "d",
+          "init": " (function () { return 1; })"
+        },
+        {
+          "spec": "uniform",
+          "type": "js",
+          "name": "e",
+          "init": " (() => {})"
+        },
+        {
+          "spec": "uniform",
+          "type": "js",
+          "name": "f",
+          "init": " (() => 42)\n"
+        }
+      ]
+    }
+  ]
+}

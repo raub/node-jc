@@ -5,4 +5,4 @@ def_end 'the end of definition'
 op_end 'the end of operation'
 	= __ ';'
 
-js_end = def_end (class_body_end / members)
+

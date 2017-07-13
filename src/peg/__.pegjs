@@ -18,6 +18,7 @@ any_line
 	= (!new_line .)*
 
 
+_0_ = __
 _n_ = new_line
 _l_ = any_line
 _s_ = white_symbol+

@@ -1,1 +1,36 @@
-null
+{
+  "imports": [],
+  "classes": [
+    {
+      "name": "MyClass",
+      "parent": null,
+      "members": [
+        {
+          "spec": "dynamic",
+          "type": "float",
+          "name": "f",
+          "params": [
+            {
+              "type": "int",
+              "name": "x"
+            },
+            {
+              "type": "char",
+              "name": "z"
+            }
+          ],
+          "body": []
+        },
+        {
+          "spec": "static",
+          "name": "f",
+          "params": [
+            "a",
+            "b"
+          ],
+          "body": []
+        }
+      ]
+    }
+  ]
+}

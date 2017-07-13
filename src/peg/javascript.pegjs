@@ -8,3 +8,5 @@ js_double = '"'  (!'"'  js_any)* '"'
 js_single = '\'' (!'\'' js_any)* '\''
 js_biased = '`'  (!'`'  js_any)* '`'
 js_normal = .
+
+js_end = class_member_end (class_body_end / class_member)

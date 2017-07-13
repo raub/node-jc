@@ -1,5 +1,10 @@
 #include operation.pegjs
 
+functions_params_static = param_list
+functions_params_dynamic = param_list_dynamic
+functions_body_static = func_body_static
+functions_body_dynamic = func_body
+
 param_list 'a static parameter list'
 	= white_symbol? '(' __ p:params? __ ')' {return p || []}
 
