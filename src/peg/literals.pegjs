@@ -9,5 +9,7 @@ float_value = $(int_value ('.' int_value)?)
 js_value = $( (!js_end js_any)+ )
 
 
-literals_js  = js_value
-literals_gpu = gpu_value
+literals_js_end = js_end
+literals_js_any = js_any
+literals_js     = js_value
+literals_gpu    = gpu_value

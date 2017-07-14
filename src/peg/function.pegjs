@@ -65,9 +65,22 @@ function_body_dynamic
 // <'{' ... '}'>
 function_body_static_not_empty
 	= _0_ function_body_start
-	  _0_ b:function_body_static
+	  _0_ b:function_body_static_content+
 	  _0_ function_body_end
 	{return b}
+
+
+function_body_static_skip
+	= (!'}' .) +
+	//= text:js_value
+	// = text:$( (!(iteration_static / literals_js_end) literals_js_any)+ )
+	{return {type: 'skip', text}}
+
+
+
+function_body_static_content
+	= function_body_static_skip / iteration_static
+
 
 // <'{' ... '}'>
 function_body_dynamic_not_empty
