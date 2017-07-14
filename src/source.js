@@ -137,23 +137,16 @@ const include = (str, ban) => {
 
 try {
 	Source._grammar = include('index.pegjs', {});
+	// fs.writeFileSync(__dirname + '/_grammar.pegjs', Source._grammar);
+	
 	Source._parser = peg.generate(Source._grammar);
-} catch (ex) {
+} catch (ex) { (()=>{
 	
 	Source._parser = { parse(){ return {}; } };
 	
 	if (ex.name !== 'GrammarError') {
 		console.log(ex);
-		return Source._error = {
-			name: ex.name,
-			message: ex.message,
-			toString() {
-				return '\n// ----------------------------------' +
-				'\n// JC Grammar ERROR:\n// ' +
-				ex.toString() +
-				'\n// ----------------------------------\n';
-			},
-		};
+		process.exit(1);
 	}
 	
 	const splitted = Source._grammar.split('\n');
@@ -187,6 +180,6 @@ try {
 	
 	process.exit(1);
 	
-}
+})(); }
 
 module.exports = Source;

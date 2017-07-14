@@ -1,1 +1,540 @@
-null
+{
+  "imports": [],
+  "classes": [
+    {
+      "name": "MyClass",
+      "parent": null,
+      "members": [
+        {
+          "spec": "uniform",
+          "type": "float",
+          "name": "stiff",
+          "init": "1"
+        },
+        {
+          "spec": "uniform",
+          "type": "float",
+          "name": "dist",
+          "init": null
+        },
+        {
+          "spec": "uniform",
+          "type": {
+            "type": "float3",
+            "names": [
+              "a",
+              "b"
+            ]
+          },
+          "name": "pos",
+          "init": null
+        },
+        {
+          "spec": "static",
+          "name": "static",
+          "params": [],
+          "body": [
+            {
+              "type": "skip",
+              "text": "console.log(1);\n\t"
+            }
+          ]
+        },
+        {
+          "spec": "dynamic",
+          "type": "void",
+          "name": "update",
+          "params": [],
+          "body": []
+        },
+        {
+          "spec": "dynamic",
+          "type": "void",
+          "name": "pull",
+          "params": [],
+          "body": [
+            {
+              "type": "action",
+              "chain": {
+                "type": "rvalue",
+                "access": "static",
+                "chain": [
+                  {
+                    "type": "call",
+                    "name": "update",
+                    "args": []
+                  }
+                ]
+              }
+            },
+            {
+              "type": "vars",
+              "typeName": "float",
+              "list": [
+                {
+                  "name": "_dist",
+                  "value": {
+                    "type": "uno",
+                    "uno": null,
+                    "a": {
+                      "type": "rvalue",
+                      "a": {
+                        "type": "rvalue",
+                        "access": "static",
+                        "chain": [
+                          {
+                            "type": "call",
+                            "name": "distance",
+                            "args": [
+                              {
+                                "type": "uno",
+                                "uno": null,
+                                "a": {
+                                  "type": "rvalue",
+                                  "a": {
+                                    "type": "rvalue",
+                                    "access": "static",
+                                    "chain": [
+                                      {
+                                        "name": "pos",
+                                        "type": "access"
+                                      },
+                                      {
+                                        "name": "a",
+                                        "type": "access"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "type": "uno",
+                                "uno": null,
+                                "a": {
+                                  "type": "rvalue",
+                                  "a": {
+                                    "type": "rvalue",
+                                    "access": "static",
+                                    "chain": [
+                                      {
+                                        "name": "pos",
+                                        "type": "access"
+                                      },
+                                      {
+                                        "name": "b",
+                                        "type": "access"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "vars",
+              "typeName": "float",
+              "list": [
+                {
+                  "name": "force",
+                  "value": {
+                    "type": "duo",
+                    "a": {
+                      "type": "uno",
+                      "uno": null,
+                      "a": {
+                        "type": "rvalue",
+                        "a": {
+                          "type": "rvalue",
+                          "access": "static",
+                          "chain": [
+                            {
+                              "name": "stiff",
+                              "type": "access"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "b": {
+                      "type": "uno",
+                      "uno": null,
+                      "a": {
+                        "type": "duo",
+                        "a": {
+                          "type": "uno",
+                          "uno": null,
+                          "a": {
+                            "type": "rvalue",
+                            "a": {
+                              "type": "rvalue",
+                              "access": "static",
+                              "chain": [
+                                {
+                                  "name": "dist",
+                                  "type": "access"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "b": {
+                          "type": "uno",
+                          "uno": null,
+                          "a": {
+                            "type": "rvalue",
+                            "a": {
+                              "type": "rvalue",
+                              "access": "static",
+                              "chain": [
+                                {
+                                  "name": "_dist",
+                                  "type": "access"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "duo": "-"
+                      }
+                    },
+                    "duo": "*"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "vars",
+              "typeName": "float3",
+              "list": [
+                {
+                  "name": "mid",
+                  "value": {
+                    "type": "duo",
+                    "a": {
+                      "type": "uno",
+                      "uno": null,
+                      "a": {
+                        "type": "duo",
+                        "a": {
+                          "type": "uno",
+                          "uno": null,
+                          "a": {
+                            "type": "rvalue",
+                            "a": {
+                              "type": "rvalue",
+                              "access": "static",
+                              "chain": [
+                                {
+                                  "name": "pos",
+                                  "type": "access"
+                                },
+                                {
+                                  "name": "a",
+                                  "type": "access"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "b": {
+                          "type": "uno",
+                          "uno": null,
+                          "a": {
+                            "type": "rvalue",
+                            "a": {
+                              "type": "rvalue",
+                              "access": "static",
+                              "chain": [
+                                {
+                                  "name": "pos",
+                                  "type": "access"
+                                },
+                                {
+                                  "name": "b",
+                                  "type": "access"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "duo": "+"
+                      }
+                    },
+                    "b": {
+                      "type": "uno",
+                      "uno": null,
+                      "a": {
+                        "type": "rvalue",
+                        "a": "0.5"
+                      }
+                    },
+                    "duo": "*"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "vars",
+              "typeName": "float3",
+              "list": [
+                {
+                  "name": "toA",
+                  "value": {
+                    "type": "uno",
+                    "uno": null,
+                    "a": {
+                      "type": "rvalue",
+                      "a": {
+                        "type": "rvalue",
+                        "access": "static",
+                        "chain": [
+                          {
+                            "type": "call",
+                            "name": "normalize",
+                            "args": [
+                              {
+                                "type": "duo",
+                                "a": {
+                                  "type": "uno",
+                                  "uno": null,
+                                  "a": {
+                                    "type": "rvalue",
+                                    "a": {
+                                      "type": "rvalue",
+                                      "access": "static",
+                                      "chain": [
+                                        {
+                                          "name": "pos",
+                                          "type": "access"
+                                        },
+                                        {
+                                          "name": "a",
+                                          "type": "access"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "b": {
+                                  "type": "uno",
+                                  "uno": null,
+                                  "a": {
+                                    "type": "rvalue",
+                                    "a": {
+                                      "type": "rvalue",
+                                      "access": "static",
+                                      "chain": [
+                                        {
+                                          "name": "mid",
+                                          "type": "access"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "duo": "-"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "vars",
+              "typeName": "float3",
+              "list": [
+                {
+                  "name": "toB",
+                  "value": {
+                    "type": "uno",
+                    "uno": null,
+                    "a": {
+                      "type": "rvalue",
+                      "a": {
+                        "type": "rvalue",
+                        "access": "static",
+                        "chain": [
+                          {
+                            "type": "call",
+                            "name": "normalize",
+                            "args": [
+                              {
+                                "type": "duo",
+                                "a": {
+                                  "type": "uno",
+                                  "uno": null,
+                                  "a": {
+                                    "type": "rvalue",
+                                    "a": {
+                                      "type": "rvalue",
+                                      "access": "static",
+                                      "chain": [
+                                        {
+                                          "name": "pos",
+                                          "type": "access"
+                                        },
+                                        {
+                                          "name": "b",
+                                          "type": "access"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "b": {
+                                  "type": "uno",
+                                  "uno": null,
+                                  "a": {
+                                    "type": "rvalue",
+                                    "a": {
+                                      "type": "rvalue",
+                                      "access": "static",
+                                      "chain": [
+                                        {
+                                          "name": "mid",
+                                          "type": "access"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "duo": "-"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "atomic",
+              "left": {
+                "type": "rvalue",
+                "access": "static",
+                "chain": [
+                  {
+                    "name": "pos",
+                    "type": "access"
+                  },
+                  {
+                    "name": "a",
+                    "type": "access"
+                  }
+                ]
+              },
+              "operator": "+==",
+              "right": {
+                "type": "duo",
+                "a": {
+                  "type": "uno",
+                  "uno": null,
+                  "a": {
+                    "type": "rvalue",
+                    "a": {
+                      "type": "rvalue",
+                      "access": "static",
+                      "chain": [
+                        {
+                          "name": "toA",
+                          "type": "access"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "b": {
+                  "type": "uno",
+                  "uno": null,
+                  "a": {
+                    "type": "rvalue",
+                    "a": {
+                      "type": "rvalue",
+                      "access": "static",
+                      "chain": [
+                        {
+                          "name": "force",
+                          "type": "access"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "duo": "*"
+              }
+            },
+            {
+              "type": "atomic",
+              "left": {
+                "type": "rvalue",
+                "access": "static",
+                "chain": [
+                  {
+                    "name": "pos",
+                    "type": "access"
+                  },
+                  {
+                    "name": "b",
+                    "type": "access"
+                  }
+                ]
+              },
+              "operator": "+==",
+              "right": {
+                "type": "duo",
+                "a": {
+                  "type": "uno",
+                  "uno": null,
+                  "a": {
+                    "type": "rvalue",
+                    "a": {
+                      "type": "rvalue",
+                      "access": "static",
+                      "chain": [
+                        {
+                          "name": "toB",
+                          "type": "access"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "b": {
+                  "type": "uno",
+                  "uno": null,
+                  "a": {
+                    "type": "rvalue",
+                    "a": {
+                      "type": "rvalue",
+                      "access": "static",
+                      "chain": [
+                        {
+                          "name": "force",
+                          "type": "access"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "duo": "*"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -29,18 +29,11 @@ class Scope {
 	
 	
 	get(k) {
-		if ( this._keys[k] === undefined ) {
-			if (k.indexOf('.') === 0) {
-				throw new Error(`Dynamic property "${k}" not found in scope "${this._name}".`);
-			}
-			return k;
-		}
-		return this._keys[k];
+		return this._keys[k] || k;
 	}
 	
 	
 	set(k, v) {
-		// console.log('SET', this._name, k, v);
 		this._keys[k] = v;
 	}
 	

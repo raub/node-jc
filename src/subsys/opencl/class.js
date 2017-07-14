@@ -25,38 +25,26 @@ class Class extends base.Class {
 		
 		desc.members.forEach(member => {
 			
-			switch (member.type) {
+			switch (member.spec) {
 				
-				case 'property':
-					switch (member.access) {
-						case 'dynamic':
-							this._cl['dp_' + member.name] = new Attribute(member);
-							break;
-						
-						case 'static':
-							this._cl['sp_' + member.name] = new Uniform(member);
-							Object.defineProperty(this, member.name, {
-								get()  { return this._cl['sp_' + member.name].value; },
-								set(v) { this._cl['sp_' + member.name].value = v;    },
-							});
-							break;
-						
-						default: break;
-					}
+				case 'attribute':
+					this._cl['attribute_' + member.name] = new Attribute(member);
 					break;
 				
-				case 'method':
-					switch (member.access) {
-						case 'dynamic':
-							this._cl['dm_' + member.name] = new Dynamic(member, this.scope);
-							break;
-						
-						case 'static':
-							this._cl['sm_' + member.name] = new Static(member);
-							break;
-						
-						default: break;
-					}
+				case 'uniform':
+					this._cl['uniform_' + member.name] = new Uniform(member);
+					Object.defineProperty(this, member.name, {
+						get()  { return this._cl['uniform_' + member.name].value; },
+						set(v) { this._cl['uniform_' + member.name].value = v;    },
+					});
+					break;
+				
+				case 'dynamic':
+					this._cl['dynamic_' + member.name] = new Dynamic(member, this.scope);
+					break;
+				
+				case 'static':
+					this._cl['static_' + member.name] = new Static(member, this.scope);
 					break;
 				
 				default: break;
@@ -67,7 +55,7 @@ class Class extends base.Class {
 		
 		// Pull method headers
 		this._header = `\n// Class ${this.name} header\n` +
-			Object.keys(this._cl).filter(k => /^.m_/.test(k)).map(
+			Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).map(
 				name => this._cl[name].header
 			).join('\n') + '\n';
 		
@@ -79,10 +67,10 @@ class Class extends base.Class {
 			// Own header
 			[this._header, `\n// Class ${this.name} code`],
 			// Own dynamic methods
-			Object.keys(this._cl).filter(k => /^dm_/.test(k)).map(
+			Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).map(
 				name => this._cl[name].code
 			),
-			Object.keys(this._cl).filter(k => /^sm_/.test(k)).map(
+			Object.keys(this._cl).filter(k => /^static_/.test(k)).map(
 				name => this._cl[name].code
 			)
 		).join('\n\n') + '\n';

@@ -68,7 +68,7 @@ class_uniform
 	  _s_ name:names_property
 	      init:class_init_gpu?
 	      class_member_end
-	{return _uniform(type, name, /*init*/)}
+	{return _uniform(type, name, init)}
 
 class_attribute
 	= _0_ type:types_gpu

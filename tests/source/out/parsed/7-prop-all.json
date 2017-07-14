@@ -14,7 +14,8 @@
         {
           "spec": "uniform",
           "type": "float",
-          "name": "y"
+          "name": "y",
+          "init": null
         },
         {
           "spec": "uniform",

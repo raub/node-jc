@@ -17,7 +17,7 @@ class Dynamic {
 		
 		this._scope = scope.clone(this._name);
 		
-		this._signature = `${desc.type} ${this._scope.get(`.${this._name}`)}()`;
+		this._signature = `${desc.type} ${this._scope.get(`${this._name}`)}()`;
 		
 		this._body = desc.body.map(statement => {
 			const method = `__${statement.type}`;
@@ -45,7 +45,6 @@ class Dynamic {
 	
 	_chain(desc) {
 		const that = this;
-		const dot = desc.access === 'dynamic' ? '.' : '';
 		
 		let fullName = '';
 		(function _recurse(subscope, chain, i) {
@@ -56,18 +55,7 @@ class Dynamic {
 			
 			const item = chain[i];
 			
-			const next = (() => {
-				// console.log('CHA', JSON.stringify(chain, null, '\t'));
-				if (i === 0) {
-					return subscope.get(`${dot}${item.name}`);
-				} else {
-					try {
-						return subscope.get(`.${item.name}`);
-					} catch (ex) {
-						return subscope.get(`${item.name}`);
-					}
-				}
-			})();
+			const next = subscope.get(`${item.name}`);
 			
 			if (typeof next === 'object') {
 				fullName += `${i ? '.' : ''}${next.key}`;

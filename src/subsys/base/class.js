@@ -32,11 +32,11 @@ class Class {
 		
 		desc.members.forEach(member => {
 			
-			const target = member.type === 'alias' ? member.target : member.name;
+			const target = member.spec === 'alias' ? member.target : member.name;
 			
 			this._scope.set(
 				`${member.name}`,
-				`_${this._name}_${member.access}_${target}`
+				`__${this._name}_${target}`
 			);
 			
 		});
