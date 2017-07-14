@@ -83,17 +83,21 @@ class Source {
 					number: ex.location.start.line,
 					column: ex.location.start.column,
 					text  : splitted[ex.location.start.line-1],
+					prev  : splitted[ex.location.start.line-2] || null,
+					next  : splitted[ex.location.start.line] || null,
 				},
 				message: ex.message,
 				toString() {
 					return '\n// ----------------------------------' +
 						'\n// JC Parser ERROR:\n// ' +
 						`At file ${that._path}\n// At line ${this.line.number}\n// ` +
+						(this.line.prev ? `${this.line.prev}\n>> ` : '') +
 						this.line.text + '\n// ' +
 						(()=>{
 							let t = this.line.text.replace(/[^\t]/g, ' ');
 							return t.slice(0,this.line.column-1) + '^' + t.slice(this.line.column);
 						})() +
+						(this.line.next ? `\n// ${this.line.next}` : '') +
 						'\n// ' +this.message +
 						'\n// ----------------------------------\n';
 				},
@@ -132,10 +136,57 @@ const include = (str, ban) => {
 };
 
 try {
-	Source._parser = peg.generate( include('index.pegjs', {}) );
+	Source._grammar = include('index.pegjs', {});
+	Source._parser = peg.generate(Source._grammar);
 } catch (ex) {
-	console.log(ex);
-	Source._parser = {parse(){throw ex}};
+	
+	Source._parser = { parse(){ return {}; } };
+	
+	if (ex.name !== 'GrammarError') {
+		console.log(ex);
+		return Source._error = {
+			name: ex.name,
+			message: ex.message,
+			toString() {
+				return '\n// ----------------------------------' +
+				'\n// JC Grammar ERROR:\n// ' +
+				ex.toString() +
+				'\n// ----------------------------------\n';
+			},
+		};
+	}
+	
+	const splitted = Source._grammar.split('\n');
+	
+	Source._error = {
+		name: ex.name,
+		line: {
+			number: ex.location.start.line,
+			column: ex.location.start.column,
+			text  : splitted[ex.location.start.line-1],
+			prev  : splitted[ex.location.start.line-2] || null,
+			next  : splitted[ex.location.start.line] || null,
+		},
+		message: ex.message,
+		toString() {
+			return '\n// ----------------------------------' +
+				'\n// JC Grammar ERROR:\n// ' +
+				`At line ${this.line.number}\n// ` +
+				(this.line.prev ? `${this.line.prev}\n>> ` : '') +
+				this.line.text + '\n// ' +
+				(()=>{
+					let t = this.line.text.replace(/[^\t]/g, ' ');
+					return t.slice(0,this.line.column-1) + '^' + t.slice(this.line.column);
+				})() +
+				(this.line.next ? `\n// ${this.line.next}` : '') +
+				'\n// ' +this.message +
+				'\n// ----------------------------------\n';
+		},
+	};
+	console.log(Source._error.toString());
+	
+	process.exit(1);
+	
 }
 
 module.exports = Source;

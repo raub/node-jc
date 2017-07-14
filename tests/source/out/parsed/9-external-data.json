@@ -9,61 +9,61 @@
           "spec": "uniform",
           "type": "js",
           "name": "a",
-          "init": " 1"
+          "init": "1"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "b",
-          "init": " 1.2"
+          "init": "1.2"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "c",
-          "init": " 'a'"
+          "init": "'a'"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "d",
-          "init": " \"a\""
+          "init": "\"a\""
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "e",
-          "init": " `x = ${12+3}`"
+          "init": "`x = ${12+3}`"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "f",
-          "init": " []"
+          "init": "[]"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "g",
-          "init": " {}"
+          "init": "{}"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "h",
-          "init": " 3 * 2"
+          "init": "3 * 2"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "i",
-          "init": " (1+2) * 3"
+          "init": "(1+2) * 3"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "j",
-          "init": " require('fs')\n"
+          "init": "require('fs')\n"
         }
       ]
     }

@@ -8,8 +8,7 @@
         {
           "spec": "uniform",
           "type": "float",
-          "name": "x",
-          "init": "10"
+          "name": "x"
         }
       ]
     }

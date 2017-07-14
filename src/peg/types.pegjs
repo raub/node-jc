@@ -39,4 +39,4 @@ class_type
 types_js = 'js'
 js_type = 'js'
 
-types_gpu = core_type
+types_gpu = struct_type / core_type / ref_type

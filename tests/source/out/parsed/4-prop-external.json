@@ -9,7 +9,7 @@
           "spec": "uniform",
           "type": "js",
           "name": "hello",
-          "init": " 'world'\n"
+          "init": "'world'\n"
         }
       ]
     }

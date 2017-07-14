@@ -9,8 +9,12 @@
           "spec": "static",
           "name": "f",
           "params": [
-            "a",
-            "b"
+            {
+              "name": "a"
+            },
+            {
+              "name": "b"
+            }
           ],
           "body": []
         }

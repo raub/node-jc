@@ -20,12 +20,12 @@ chain_access
 	{return {name, type: 'access'}}
 
 chain_call
-	= name:base_name args:arg_list
-	{return {name, type: 'call', args}}
+	= name:names_any args:function_args_dynamic
+	{return {type: 'call', name, args}}
 
 chain_index
 	= name:base_name index:indexation
-	{return {name, type: 'index', index}}
+	{return {type: 'index', name, index}}
 
 indexation
 	= __ '[' __ r:'%'? __ i:expression __ ']'

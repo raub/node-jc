@@ -9,37 +9,37 @@
           "spec": "uniform",
           "type": "js",
           "name": "a",
-          "init": " function () { return 1; }"
+          "init": "function () { return 1; }"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "b",
-          "init": " () => {}"
+          "init": "() => {}"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "c",
-          "init": " () => 42"
+          "init": "() => 42"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "d",
-          "init": " (function () { return 1; })"
+          "init": "(function () { return 1; })"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "e",
-          "init": " (() => {})"
+          "init": "(() => {})"
         },
         {
           "spec": "uniform",
           "type": "js",
           "name": "f",
-          "init": " (() => 42)\n"
+          "init": "(() => 42)\n"
         }
       ]
     }
