@@ -1,0 +1,194 @@
+{
+  "imports": [
+    {
+      "classes": [
+        "MyClass"
+      ],
+      "path": "11-gpu-code"
+    }
+  ],
+  "classes": [
+    {
+      "name": "MyClass1",
+      "parent": "MyClass",
+      "members": [
+        {
+          "spec": "uniform",
+          "type": "float",
+          "name": "dd",
+          "init": null
+        },
+        {
+          "spec": "dynamic",
+          "type": "void",
+          "name": "f1",
+          "params": [],
+          "body": [
+            {
+              "type": "vars",
+              "typeName": "float",
+              "list": [
+                {
+                  "name": "s",
+                  "value": {
+                    "type": "uno",
+                    "uno": null,
+                    "a": {
+                      "type": "rvalue",
+                      "a": {
+                        "type": "rvalue",
+                        "access": "static",
+                        "chain": [
+                          {
+                            "name": "stiff",
+                            "type": "access"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "assign",
+              "left": {
+                "type": "rvalue",
+                "access": "static",
+                "chain": [
+                  {
+                    "name": "dist",
+                    "type": "access"
+                  }
+                ]
+              },
+              "operator": "=",
+              "right": {
+                "type": "uno",
+                "uno": null,
+                "a": {
+                  "type": "rvalue",
+                  "a": "2"
+                }
+              }
+            },
+            {
+              "type": "action",
+              "chain": {
+                "type": "rvalue",
+                "access": "static",
+                "chain": [
+                  {
+                    "type": "call",
+                    "name": "pull",
+                    "args": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MyClass2",
+      "parent": "MyClass1",
+      "members": [
+        {
+          "spec": "uniform",
+          "type": "float3",
+          "name": "xyz",
+          "init": null
+        },
+        {
+          "spec": "dynamic",
+          "type": "void",
+          "name": "f2",
+          "params": [],
+          "body": [
+            {
+              "type": "vars",
+              "typeName": "float",
+              "list": [
+                {
+                  "name": "s",
+                  "value": {
+                    "type": "uno",
+                    "uno": null,
+                    "a": {
+                      "type": "rvalue",
+                      "a": {
+                        "type": "rvalue",
+                        "access": "static",
+                        "chain": [
+                          {
+                            "name": "stiff",
+                            "type": "access"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "action",
+              "chain": {
+                "type": "rvalue",
+                "access": "static",
+                "chain": [
+                  {
+                    "type": "call",
+                    "name": "pull",
+                    "args": []
+                  }
+                ]
+              }
+            },
+            {
+              "type": "action",
+              "chain": {
+                "type": "rvalue",
+                "access": "static",
+                "chain": [
+                  {
+                    "type": "call",
+                    "name": "f1",
+                    "args": []
+                  }
+                ]
+              }
+            },
+            {
+              "type": "assign",
+              "left": {
+                "type": "rvalue",
+                "access": "static",
+                "chain": [
+                  {
+                    "name": "pos",
+                    "type": "access"
+                  },
+                  {
+                    "name": "a",
+                    "type": "access"
+                  }
+                ]
+              },
+              "operator": "=",
+              "right": {
+                "type": "uno",
+                "uno": null,
+                "a": {
+                  "type": "rvalue",
+                  "a": "1"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

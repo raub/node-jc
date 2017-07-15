@@ -8,7 +8,7 @@ class Dynamic {
 	
 	get name()   { return this._name; }
 	get header() { return `${this._signature};`; }
-	get code()   { return `${this._signature} {\n${this._body}\n}`; }
+	get code()   { return `${this._signature} {\n\t${this._body}\n}`; }
 	
 	
 	constructor(desc, scope) {
@@ -23,7 +23,7 @@ class Dynamic {
 			const method = `__${statement.type}`;
 			return this[method] && this[method](statement, scope) ||
 				`// ${statement.type}`;
-		}).join('\n');
+		}).join('\n\t');
 		
 	}
 	

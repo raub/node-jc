@@ -139,9 +139,9 @@ MyClass {
 	float{r, g, b} .rgb
 	
 	// uniforms
-	float          a = 10
-	float3         abc
-	float{a, b, c} tri
+	float           a = 10
+	float3          abc
+	float3{a, b, c} tri
 	
 }
 ```

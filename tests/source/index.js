@@ -9,23 +9,24 @@ const ok = fn => (err, res) => err ? console.log(err) : fn(res);
 
 /** Cases:
  * 
- * 1.  just-class      : an empty class
- * 2.  prop-dynamic    : a class with a dynamic property
- * 3.  prop-static     : a class with a static property
- * 4.  prop-external   : a class with an external property
- * 5.  method-dynamic  : a class with a dynamic method (empty)
- * 6.  method-static   : a class with a static method (empty)
- * 7.  prop-all        : a class with all kinds of properties
- * 8.  method-all      : a class with all kinds of methods (empty)
- * 9.  external-data   : external data of all kinds
- * 10. external-func   : external functions of all kinds
- * 11. gpu-code        : a gpu method with code
- * 12. static-default  : use of defaults for static props
- * 13. dynamic-struct  : use of struct types for dynamic structs
- * 14. multi-class     : multiple classes
- * 15. import-singular : singular import
- * 16. import-dual     : dual import
- * 17. import-multi    : multiple imports
+ * 1.  just-class       : an empty class
+ * 2.  prop-dynamic     : a class with a dynamic property
+ * 3.  prop-static      : a class with a static property
+ * 4.  prop-external    : a class with an external property
+ * 5.  method-dynamic   : a class with a dynamic method (empty)
+ * 6.  method-static    : a class with a static method (empty)
+ * 7.  prop-all         : a class with all kinds of properties
+ * 8.  method-all       : a class with all kinds of methods (empty)
+ * 9.  external-data    : external data of all kinds
+ * 10. external-func    : external functions of all kinds
+ * 11. gpu-code         : a gpu method with code
+ * 12. static-default   : use of defaults for static props
+ * 13. dynamic-struct   : use of struct types for dynamic structs
+ * 14. multi-class      : multiple classes
+ * 15. import-singular  : singular import
+ * 16. import-dual      : dual import
+ * 17. import-multi     : multiple imports
+ * 18. inherited-member : import from file and then use inherited method
  * 
  */
 

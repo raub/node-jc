@@ -1,0 +1,35 @@
+import MyClass from 11-gpu-code
+
+
+MyClass1 extends MyClass {
+	
+	float .dd
+	
+	void .f1() {
+		
+		float s = stiff;
+		dist = 2;
+		
+		pull();
+		
+	}
+	
+}
+
+MyClass2 extends MyClass1 {
+	
+	float3 .xyz
+	
+	void .f2() {
+		
+		float s = stiff;
+		
+		pull();
+		
+		f1();
+		
+		pos.a = 1;
+		
+	}
+	
+}
