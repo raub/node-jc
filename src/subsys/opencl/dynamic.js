@@ -8,7 +8,10 @@ class Dynamic {
 	
 	get name()   { return this._name; }
 	get header() { return `${this._signature};`; }
-	get code()   { return `${this._signature} {\n\t${this._body}\n}`; }
+	get code()   { return `${this._signature} {${this._inject}\n\t${this._body}\n}`; }
+	
+	get inject()  { return this._inject; }
+	set inject(v) { this._inject = v; }
 	
 	
 	constructor(desc, scope) {
@@ -24,6 +27,8 @@ class Dynamic {
 			return this[method] && this[method](statement, scope) ||
 				`// ${statement.type}`;
 		}).join('\n\t');
+		
+		this._inject = '';
 		
 	}
 	

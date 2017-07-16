@@ -6,61 +6,61 @@
       "parent": null,
       "members": [
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "a",
           "init": "1"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "b",
           "init": "1.2"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "c",
           "init": "'a'"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "d",
           "init": "\"a\""
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "e",
           "init": "`x = ${12+3}`"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "f",
           "init": "[]"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "g",
           "init": "{}"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "h",
           "init": "3 * 2"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "i",
           "init": "(1+2) * 3"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "j",
           "init": "require('fs')\n"

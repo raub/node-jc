@@ -20,10 +20,14 @@ class Attribute {
 		return this._count * this._attrBytes;
 	}
 	
+	get header() { return `${this._signature};`; }
+	get code()   { return `${this._signature} {\n\t${this._body}\n}`; }
+	get inject() { return this._inject; }
 	
-	constructor(desc) {
+	constructor(desc, scope) {
 		
 		this._name = desc.name;
+		this._scope = scope.clone(this._name);
 		
 		this._attrItems = 1;
 		this._attrBytes = 4;
@@ -31,7 +35,7 @@ class Attribute {
 		
 		if (typeof desc.type === 'object') {
 			this._attrType  = desc.type.type;
-			this._attrItems = desc.names.length;
+			this._attrItems = desc.type.names.length;
 		} else {
 			this._attrType = desc.type;
 		}
@@ -45,6 +49,13 @@ class Attribute {
 			device.cl.MEM_READ_WRITE,
 			this._attrBytes * types.CLASS_SIZE
 		);
+		
+		this._signature = `__global ${this._attrType} *__global *_attribute_${this._scope.get(`${this._name}`)}()`;
+		
+		this._body = `__global static ${this._attrType}  *__global _attribute_stored_${this._scope.get(`${this._name}`)};\n`+
+			`\treturn &_attribute_stored_${this._scope.get(`${this._name}`)};`;
+		
+		this._inject = `\t__global ${this._attrType} *${this._scope.get(`${this._name}`)} = *_attribute_${this._scope.get(`${this._name}`)}();`;
 		
 	}
 	

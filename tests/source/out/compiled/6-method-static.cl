@@ -1,6 +1,10 @@
 // ----> MyClass <---- //
 
-// Class MyClass header
+// --- Class MyClass header --- //
+
+// Uniform helpers
+
+// Attribute helpers
 
 
 

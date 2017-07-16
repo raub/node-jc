@@ -6,11 +6,14 @@ const _import   = (classes, path)       => ({classes, path});
 const _class    = (name,parent,members) => ({name,parent,members});
 
 
-const _attribute = (type, name, init) =>
-	({spec: 'attribute', type, name, init});
+const _jsprop = (type, name, init) =>
+	({spec: 'jsprop', type, name, init});
 
 const _uniform = (type, name, init) =>
 	({spec: 'uniform', type, name, init});
+
+const _attribute = (type, name, init) =>
+	({spec: 'attribute', type, name, init});
 
 const _dynamic = (type, name, params, body) =>
 	({spec: 'dynamic', type, name, params, body});

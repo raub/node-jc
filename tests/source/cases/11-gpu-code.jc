@@ -18,19 +18,19 @@ MyClass {
 		// TODO: iterate vertices?
 		
 		update();
+		float x = 1;
+		// // Calculate acceleration for vertices
+		// float _dist = distance(pos.a, pos.b);
+		// float force = stiff * (dist - _dist);
 		
-		// Calculate acceleration for vertices
-		float _dist = distance(pos.a, pos.b);
-		float force = stiff * (dist - _dist);
+		// float3 mid  = (pos.a + pos.b) * 0.5;
 		
-		float3 mid  = (pos.a + pos.b) * 0.5;
+		// float3 toA  = normalize(pos.a - mid);
+		// float3 toB  = normalize(pos.b - mid);
 		
-		float3 toA  = normalize(pos.a - mid);
-		float3 toB  = normalize(pos.b - mid);
-		
-		// Atomic add acceleration
-		pos.a +== toA * force;
-		pos.b +== toB * force;
+		// // Atomic add acceleration
+		// pos.a +== toA * force;
+		// pos.b +== toB * force;
 		
 	}
 	

@@ -6,7 +6,7 @@
       "parent": null,
       "members": [
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "hello",
           "init": "'world'\n"

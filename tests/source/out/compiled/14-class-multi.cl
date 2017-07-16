@@ -1,6 +1,10 @@
 // ----> MyClass1 <---- //
 
-// Class MyClass1 header
+// --- Class MyClass1 header --- //
+
+// Uniform helpers
+
+// Attribute helpers
 
 
 
@@ -10,12 +14,20 @@
 
 // ----> MyClass2 <---- //
 
-// Class MyClass1 header
+// --- Class MyClass1 header --- //
+
+// Uniform helpers
+
+// Attribute helpers
 
 
 
 
-// Class MyClass2 header
+// --- Class MyClass2 header --- //
+
+// Uniform helpers
+
+// Attribute helpers
 
 
 

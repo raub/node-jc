@@ -6,37 +6,37 @@
       "parent": null,
       "members": [
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "a",
           "init": "function () { return 1; }"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "b",
           "init": "() => {}"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "c",
           "init": "() => 42"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "d",
           "init": "(function () { return 1; })"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "e",
           "init": "(() => {})"
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "f",
           "init": "(() => 42)\n"

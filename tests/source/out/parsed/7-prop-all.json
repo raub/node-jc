@@ -6,7 +6,7 @@
       "parent": null,
       "members": [
         {
-          "spec": "uniform",
+          "spec": "attribute",
           "type": "float",
           "name": "x",
           "init": null
@@ -18,7 +18,7 @@
           "init": null
         },
         {
-          "spec": "uniform",
+          "spec": "jsprop",
           "type": "js",
           "name": "z",
           "init": "'z'\n"

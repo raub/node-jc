@@ -13,7 +13,7 @@
       "parent": "MyClass",
       "members": [
         {
-          "spec": "uniform",
+          "spec": "attribute",
           "type": "float",
           "name": "dd",
           "init": null
@@ -95,7 +95,7 @@
       "parent": "MyClass1",
       "members": [
         {
-          "spec": "uniform",
+          "spec": "attribute",
           "type": "float3",
           "name": "xyz",
           "init": null

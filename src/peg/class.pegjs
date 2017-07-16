@@ -61,7 +61,7 @@ class_uniform_js
 	  _s_ name:names_property
 	      init:class_init_js?
 	      class_member_end
-	{return _uniform(type, name, init)}
+	{return _jsprop(type, name, init)}
 
 class_uniform
 	= _0_ type:types_gpu
@@ -75,7 +75,7 @@ class_attribute
 	  _s_ '.' name:names_property
 	      init:class_init_gpu?
 	      class_member_end
-	{return _uniform(type, name, init)}
+	{return _attribute(type, name, init)}
 
 class_static
 	= _0_ name:names_property
