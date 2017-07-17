@@ -27,25 +27,30 @@ class Uniform {
 			this._uniType = desc.type;
 			this._uniItems = 1;
 		}
-		this._length = this._uniItems * TYPE_SIZES[this._uniType];
+		this._length = this._uniItems * types.TYPE_SIZES[this._uniType];
 		this._pos = device.uniforms.seize(this._length);
 		
-		this._value = desc.init;
+		this._value =  new Float32Array([desc.init]);
 		this._write();
 		
-		this._signature = `__global ${this._uniType} *_uniform_${this._scope.get(`${this._name}`)}()`;
+		this._signature = `${this._uniType} _uniform_${this._scope.get(`${this._name}`)}(__global char *_uniform_buffer_)`;
 		
-		this._body = `__global static ${this._uniType} _uniform_stored_${this._scope.get(`${this._name}`)};\n`+
-			`\treturn &_uniform_stored_${this._scope.get(`${this._name}`)};`;
+		this._body = `return *((__global ${this._uniType}*)(&_uniform_buffer_[${this._pos}]));`;
 		
-		this._inject = `\t${this._uniType} ${this._scope.get(`${this._name}`)} = *_uniform_${this._scope.get(`${this._name}`)}();`;
+		this._inject = `\t${this._uniType} ${this._scope.get(`${this._name}`)} = _uniform_${this._scope.get(`${this._name}`)}(_uniform_buffer_);`;
 		
 	}
 	
 	_write() {
 		const buffer = device.uniforms.buffer;
-		cl.enqueueWriteBuffer (queue, buffer, true, this._pos,
-			this._length, [1,2,3]);
+		device.cl.enqueueWriteBuffer(
+			device.queue,
+			buffer,
+			true,
+			this._pos,
+			this._length,
+			this._value
+		);
 	}
 	
 };

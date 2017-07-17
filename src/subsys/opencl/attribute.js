@@ -20,11 +20,11 @@ class Attribute {
 		return this._count * this._attrBytes;
 	}
 	
-	get header() { return `${this._signature};`; }
-	get code()   { return `${this._signature} {\n\t${this._body}\n}`; }
+	get header() { return ``; }
+	get code()   { return ``; }
 	get inject() { return this._inject; }
 	
-	constructor(device, desc, scope) {
+	constructor(desc, scope) {
 		
 		this._name = desc.name;
 		this._scope = scope.clone(this._name);
@@ -50,12 +50,11 @@ class Attribute {
 			this._attrBytes * types.CLASS_SIZE
 		);
 		
-		this._signature = `__global ${this._attrType} *__global *_attribute_${this._scope.get(`${this._name}`)}()`;
+		this._signature = ``;
 		
-		this._body = `__global static ${this._attrType}  *__global _attribute_stored_${this._scope.get(`${this._name}`)};\n`+
-			`\treturn &_attribute_stored_${this._scope.get(`${this._name}`)};`;
+		this._body = ``;
 		
-		this._inject = `\t${this._attrType} ${this._scope.get(`${this._name}`)} = *_attribute_${this._scope.get(`${this._name}`)}()[__this_i];`;
+		this._inject = ``;
 		
 	}
 	

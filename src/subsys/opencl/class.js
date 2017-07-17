@@ -29,11 +29,11 @@ class Class extends base.Class {
 			switch (member.spec) {
 				
 				case 'attribute'://console.log('attr', member.name);
-					this._cl['attribute_' + member.name] = new Attribute(device, member, this.scope);
+					this._cl['attribute_' + member.name] = new Attribute(member, this.scope);
 					break;
 				
 				case 'uniform'://console.log('uni', member.name);
-					this._cl['uniform_' + member.name] = new Uniform(device, member, this.scope);
+					this._cl['uniform_' + member.name] = new Uniform(member, this.scope);
 					Object.defineProperty(this, member.name, {
 						get()  { return this._cl['uniform_' + member.name].value; },
 						set(v) { this._cl['uniform_' + member.name].value = v;    },
@@ -41,11 +41,11 @@ class Class extends base.Class {
 					break;
 				
 				case 'dynamic':
-					this._cl['dynamic_' + member.name] = new Dynamic(device, member, this.scope);
+					this._cl['dynamic_' + member.name] = new Dynamic(member, this.scope);
 					break;
 				
 				case 'static':
-					this._cl['static_' + member.name] = new Static(device, member, this.scope);
+					this._cl['static_' + member.name] = new Static(member, this.scope);
 					break;
 				
 				default: break;

@@ -14,13 +14,13 @@ class Dynamic {
 	set inject(v) { this._inject = v; }
 	
 	
-	constructor(device, desc, scope) {
+	constructor(desc, scope) {
 		
 		this._name = desc.name;
 		
 		this._scope = scope.clone(this._name);
 		
-		this._signature = `${desc.type} ${this._scope.get(`${this._name}`)}(uint __this_i)`;
+		this._signature = `${desc.type} ${this._scope.get(`${this._name}`)}(size_t _this_i_, __global char *_uniform_buffer_)`;
 		
 		this._body = desc.body.map(statement => {
 			const method = `__${statement.type}`;
@@ -97,7 +97,7 @@ class Dynamic {
 	
 	
 	_args(desc) {
-		return `(${desc.map(e => this.__expression(e)).join(', ')})`;
+		return `(_this_i_, _uniform_buffer_${desc.length ? `, ${desc.map(e => this.__expression(e)).join(', ')}` : ''})`;
 	}
 	
 	

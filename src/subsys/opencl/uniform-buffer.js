@@ -3,8 +3,8 @@
 
 class UniformBuffer {
 	
-	get buffer() { return _buffer; }
-	get used() { return _used; }
+	get buffer() { return this._buffer; }
+	get used() { return this._used; }
 	
 	constructor(cl, context, size) {
 		

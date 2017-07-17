@@ -5,10 +5,13 @@ MyClass1 extends MyClass {
 	
 	float .dd
 	
+	int abc
+	uchar def
+	
 	void .f1() {
 		
 		float s = stiff;
-		dist = 2;
+		//dist = 2;
 		
 		pull();
 		
@@ -28,7 +31,7 @@ MyClass2 extends MyClass1 {
 		
 		f1();
 		
-		pos.a = 1;
+		//pos.a = 1;
 		
 	}
 	

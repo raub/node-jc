@@ -1,100 +1,106 @@
 // ----> MyClass1 <---- //
 
 // --- Class MyClass header --- //
-void __MyClass_update(uint __this_i);
-void __MyClass_pull(uint __this_i);
+void __MyClass_update(size_t _this_i_, __global char *_uniform_buffer_);
+void __MyClass_pull(size_t _this_i_, __global char *_uniform_buffer_);
 // Uniform helpers
-__global float *_uniform___MyClass_stiff();
+float _uniform___MyClass_stiff(__global char *_uniform_buffer_);
 // Attribute helpers
-__global float *__global *_attribute___MyClass_dist();
-__global float3 *__global *_attribute___MyClass_pos();
+
+
 
 
 
 // --- Class MyClass1 header --- //
-void __MyClass1_f1(uint __this_i);
+void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_);
 // Uniform helpers
-
+int _uniform___MyClass1_abc(__global char *_uniform_buffer_);
+uchar _uniform___MyClass1_def(__global char *_uniform_buffer_);
 // Attribute helpers
-__global float *__global *_attribute___MyClass1_dd();
+
 
 
 
 // Class MyClass1 code
 
-void __MyClass1_f1(uint __this_i) {
+void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_) {
 	// Class MyClass injects
-	float __MyClass_stiff = *_uniform___MyClass_stiff();
-	float __MyClass_dist = *_attribute___MyClass_dist()[__this_i];
-	float3 __MyClass_pos = *_attribute___MyClass_pos()[__this_i];
+	float __MyClass_stiff = _uniform___MyClass_stiff(_uniform_buffer_);
+
+
 
 	// Class MyClass1 injects
-	float __MyClass1_dd = *_attribute___MyClass1_dd()[__this_i];
+	int __MyClass1_abc = _uniform___MyClass1_abc(_uniform_buffer_);
+	uchar __MyClass1_def = _uniform___MyClass1_def(_uniform_buffer_);
+
 
 	float _f1_local_s = __MyClass_stiff;
-	__MyClass_dist = 2;
-	__MyClass_pull();
+	__MyClass_pull(_this_i_, _uniform_buffer_);
 }
 
-__global float *__global *_attribute___MyClass1_dd() {
-	__global static float  *__global _attribute_stored___MyClass1_dd;
-	return &_attribute_stored___MyClass1_dd;
+int _uniform___MyClass1_abc(__global char *_uniform_buffer_) {
+	return *((__global int*)(&_uniform_buffer_[12]));
 }
+
+uchar _uniform___MyClass1_def(__global char *_uniform_buffer_) {
+	return *((__global uchar*)(&_uniform_buffer_[16]));
+}
+
+
 
 
 // ----> MyClass2 <---- //
 
 // --- Class MyClass header --- //
-void __MyClass_update(uint __this_i);
-void __MyClass_pull(uint __this_i);
+void __MyClass_update(size_t _this_i_, __global char *_uniform_buffer_);
+void __MyClass_pull(size_t _this_i_, __global char *_uniform_buffer_);
 // Uniform helpers
-__global float *_uniform___MyClass_stiff();
+float _uniform___MyClass_stiff(__global char *_uniform_buffer_);
 // Attribute helpers
-__global float *__global *_attribute___MyClass_dist();
-__global float3 *__global *_attribute___MyClass_pos();
+
+
 
 
 
 // --- Class MyClass1 header --- //
-void __MyClass1_f1(uint __this_i);
+void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_);
 // Uniform helpers
-
+int _uniform___MyClass1_abc(__global char *_uniform_buffer_);
+uchar _uniform___MyClass1_def(__global char *_uniform_buffer_);
 // Attribute helpers
-__global float *__global *_attribute___MyClass1_dd();
+
 
 
 
 // --- Class MyClass2 header --- //
-void __MyClass2_f2(uint __this_i);
+void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_);
 // Uniform helpers
 
 // Attribute helpers
-__global float3 *__global *_attribute___MyClass2_xyz();
+
 
 
 
 // Class MyClass2 code
 
-void __MyClass2_f2(uint __this_i) {
+void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_) {
 	// Class MyClass injects
-	float __MyClass_stiff = *_uniform___MyClass_stiff();
-	float __MyClass_dist = *_attribute___MyClass_dist()[__this_i];
-	float3 __MyClass_pos = *_attribute___MyClass_pos()[__this_i];
+	float __MyClass_stiff = _uniform___MyClass_stiff(_uniform_buffer_);
+
+
 
 
 	// Class MyClass1 injects
-	float __MyClass1_dd = *_attribute___MyClass1_dd()[__this_i];
+	int __MyClass1_abc = _uniform___MyClass1_abc(_uniform_buffer_);
+	uchar __MyClass1_def = _uniform___MyClass1_def(_uniform_buffer_);
+
 
 	// Class MyClass2 injects
-	float3 __MyClass2_xyz = *_attribute___MyClass2_xyz()[__this_i];
+
 
 	float _f2_local_s = __MyClass_stiff;
-	__MyClass_pull();
-	__MyClass1_f1();
-	__MyClass_pos = 1;
+	__MyClass_pull(_this_i_, _uniform_buffer_);
+	__MyClass1_f1(_this_i_, _uniform_buffer_);
 }
 
-__global float3 *__global *_attribute___MyClass2_xyz() {
-	__global static float3  *__global _attribute_stored___MyClass2_xyz;
-	return &_attribute_stored___MyClass2_xyz;
-}
+

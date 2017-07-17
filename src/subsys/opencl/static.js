@@ -4,13 +4,13 @@
 // const types = require('./types');
 
 
-class Dynamic {
+class Static {
 	
 	get name()   { return this._name; }
 	get code()   { return `${this._kernels}`; }
 	
 	
-	constructor(device, desc, scope) {
+	constructor(desc, scope) {
 		
 		this._name = desc.name;
 		
@@ -25,4 +25,4 @@ class Dynamic {
 	
 };
 
-module.exports = Dynamic;
+module.exports = Static;

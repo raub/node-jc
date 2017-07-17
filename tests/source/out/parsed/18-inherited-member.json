@@ -19,6 +19,18 @@
           "init": null
         },
         {
+          "spec": "uniform",
+          "type": "int",
+          "name": "abc",
+          "init": null
+        },
+        {
+          "spec": "uniform",
+          "type": "uchar",
+          "name": "def",
+          "init": null
+        },
+        {
           "spec": "dynamic",
           "type": "void",
           "name": "f1",
@@ -49,28 +61,6 @@
                   }
                 }
               ]
-            },
-            {
-              "type": "assign",
-              "left": {
-                "type": "rvalue",
-                "access": "static",
-                "chain": [
-                  {
-                    "name": "dist",
-                    "type": "access"
-                  }
-                ]
-              },
-              "operator": "=",
-              "right": {
-                "type": "uno",
-                "uno": null,
-                "a": {
-                  "type": "rvalue",
-                  "a": "2"
-                }
-              }
             },
             {
               "type": "action",
@@ -158,32 +148,6 @@
                     "args": []
                   }
                 ]
-              }
-            },
-            {
-              "type": "assign",
-              "left": {
-                "type": "rvalue",
-                "access": "static",
-                "chain": [
-                  {
-                    "name": "pos",
-                    "type": "access"
-                  },
-                  {
-                    "name": "a",
-                    "type": "access"
-                  }
-                ]
-              },
-              "operator": "=",
-              "right": {
-                "type": "uno",
-                "uno": null,
-                "a": {
-                  "type": "rvalue",
-                  "a": "1"
-                }
               }
             }
           ]
