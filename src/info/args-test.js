@@ -25,7 +25,7 @@ function VectorAdd() {
     console.info("Platform "+i+": "+cl.getPlatformInfo(platforms[i],cl.PLATFORM_NAME));
   var platform=platforms[0];
 
-  var devices=cl.getDeviceIDs(platform, cl.DEVICE_TYPE_ALL);
+  var devices=cl.getDeviceIDs(platform, cl.DEVICE_TYPE_GPU);
   for(var i=0;i<devices.length;i++)
     console.info("  Devices "+i+": "+cl.getDeviceInfo(devices[i],cl.DEVICE_NAME));
 
@@ -122,7 +122,7 @@ var device = cl.getContextInfo(context, cl.CONTEXT_DEVICES)[0];
   // compile
   const tc1 = Date.now();
   try {
-  	cl.compileProgram(helper);
+  	cl.compileProgram(helper, [device]);
   } catch (ex) {
   	const log = cl.getProgramBuildInfo(helper, device, cl.PROGRAM_BUILD_LOG);
   	console.log('HELPER LOG', log);
@@ -131,7 +131,7 @@ var device = cl.getContextInfo(context, cl.CONTEXT_DEVICES)[0];
   
   const tc2 = Date.now();
   try {
-  	cl.compileProgram(main);
+  	cl.compileProgram(main, [device]);
   } catch (ex) {
   	const log = cl.getProgramBuildInfo(main, device, cl.PROGRAM_BUILD_LOG);
   	console.log('MAIN LOG', log);

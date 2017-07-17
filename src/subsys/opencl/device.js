@@ -2,6 +2,9 @@
 
 const cl = require('node-opencl');
 
+const UniformBuffer = require('./uniform-buffer');
+
+
 const platforms = cl.getPlatformIDs();
 
 // for(let i=0;i<platforms.length;i++) {
@@ -23,19 +26,19 @@ const device = cl.getContextInfo(context, cl.CONTEXT_DEVICES)[0];
 
 // Create command queue
 let queue;
-let version;
 if (cl.createCommandQueueWithProperties !== undefined) {
 	queue = cl.createCommandQueueWithProperties(context, device, []); // OpenCL 2
-	version = '2.0';
 } else {
 	queue = cl.createCommandQueue(context, device, null); // OpenCL 1.x
-	version = '1.2';
-	
 }
 
-console.log(`OpenCL ${version}.`);
+console.log(cl.getPlatformInfo(platform, cl.PLATFORM_VERSION));
+
+const uniforms = new UniformBuffer(cl, context, 32000);
+
 
 module.exports = {
+	uniforms,
 	cl,
 	platform,
 	context,

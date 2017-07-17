@@ -10,7 +10,7 @@ class Dynamic {
 	get code()   { return `${this._kernels}`; }
 	
 	
-	constructor(desc, scope) {
+	constructor(device, desc, scope) {
 		
 		this._name = desc.name;
 		

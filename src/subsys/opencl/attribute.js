@@ -24,7 +24,7 @@ class Attribute {
 	get code()   { return `${this._signature} {\n\t${this._body}\n}`; }
 	get inject() { return this._inject; }
 	
-	constructor(desc, scope) {
+	constructor(device, desc, scope) {
 		
 		this._name = desc.name;
 		this._scope = scope.clone(this._name);
@@ -55,7 +55,7 @@ class Attribute {
 		this._body = `__global static ${this._attrType}  *__global _attribute_stored_${this._scope.get(`${this._name}`)};\n`+
 			`\treturn &_attribute_stored_${this._scope.get(`${this._name}`)};`;
 		
-		this._inject = `\t__global ${this._attrType} *${this._scope.get(`${this._name}`)} = *_attribute_${this._scope.get(`${this._name}`)}();`;
+		this._inject = `\t${this._attrType} ${this._scope.get(`${this._name}`)} = *_attribute_${this._scope.get(`${this._name}`)}()[__this_i];`;
 		
 	}
 	

@@ -1,8 +1,8 @@
 // ----> MyClass <---- //
 
 // --- Class MyClass header --- //
-void __MyClass_update();
-void __MyClass_pull();
+void __MyClass_update(uint __this_i);
+void __MyClass_pull(uint __this_i);
 // Uniform helpers
 __global float *_uniform___MyClass_stiff();
 // Attribute helpers
@@ -13,20 +13,20 @@ __global float3 *__global *_attribute___MyClass_pos();
 
 // Class MyClass code
 
-void __MyClass_update() {
+void __MyClass_update(uint __this_i) {
 	// Class MyClass injects
 	float __MyClass_stiff = *_uniform___MyClass_stiff();
-	__global float *__MyClass_dist = *_attribute___MyClass_dist();
-	__global float3 *__MyClass_pos = *_attribute___MyClass_pos();
+	float __MyClass_dist = *_attribute___MyClass_dist()[__this_i];
+	float3 __MyClass_pos = *_attribute___MyClass_pos()[__this_i];
 
 	
 }
 
-void __MyClass_pull() {
+void __MyClass_pull(uint __this_i) {
 	// Class MyClass injects
 	float __MyClass_stiff = *_uniform___MyClass_stiff();
-	__global float *__MyClass_dist = *_attribute___MyClass_dist();
-	__global float3 *__MyClass_pos = *_attribute___MyClass_pos();
+	float __MyClass_dist = *_attribute___MyClass_dist()[__this_i];
+	float3 __MyClass_pos = *_attribute___MyClass_pos()[__this_i];
 
 	__MyClass_update();
 	float _pull_local_x = 1;
