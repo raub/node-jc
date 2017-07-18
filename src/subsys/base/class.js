@@ -36,7 +36,8 @@ class Class {
 			
 			this._scope.set(
 				`${member.name}`,
-				`__${this._name}_${target}`
+				new Scope(`__${this._name}_${target}`)
+				//`__${this._name}_${target}`
 			);
 			
 		});

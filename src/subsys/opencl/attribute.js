@@ -40,7 +40,7 @@ class Attribute {
 			this._attrType = desc.type;
 		}
 		
-		this._attrBytes = types.TYPE_SIZES[this._attrType] * this._attrItems;
+		this._attrBytes = types.sizeof(this._attrType) * this._attrItems;
 		
 		this._count = 0;
 		

@@ -19,8 +19,11 @@ class Dynamic {
 		this._name = desc.name;
 		
 		this._scope = scope.clone(this._name);
+		this._ownScope = scope.get(this._name);
 		
-		this._signature = `${desc.type} ${this._scope.get(`${this._name}`)}(size_t _this_i_, __global char *_uniform_buffer_)`;
+		const name = this._scope.get(`${this._name}`).name;
+		
+		this._signature = `${desc.type} ${name}(size_t _this_i_, __global char *_uniform_buffer_)`;
 		
 		this._body = desc.body.map(statement => {
 			const method = `__${statement.type}`;
@@ -63,9 +66,7 @@ class Dynamic {
 			const next = subscope.get(`${item.name}`);
 			
 			if (typeof next === 'object') {
-				fullName += `${i ? '.' : ''}${next.key}`;
-			} else {
-				fullName += next;
+				fullName += `${i ? '.' : ''}${next.name}`;
 			}
 			
 			if (item.type === 'call') {
@@ -73,7 +74,6 @@ class Dynamic {
 			} else if (item.type === 'index') {
 				fullName += that._index(item.index, fullName);
 			}
-			
 			
 			if (typeof next === 'object') {
 				_recurse(next.scope, chain, i+1);

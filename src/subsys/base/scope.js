@@ -4,11 +4,15 @@ class Scope {
 	
 	get name() { return this._name; }
 	
+	get info()  { return this._info; }
+	set info(v) { this._info = v;    }
+	
 	
 	constructor(name) {
 		
 		this._name = name || this._randomName();
 		this._keys = {};
+		this._info = null;
 		
 	}
 	
