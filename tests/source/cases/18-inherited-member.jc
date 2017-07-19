@@ -8,10 +8,22 @@ MyClass1 extends MyClass {
 	int abc
 	uchar def
 	
-	void .f1() {
+	void kernel() {
+		
+		// float extra = Date.now();
+		
+		// MyClass1[](this) {
+			
+		// 	this.f1(extra)
+			
+		// }
+		
+	}
+	
+	void .f1(float v) {
 		
 		float s = stiff;
-		//dist = 2;
+		// dist = [v, v, v];
 		
 		pull();
 		
@@ -29,7 +41,7 @@ MyClass2 extends MyClass1 {
 		
 		pull();
 		
-		f1();
+		f1(/*10 * */s);
 		
 		//pos.a = 1;
 		

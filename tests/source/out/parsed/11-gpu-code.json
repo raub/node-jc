@@ -31,12 +31,20 @@
         },
         {
           "spec": "static",
+          "type": "float",
           "name": "static",
           "params": [],
           "body": [
             {
-              "type": "skip",
-              "text": "console.log(1);\n\t"
+              "type": "return",
+              "value": {
+                "type": "uno",
+                "uno": null,
+                "a": {
+                  "type": "rvalue",
+                  "a": "1.0"
+                }
+              }
             }
           ]
         },

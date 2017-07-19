@@ -12,7 +12,7 @@ float _uniform___MyClass_stiff(__global char *_uniform_buffer_);
 
 
 // --- Class MyClass1 header --- //
-void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_);
+void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, float _f1_param_v);
 // Uniform helpers
 int _uniform___MyClass1_abc(__global char *_uniform_buffer_);
 uchar _uniform___MyClass1_def(__global char *_uniform_buffer_);
@@ -23,7 +23,7 @@ uchar _uniform___MyClass1_def(__global char *_uniform_buffer_);
 
 // Class MyClass1 code
 
-void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_) {
+void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, float _f1_param_v) {
 	// Class MyClass injects
 	float __MyClass_stiff = _uniform___MyClass_stiff(_uniform_buffer_);
 
@@ -37,6 +37,8 @@ void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_) {
 	float _f1_local_s = __MyClass_stiff;
 	__MyClass_pull(_this_i_, _uniform_buffer_);
 }
+
+
 
 int _uniform___MyClass1_abc(__global char *_uniform_buffer_) {
 	return *((__global int*)(&_uniform_buffer_[12]));
@@ -63,7 +65,7 @@ float _uniform___MyClass_stiff(__global char *_uniform_buffer_);
 
 
 // --- Class MyClass1 header --- //
-void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_);
+void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, float _f1_param_v);
 // Uniform helpers
 int _uniform___MyClass1_abc(__global char *_uniform_buffer_);
 uchar _uniform___MyClass1_def(__global char *_uniform_buffer_);
@@ -100,7 +102,7 @@ void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_) {
 
 	float _f2_local_s = __MyClass_stiff;
 	__MyClass_pull(_this_i_, _uniform_buffer_);
-	__MyClass1_f1(_this_i_, _uniform_buffer_);
+	__MyClass1_f1(_this_i_, _uniform_buffer_, _f2_local_s);
 }
 
 

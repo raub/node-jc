@@ -78,11 +78,12 @@ class_attribute
 	{return _attribute(type, name, init)}
 
 class_static
-	= _0_ name:names_property
-	  _0_ params:function_params_static_list
-	  _0_ body:function_body_static
+	= _0_ type:types_static
+	  _s_ name:names_property
+	  _0_ params:function_params_static_list?
+	  _0_ body:function_body_static?
 	  class_member_end
-	{return _static(name, params, body)}
+	{return _static(type, name, params, body)}
 
 class_dynamic
 	= _0_ type:types_gpu

@@ -3,6 +3,8 @@
 // const device = require('./device');
 // const types = require('./types');
 
+const Scope = require('../base/scope');
+
 
 class Dynamic {
 	
@@ -23,7 +25,7 @@ class Dynamic {
 		
 		const name = this._scope.get(`${this._name}`).name;
 		
-		this._signature = `${desc.type} ${name}(size_t _this_i_, __global char *_uniform_buffer_)`;
+		this._signature = `${desc.type} ${name}${this._params(desc.params)}`;
 		
 		this._body = desc.body.map(statement => {
 			const method = `__${statement.type}`;
@@ -36,16 +38,37 @@ class Dynamic {
 	}
 	
 	
+	_params(desc) {
+		return `(size_t _this_i_, __global char *_uniform_buffer_${
+				desc.length ? `, ${desc.map(v => {
+					
+					const name = `_${this._name}_param_${v.name}`;
+					const ownScope = new Scope(name);
+					// TODO: fillScope?
+					this._scope.set(v.name, ownScope);
+					
+					return `${v.type} ${name}`;
+					
+				}).join(', ')
+			}` : ''})`;
+	}
+	
+	
 	__vars(desc) {
 		
 		return desc.list.map(v => {
-			this._scope.set(v.name, `_${this._name}_local_${v.name}`);
+			
+			const name = `_${this._name}_local_${v.name}`;
+			const ownScope = new Scope(name);
+			this._scope.set(v.name, ownScope);
+			
+			
 			if (v.value) {
-				return `${desc.typeName} ${this._scope.get(v.name)
-					} = ${this.__expression(v.value)};`;
+				return `${desc.typeName} ${name} = ${this.__expression(v.value)};`;
 			} else {
-				return `${desc.typeName} ${this._scope.get(v.name)};`;
+				return `${desc.typeName} ${name};`;
 			}
+			
 		}).join('\n');
 		
 	}
@@ -62,11 +85,12 @@ class Dynamic {
 			}
 			
 			const item = chain[i];
-			
 			const next = subscope.get(`${item.name}`);
 			
 			if (typeof next === 'object') {
 				fullName += `${i ? '.' : ''}${next.name}`;
+			} else if (typeof next === 'string') {
+				fullName += `${i ? '.' : ''}${next}`;
 			}
 			
 			if (item.type === 'call') {
@@ -80,6 +104,7 @@ class Dynamic {
 			}
 			
 		})(this._scope, desc.chain, 0);
+		
 		return fullName;
 	}
 	
@@ -90,9 +115,7 @@ class Dynamic {
 	
 	
 	__call(desc) {
-		// console.log('CL:', JSON.stringify(desc, null, '\t'));
 		return `${this._chain(desc.callee)}${this.__args(desc.args)};`;
-		
 	}
 	
 	

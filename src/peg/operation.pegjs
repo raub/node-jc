@@ -4,6 +4,9 @@
 #include chain.pegjs
 #include control.pegjs
 
+operation_dynamic = operation
+operation_static  = operation
+
 operation  = var_def_op / no_def_op
 var_def_op = local_var
 no_def_op  = assignment / iteration / control / action_only

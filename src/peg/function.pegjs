@@ -39,8 +39,9 @@ function_params_static_more
 	= __ ',' p:function_params_static_one
 	{return p}
 function_params_static_one
-	= _0_ name:names_param
-	{return {name}}
+	= _0_ type:types_static
+	  _s_ name:names_param
+	{return {type, name}}
 
 function_params_dynamic_names
 	= a:function_params_dynamic_one
@@ -65,7 +66,7 @@ function_body_dynamic
 // <'{' ... '}'>
 function_body_static_not_empty
 	= _0_ function_body_start
-	  _0_ b:function_body_static_content
+	  _0_ b:operation_static+
 	  _0_ function_body_end
 	{return b}
 
@@ -85,7 +86,7 @@ function_body_static_content
 // <'{' ... '}'>
 function_body_dynamic_not_empty
 	= _0_ function_body_start
-	  _0_ b:operation+
+	  _0_ b:operation_dynamic+
 	  _0_ function_body_end
 	{return b}
 

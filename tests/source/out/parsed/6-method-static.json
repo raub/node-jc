@@ -7,12 +7,15 @@
       "members": [
         {
           "spec": "static",
+          "type": "float",
           "name": "f",
           "params": [
             {
+              "type": "int",
               "name": "a"
             },
             {
+              "type": "char",
               "name": "b"
             }
           ],

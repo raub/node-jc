@@ -6,8 +6,8 @@ MyClass {
 	float .dist
 	float3{a, b} .pos
 	
-	static() {
-		console.log(1);
+	float static() {
+		return 1.0;
 	}
 	
 	void .update() {}

@@ -3,10 +3,10 @@ MyClass {
 	
 	float .f(int x, char z) {
 		
-	}
-	
-	f(a, b) {
+		return 1.0;
 		
 	}
+	
+	uint stf
 	
 }

@@ -19,20 +19,25 @@
               "name": "z"
             }
           ],
-          "body": []
+          "body": [
+            {
+              "type": "return",
+              "value": {
+                "type": "uno",
+                "uno": null,
+                "a": {
+                  "type": "rvalue",
+                  "a": "1.0"
+                }
+              }
+            }
+          ]
         },
         {
-          "spec": "static",
-          "name": "f",
-          "params": [
-            {
-              "name": "a"
-            },
-            {
-              "name": "b"
-            }
-          ],
-          "body": []
+          "spec": "uniform",
+          "type": "uint",
+          "name": "stf",
+          "init": null
         }
       ]
     }

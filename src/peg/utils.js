@@ -18,8 +18,8 @@ const _attribute = (type, name, init) =>
 const _dynamic = (type, name, params, body) =>
 	({spec: 'dynamic', type, name, params, body});
 
-const _static = (name, params, body) =>
-	({spec: 'static', name, params, body});
+const _static = (type, name, params, body) =>
+	({spec: 'static', type, name, params, body});
 
 const _alias = (name, target) =>
 	({spec: 'alias', name, target});

@@ -31,10 +31,22 @@
           "init": null
         },
         {
+          "spec": "static",
+          "type": "void",
+          "name": "kernel",
+          "params": [],
+          "body": []
+        },
+        {
           "spec": "dynamic",
           "type": "void",
           "name": "f1",
-          "params": [],
+          "params": [
+            {
+              "type": "float",
+              "name": "v"
+            }
+          ],
           "body": [
             {
               "type": "vars",
@@ -145,7 +157,25 @@
                   {
                     "type": "call",
                     "name": "f1",
-                    "args": []
+                    "args": [
+                      {
+                        "type": "uno",
+                        "uno": null,
+                        "a": {
+                          "type": "rvalue",
+                          "a": {
+                            "type": "rvalue",
+                            "access": "static",
+                            "chain": [
+                              {
+                                "name": "s",
+                                "type": "access"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }

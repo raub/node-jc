@@ -1,7 +1,7 @@
 
 MyClass {
 	
-	f(a, b) {
+	float f(int a, char b) {
 		
 	}
 	

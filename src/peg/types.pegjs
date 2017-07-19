@@ -40,3 +40,5 @@ types_js = 'js'
 js_type = 'js'
 
 types_gpu = struct_type / core_type / ref_type
+
+types_static = types_js / struct_type / core_type
