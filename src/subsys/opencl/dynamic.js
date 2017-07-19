@@ -9,15 +9,30 @@ const Scope = require('../base/scope');
 class Dynamic {
 	
 	get name()   { return this._name; }
-	get header() { return `${this._signature};`; }
-	get code()   { return `${this._signature} {${this._inject}\n\t${this._body}\n}`; }
+	get header() { return `${this.signature};`; }
+	get code()   {
+		return `${this.signature} {${this._inject}\n\t${
+			this._descBody.map(statement => {
+				const method = `__${statement.type}`;
+				return this[method] && this[method](statement, this._scope) ||
+					`// TODO: ${statement.type}`;
+			}).join('\n\t')
+		}\n}`;
+	}
 	
 	get inject()  { return this._inject; }
 	set inject(v) { this._inject = v; }
 	
-	get attributes()  { return this._attributes; }
-	set attributes(v) { this._attributes = v; }
+	get attributeParams()  { return this._attributeParams; }
+	set attributeParams(v) { this._attributeParams = v; }
 	
+	get attributeArgs()  { return this._attributeArgs; }
+	set attributeArgs(v) { this._attributeArgs = v; }
+	
+	get signature() {
+		this._paramList = this._paramList || this._params(this._descParams);
+		return `${this._ownType} ${this._ownName}${this._paramList}`;
+	}
 	
 	constructor(desc, scope) {
 		
@@ -26,17 +41,15 @@ class Dynamic {
 		this._scope = scope.clone(this._name);
 		this._ownScope = scope.get(this._name);
 		
-		const name = this._scope.get(`${this._name}`).name;
+		this._ownName = this._scope.get(`${this._name}`).name;
+		this._ownType = desc.type;
 		
-		this._signature = `${desc.type} ${name}${this._params(desc.params)}`;
+		this._descParams = desc.params;
+		this._descBody = desc.body;
 		
-		this._body = desc.body.map(statement => {
-			const method = `__${statement.type}`;
-			return this[method] && this[method](statement, scope) ||
-				`// TODO: ${statement.type}`;
-		}).join('\n\t');
+		this._body = 'NOT_READY';
 		
-		this._inject = '';
+		this._attributes = 'NOT_READY';
 		
 	}
 	
@@ -125,6 +138,7 @@ class Dynamic {
 	
 	
 	_args(desc) {
+		
 		return `(_this_i_, _uniform_buffer_${desc.length ? `, ${desc.map(e => this.__expression(e)).join(', ')}` : ''})`;
 	}
 	

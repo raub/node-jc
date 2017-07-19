@@ -16,7 +16,8 @@ class Class extends base.Class {
 	get inject()  { return this._inject;  }
 	get program() { return this._program; }
 	
-	get attributes() { return this._attributes; }
+	get attributeParams() { return this._attributeParams; }
+	get attributeArgs() { return this._attributeArgs; }
 	
 	
 	constructor(desc, imported, location) {
@@ -61,12 +62,23 @@ class Class extends base.Class {
 		});
 		
 		
-		this._attributes = Object.keys(this._cl).filter(k => /^attribute_/.test(k)).map(
+		this._attributeParams = Object.keys(this._cl).filter(k => /^attribute_/.test(k)).map(
 			name => this._cl[name].param
 		).join(', ');
 		
-		const attributesFull = this.classes.map(item => item.attributes).join('\n') +
-			this._attributes;
+		this._attributeArgs = Object.keys(this._cl).filter(k => /^attribute_/.test(k)).map(
+			name => this._scope.get(this._cl[name].name).name
+		).join(', ');
+		
+		const attributeParamsFull = [].concat(
+			this.classes.map(item => item.attributeParams).filter(x=>x),
+			(this._attributeParams ? [this._attributeParams] : [])
+		).join(', ');
+		
+		const attributeArgsFull = [].concat(
+			this.classes.map(item => item.attributeArgs).filter(x=>x),
+			(this._attributeArgs ? [this._attributeArgs] : [])
+		).join(', ');
 		
 		this._inject = [].concat(
 			[`\n\t// Class ${this.name} uniforms`],
@@ -79,8 +91,10 @@ class Class extends base.Class {
 		
 		// Patch the methods
 		Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).forEach(name => {
+			console.log('IAF');
 			this._cl[name].inject = injectFull;
-			this._cl[name].attributes = attributesFull;
+			this._cl[name].attributeParams = attributeParamsFull;
+			this._cl[name].attributeArgs   = attributeArgsFull;
 		});
 		
 		// Pull method headers

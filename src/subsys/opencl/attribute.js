@@ -2,6 +2,7 @@
 
 const device = require('./device');
 const types = require('./types');
+const Scope = require('../base/scope');
 
 
 class Attribute {
