@@ -43,10 +43,10 @@ class Uniform {
 			
 		}
 		
-		this._length = this._uniItems * types.sizeof(this._uniType);
-		this._pos = device.uniforms.seize(this._length);
+		this._uniBytes = this._uniItems * types.sizeof(this._uniType);
+		this._pos = device.uniforms.seize(this._uniBytes);
 		
-		this._array = new Uint8Array(this._length);
+		this._array = new Uint8Array(this._uniBytes);
 		
 		this._value =  desc.init;
 		this._write();

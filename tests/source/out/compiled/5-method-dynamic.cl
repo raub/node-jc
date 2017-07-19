@@ -1,18 +1,22 @@
 // ----> MyClass <---- //
 
 // --- Class MyClass header --- //
+
+// Dynamic-headers
 float __MyClass_f(size_t _this_i_, __global char *_uniform_buffer_, int _f_param_x, char _f_param_z);
-// Uniform helpers
 
-// Attribute helpers
-
+// Uniform-headers
 
 
 
-// Class MyClass code
+
+// --- Class MyClass code ---
 
 float __MyClass_f(size_t _this_i_, __global char *_uniform_buffer_, int _f_param_x, char _f_param_z) {
-	// Class MyClass injects
-
+	// Class MyClass uniforms
+	
 	
 }
+
+
+// --- Class MyClass END ---

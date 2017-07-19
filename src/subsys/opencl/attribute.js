@@ -22,39 +22,62 @@ class Attribute {
 	
 	get header() { return ``; }
 	get code()   { return ``; }
-	get inject() { return this._inject; }
+	get param() { return this._param; }
 	
 	constructor(desc, scope) {
 		
-		this._name = desc.name;
-		this._scope = scope.clone(this._name);
-		
-		this._attrItems = 1;
-		this._attrBytes = 4;
-		this._attrType  = 'float';
+		this._name     = desc.name;
+		this._scope    = scope.clone(this._name);
+		this._ownScope = scope.get(this._name);
 		
 		if (typeof desc.type === 'object') {
-			this._attrType  = desc.type.type;
-			this._attrItems = desc.type.names.length;
+			
+			this._uniType  = desc.type.type;
+			this._uniItems = desc.type.names.length;
+			
+			const typeScope = new Scope();
+			types.fillScope(this._uniType, typeScope, this._scope);
+			
+			desc.type.names.forEach(
+				n => this._ownScope.set(n, typeScope)
+			);
+			
 		} else {
-			this._attrType = desc.type;
+			
+			this._uniType = desc.type;
+			this._uniItems = 1;
+			
+			types.fillScope(this._uniType, this._ownScope, this._scope);
+			
 		}
 		
-		this._attrBytes = types.sizeof(this._attrType) * this._attrItems;
+		// this._name = desc.name;
+		
+		// this._scope    = scope.clone(this._name);
+		// this._ownScope = scope.get(this._name);
+		
+		// if (typeof desc.type === 'object') {
+		// 	this._attrType  = desc.type.type;
+		// 	this._attrItems = desc.type.names.length;
+		// } else {
+		// 	this._attrType = desc.type;
+		// }
+		
+		// this._attrBytes = types.sizeof(this._attrType) * this._attrItems;
+		
+		this._uniBytes = this._uniItems * types.sizeof(this._uniType);
 		
 		this._count = 0;
 		
 		this._buffer = device.cl.createBuffer(
 			device.context,
 			device.cl.MEM_READ_WRITE,
-			this._attrBytes * types.CLASS_SIZE
+			this._uniBytes * types.CLASS_SIZE
 		);
 		
-		this._signature = ``;
+		const name = this._scope.get(`${this._name}`).name;
 		
-		this._body = ``;
-		
-		this._inject = ``;
+		this._param = `global ${this._uniType} *${name}`;
 		
 	}
 	

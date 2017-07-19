@@ -15,6 +15,9 @@ class Dynamic {
 	get inject()  { return this._inject; }
 	set inject(v) { this._inject = v; }
 	
+	get attributes()  { return this._attributes; }
+	set attributes(v) { this._attributes = v; }
+	
 	
 	constructor(desc, scope) {
 		
@@ -30,7 +33,7 @@ class Dynamic {
 		this._body = desc.body.map(statement => {
 			const method = `__${statement.type}`;
 			return this[method] && this[method](statement, scope) ||
-				`// ${statement.type}`;
+				`// TODO: ${statement.type}`;
 		}).join('\n\t');
 		
 		this._inject = '';
@@ -40,6 +43,8 @@ class Dynamic {
 	
 	_params(desc) {
 		return `(size_t _this_i_, __global char *_uniform_buffer_${
+				this._attributes ? `, ${this._attributes}` : ''
+			}${
 				desc.length ? `, ${desc.map(v => {
 					
 					const name = `_${this._name}_param_${v.name}`;

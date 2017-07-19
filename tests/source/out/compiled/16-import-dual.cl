@@ -2,29 +2,35 @@
 
 // --- Class MyClass1 header --- //
 
-// Uniform helpers
+// Dynamic-headers
 
-// Attribute helpers
+
+// Uniform-headers
 
 
 
 
 // --- Class MyClass2 header --- //
 
-// Uniform helpers
+// Dynamic-headers
 
-// Attribute helpers
+
+// Uniform-headers
 
 
 
 
 // --- Class MyClass header --- //
 
-// Uniform helpers
-
-// Attribute helpers
+// Dynamic-headers
 
 
+// Uniform-headers
 
 
-// Class MyClass code
+
+
+// --- Class MyClass code ---
+
+
+// --- Class MyClass END ---

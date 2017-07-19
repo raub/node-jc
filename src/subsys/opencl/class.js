@@ -16,6 +16,8 @@ class Class extends base.Class {
 	get inject()  { return this._inject;  }
 	get program() { return this._program; }
 	
+	get attributes() { return this._attributes; }
+	
 	
 	constructor(desc, imported, location) {
 		
@@ -58,34 +60,37 @@ class Class extends base.Class {
 			
 		});
 		
+		
+		this._attributes = Object.keys(this._cl).filter(k => /^attribute_/.test(k)).map(
+			name => this._cl[name].param
+		).join(', ');
+		
+		const attributesFull = this.classes.map(item => item.attributes).join('\n') +
+			this._attributes;
+		
 		this._inject = [].concat(
-			[`\n\t// Class ${this.name} injects`],
+			[`\n\t// Class ${this.name} uniforms`],
 			Object.keys(this._cl).filter(k => /^uniform_/.test(k)).map(
 				name => this._cl[name].inject
-			),
-			Object.keys(this._cl).filter(k => /^attribute_/.test(k)).map(
-				name => this._cl[name].inject
 			)
-		).join('\n') + '\n';
+		).join('\n') + '\n\t';
 		
 		const injectFull = this.classes.map(item => item.inject).join('\n') + this._inject;
 		
 		// Patch the methods
-		Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).forEach(
-			name => this._cl[name].inject = injectFull
-		);
+		Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).forEach(name => {
+			this._cl[name].inject = injectFull;
+			this._cl[name].attributes = attributesFull;
+		});
 		
 		// Pull method headers
 		this._header = `\n// --- Class ${this.name} header --- //\n` +
+			'\n// Dynamic-headers\n' +
 			Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).map(
 				name => this._cl[name].header
-			).join('\n') +
-			'\n// Uniform helpers\n' + 
+			).join('\n') + '\n' +
+			'\n// Uniform-headers\n' +
 			Object.keys(this._cl).filter(k => /^uniform_/.test(k)).map(
-				name => this._cl[name].header
-			).join('\n') +
-			'\n// Attribute helpers\n' + 
-			Object.keys(this._cl).filter(k => /^attribute_/.test(k)).map(
 				name => this._cl[name].header
 			).join('\n') + '\n';
 		
@@ -95,7 +100,7 @@ class Class extends base.Class {
 			// Imported headers
 			this.classes.map(item => item.header),
 			// Own header
-			[this._header, `\n// Class ${this.name} code`],
+			[this._header, `\n// --- Class ${this.name} code ---`],
 			// Own dynamic methods
 			Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).map(
 				name => this._cl[name].code
@@ -106,9 +111,7 @@ class Class extends base.Class {
 			Object.keys(this._cl).filter(k => /^uniform_/.test(k)).map(
 				name => this._cl[name].code
 			),
-			Object.keys(this._cl).filter(k => /^attribute_/.test(k)).map(
-				name => this._cl[name].code
-			)
+			[`\n// --- Class ${this.name} END ---`]
 		).join('\n\n') + '\n';
 		
 		try {
