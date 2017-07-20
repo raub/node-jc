@@ -30,7 +30,7 @@ class Dynamic {
 	set attributeArgs(v) { this._attributeArgs = v; }
 	
 	get signature() {
-		this._paramList = this._paramList || this._params(this._descParams);
+		this._paramList = this._paramList || this._params();
 		return `${this._ownType} ${this._ownName}${this._paramList}`;
 	}
 	
@@ -47,16 +47,18 @@ class Dynamic {
 		this._descParams = desc.params;
 		this._descBody = desc.body;
 		
-		this._body = 'NOT_READY';
+		this._body = 'BODY_NOT_READY';
 		
-		this._attributes = 'NOT_READY';
+		this._attributeParams = 'PARAMS_NOT_READY';
+		this._attributeArgs = 'ARGS_NOT_READY';
 		
 	}
 	
 	
-	_params(desc) {
+	_params() {
+		const desc = this._descParams;
 		return `(size_t _this_i_, __global char *_uniform_buffer_${
-				this._attributes ? `, ${this._attributes}` : ''
+				this._attributeParams ? `, ${this._attributeParams}` : ''
 			}${
 				desc.length ? `, ${desc.map(v => {
 					
@@ -112,7 +114,7 @@ class Dynamic {
 			}
 			
 			if (item.type === 'call') {
-				fullName += that._args(item.args);
+				fullName += that._args(typeof next === 'object' ? next : null, item.args);
 			} else if (item.type === 'index') {
 				fullName += that._index(item.index, fullName);
 			}
@@ -132,14 +134,27 @@ class Dynamic {
 	}
 	
 	
-	__call(desc) {
-		return `${this._chain(desc.callee)}${this.__args(desc.args)};`;
-	}
+	// __call(desc) {
+	// 	return `${this._chain(desc.callee)}${this.__args(desc.args)};`;
+	// }
 	
 	
-	_args(desc) {
+	_args(subscope, desc) {
 		
-		return `(_this_i_, _uniform_buffer_${desc.length ? `, ${desc.map(e => this.__expression(e)).join(', ')}` : ''})`;
+		const attributes = subscope && subscope.info && subscope.info.owner &&
+				this._scope.get(subscope.info.owner) &&
+				this._scope.get(subscope.info.owner).attributeArgs ||
+			'';
+		
+		return `(_this_i_, _uniform_buffer_${
+				attributes ?
+					`, /*ARGS: ${this._ownScope.info.owner} */ ${attributes} /* END ARGS */` :
+					`/* NO_ARGS: ${this._ownScope.info.owner} */`
+			}${
+				desc.length ?
+					`, ${desc.map(e => this.__expression(e)).join(', ')}` :
+					''
+			})`;
 	}
 	
 	

@@ -63,12 +63,13 @@ class Uniform {
 	
 	_write() {
 		const buffer = device.uniforms.buffer;
+		// console.log('BUF W', this._pos, this._uniBytes, this._array );
 		device.cl.enqueueWriteBuffer(
 			device.queue,
 			buffer,
 			true,
 			this._pos,
-			this._length,
+			this._uniBytes,
 			this._array
 		);
 	}

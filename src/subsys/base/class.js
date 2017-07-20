@@ -29,16 +29,16 @@ class Class {
 		// Put imports into the scope
 		this._classes.forEach(c => this._scope.set(c.name, c.scope));
 		
+		this._scope.set(this._name, this._scope);
 		
 		desc.members.forEach(member => {
 			
 			const target = member.spec === 'alias' ? member.target : member.name;
 			
-			this._scope.set(
-				`${member.name}`,
-				new Scope(`__${this._name}_${target}`)
-				//`__${this._name}_${target}`
-			);
+			const scope = new Scope(`__${this._name}_${target}`);
+			scope.info.owner = this._name;
+			
+			this._scope.set(`${member.name}`, scope);
 			
 		});
 		

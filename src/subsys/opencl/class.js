@@ -80,6 +80,8 @@ class Class extends base.Class {
 			(this._attributeArgs ? [this._attributeArgs] : [])
 		).join(', ');
 		
+		this._scope.info[this._name] = { attributeArgs: attributeArgsFull };
+		
 		this._inject = [].concat(
 			[`\n\t// Class ${this.name} uniforms`],
 			Object.keys(this._cl).filter(k => /^uniform_/.test(k)).map(

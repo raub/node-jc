@@ -12,7 +12,7 @@ class Scope {
 		
 		this._name = name || this._randomName();
 		this._keys = {};
-		this._info = null;
+		this._info = {};
 		
 	}
 	
@@ -28,6 +28,7 @@ class Scope {
 		Object.keys(this._keys).forEach(k => {
 			cloned._keys[k] = this._keys[k];
 		});
+		cloned._info = this._info;
 		return cloned;
 	}
 	

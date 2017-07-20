@@ -3,8 +3,8 @@
 // --- Class MyClass header --- //
 
 // Dynamic-headers
-void __MyClass_update(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY);
-void __MyClass_pull(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY);
+void __MyClass_update(size_t _this_i_, __global char *_uniform_buffer_, global float *__MyClass_dist, global float3 *__MyClass_pos);
+void __MyClass_pull(size_t _this_i_, __global char *_uniform_buffer_, global float *__MyClass_dist, global float3 *__MyClass_pos);
 
 // Uniform-headers
 float _uniform___MyClass_stiff(__global char *_uniform_buffer_);
@@ -14,7 +14,7 @@ float _uniform___MyClass_stiff(__global char *_uniform_buffer_);
 // --- Class MyClass1 header --- //
 
 // Dynamic-headers
-void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY, float _f1_param_v);
+void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, global float *__MyClass_dist, global float3 *__MyClass_pos, global float *__MyClass1_dd, float _f1_param_v);
 
 // Uniform-headers
 int _uniform___MyClass1_abc(__global char *_uniform_buffer_);
@@ -24,7 +24,7 @@ uchar _uniform___MyClass1_def(__global char *_uniform_buffer_);
 
 // --- Class MyClass1 code ---
 
-void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY, float _f1_param_v) {
+void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, global float *__MyClass_dist, global float3 *__MyClass_pos, global float *__MyClass1_dd, float _f1_param_v) {
 	// Class MyClass uniforms
 	float __MyClass_stiff = _uniform___MyClass_stiff(_uniform_buffer_);
 	
@@ -33,7 +33,7 @@ void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY, 
 	uchar __MyClass1_def = _uniform___MyClass1_def(_uniform_buffer_);
 	
 	float _f1_local_s = __MyClass_stiff;
-	__MyClass_pull(_this_i_, _uniform_buffer_);
+	__MyClass_pull(_this_i_, _uniform_buffer_/* NO_ARGS: MyClass1 */);
 }
 
 
@@ -55,8 +55,8 @@ uchar _uniform___MyClass1_def(__global char *_uniform_buffer_) {
 // --- Class MyClass header --- //
 
 // Dynamic-headers
-void __MyClass_update(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY);
-void __MyClass_pull(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY);
+void __MyClass_update(size_t _this_i_, __global char *_uniform_buffer_, global float *__MyClass_dist, global float3 *__MyClass_pos);
+void __MyClass_pull(size_t _this_i_, __global char *_uniform_buffer_, global float *__MyClass_dist, global float3 *__MyClass_pos);
 
 // Uniform-headers
 float _uniform___MyClass_stiff(__global char *_uniform_buffer_);
@@ -66,7 +66,7 @@ float _uniform___MyClass_stiff(__global char *_uniform_buffer_);
 // --- Class MyClass1 header --- //
 
 // Dynamic-headers
-void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY, float _f1_param_v);
+void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, global float *__MyClass_dist, global float3 *__MyClass_pos, global float *__MyClass1_dd, float _f1_param_v);
 
 // Uniform-headers
 int _uniform___MyClass1_abc(__global char *_uniform_buffer_);
@@ -77,7 +77,7 @@ uchar _uniform___MyClass1_def(__global char *_uniform_buffer_);
 // --- Class MyClass2 header --- //
 
 // Dynamic-headers
-void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY);
+void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_, global float *__MyClass_dist, global float3 *__MyClass_pos, global float *__MyClass1_dd, global float3 *__MyClass2_xyz);
 
 // Uniform-headers
 
@@ -86,7 +86,7 @@ void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY);
 
 // --- Class MyClass2 code ---
 
-void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY) {
+void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_, global float *__MyClass_dist, global float3 *__MyClass_pos, global float *__MyClass1_dd, global float3 *__MyClass2_xyz) {
 	// Class MyClass uniforms
 	float __MyClass_stiff = _uniform___MyClass_stiff(_uniform_buffer_);
 	
@@ -98,8 +98,8 @@ void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_, NOT_READY) 
 	// Class MyClass2 uniforms
 	
 	float _f2_local_s = __MyClass_stiff;
-	__MyClass_pull(_this_i_, _uniform_buffer_);
-	__MyClass1_f1(_this_i_, _uniform_buffer_, _f2_local_s);
+	__MyClass_pull(_this_i_, _uniform_buffer_/* NO_ARGS: MyClass2 */);
+	__MyClass1_f1(_this_i_, _uniform_buffer_/* NO_ARGS: MyClass2 */, _f2_local_s);
 }
 
 
