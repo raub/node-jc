@@ -33,7 +33,7 @@ void __MyClass1_f1(size_t _this_i_, __global char *_uniform_buffer_, global floa
 	uchar __MyClass1_def = _uniform___MyClass1_def(_uniform_buffer_);
 	
 	float _f1_local_s = __MyClass_stiff;
-	__MyClass_pull(_this_i_, _uniform_buffer_/* NO_ARGS: MyClass1 */);
+	__MyClass_pull(_this_i_, _uniform_buffer_, /*ARGS: MyClass1 */ __MyClass_dist, __MyClass_pos /* END ARGS */);
 }
 
 
@@ -98,8 +98,8 @@ void __MyClass2_f2(size_t _this_i_, __global char *_uniform_buffer_, global floa
 	// Class MyClass2 uniforms
 	
 	float _f2_local_s = __MyClass_stiff;
-	__MyClass_pull(_this_i_, _uniform_buffer_/* NO_ARGS: MyClass2 */);
-	__MyClass1_f1(_this_i_, _uniform_buffer_/* NO_ARGS: MyClass2 */, _f2_local_s);
+	__MyClass_pull(_this_i_, _uniform_buffer_, /*ARGS: MyClass2 */ __MyClass_dist, __MyClass_pos /* END ARGS */);
+	__MyClass1_f1(_this_i_, _uniform_buffer_, /*ARGS: MyClass2 */ __MyClass_dist, __MyClass_pos, __MyClass1_dd /* END ARGS */, _f2_local_s);
 }
 
 

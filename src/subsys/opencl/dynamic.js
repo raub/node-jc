@@ -143,7 +143,7 @@ class Dynamic {
 		
 		const attributes = subscope && subscope.info && subscope.info.owner &&
 				this._scope.get(subscope.info.owner) &&
-				this._scope.get(subscope.info.owner).attributeArgs ||
+				this._scope.get(subscope.info.owner).info[subscope.info.owner].attributeArgs ||
 			'';
 		
 		return `(_this_i_, _uniform_buffer_${

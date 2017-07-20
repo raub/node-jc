@@ -24,7 +24,7 @@ void __MyClass_pull(size_t _this_i_, __global char *_uniform_buffer_, global flo
 	// Class MyClass uniforms
 	float __MyClass_stiff = _uniform___MyClass_stiff(_uniform_buffer_);
 	
-	__MyClass_update(_this_i_, _uniform_buffer_/* NO_ARGS: MyClass */);
+	__MyClass_update(_this_i_, _uniform_buffer_, /*ARGS: MyClass */ __MyClass_dist, __MyClass_pos /* END ARGS */);
 	float _pull_local_x = 1;
 }
 
