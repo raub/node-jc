@@ -105,6 +105,9 @@ class Dynamic {
 			}
 			
 			const item = chain[i];
+			// if (!subscope) {
+				
+			// }
 			const next = subscope.get(`${item.name}`);
 			
 			if (typeof next === 'object') {
@@ -120,7 +123,8 @@ class Dynamic {
 			}
 			
 			if (typeof next === 'object') {
-				_recurse(next.scope, chain, i+1);
+				//console.log('next', JSON.stringify(next, null, '\t'));
+				_recurse(next, chain, i+1);
 			}
 			
 		})(this._scope, desc.chain, 0);
@@ -141,18 +145,26 @@ class Dynamic {
 	
 	_args(subscope, desc) {
 		
+		const thiscall = subscope && subscope.info && subscope.info.owner;
+		
 		const attributes = subscope && subscope.info && subscope.info.owner &&
 				this._scope.get(subscope.info.owner) &&
 				this._scope.get(subscope.info.owner).info[subscope.info.owner].attributeArgs ||
 			'';
 		
-		return `(_this_i_, _uniform_buffer_${
+		return `(${
+				thiscall ? '_this_i_, _uniform_buffer_' : ''
+			}${
+				thiscall && attributes && ', ' || ' '
+			}${
 				attributes ?
 					`, /*ARGS: ${this._ownScope.info.owner} */ ${attributes} /* END ARGS */` :
 					`/* NO_ARGS: ${this._ownScope.info.owner} */`
 			}${
+				thiscall && attributes && desc.length && ', ' || ' '
+			}${
 				desc.length ?
-					`, ${desc.map(e => this.__expression(e)).join(', ')}` :
+					desc.map(e => this.__expression(e)).join(', ') :
 					''
 			})`;
 	}

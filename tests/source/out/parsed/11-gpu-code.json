@@ -80,13 +80,66 @@
               "typeName": "float",
               "list": [
                 {
-                  "name": "x",
+                  "name": "_dist",
                   "value": {
                     "type": "uno",
                     "uno": null,
                     "a": {
                       "type": "rvalue",
-                      "a": "1"
+                      "a": {
+                        "type": "rvalue",
+                        "access": "static",
+                        "chain": [
+                          {
+                            "type": "call",
+                            "name": "distance",
+                            "args": [
+                              {
+                                "type": "uno",
+                                "uno": null,
+                                "a": {
+                                  "type": "rvalue",
+                                  "a": {
+                                    "type": "rvalue",
+                                    "access": "static",
+                                    "chain": [
+                                      {
+                                        "name": "pos",
+                                        "type": "access"
+                                      },
+                                      {
+                                        "name": "a",
+                                        "type": "access"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "type": "uno",
+                                "uno": null,
+                                "a": {
+                                  "type": "rvalue",
+                                  "a": {
+                                    "type": "rvalue",
+                                    "access": "static",
+                                    "chain": [
+                                      {
+                                        "name": "pos",
+                                        "type": "access"
+                                      },
+                                      {
+                                        "name": "b",
+                                        "type": "access"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
                     }
                   }
                 }

@@ -18,9 +18,9 @@ MyClass {
 		// TODO: iterate vertices?
 		
 		update();
-		float x = 1;
-		// // Calculate acceleration for vertices
-		// float _dist = distance(pos.a, pos.b);
+		// float x = 1;
+		// Calculate acceleration for vertices
+		float _dist = distance(pos.a, pos.b);
 		// float force = stiff * (dist - _dist);
 		
 		// float3 mid  = (pos.a + pos.b) * 0.5;

@@ -24,7 +24,7 @@ class Class {
 		}
 		
 		this._imported = desc.imported;
-		this._classes = Object.keys(imported).map(k => imported[k]);
+		this._classes  = Object.keys(imported).map(k => imported[k]);
 		
 		// Put imports into the scope
 		this._classes.forEach(c => this._scope.set(c.name, c.scope));

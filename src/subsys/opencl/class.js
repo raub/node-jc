@@ -93,7 +93,7 @@ class Class extends base.Class {
 		
 		// Patch the methods
 		Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).forEach(name => {
-			this._cl[name].inject = injectFull;
+			this._cl[name].inject          = injectFull;
 			this._cl[name].attributeParams = attributeParamsFull;
 			this._cl[name].attributeArgs   = attributeArgsFull;
 		});
