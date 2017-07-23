@@ -1,18 +1,27 @@
 // ----> MyClass <---- //
 
-// --- Class MyClass header --- //
 
-// Dynamic-headers
+// --- Forward declarations --- //
 
-
-// Uniform-headers
+// Uniform helpers
 
 
-
-
-// --- Class MyClass code ---
+// Dynamic methods
 
 
 
+// --- Implementation --- //
 
-// --- Class MyClass END ---
+// MyClass uniform helpers
+
+
+
+
+// MyClass dynamic methods
+
+
+
+
+// MyClass static methods
+
+

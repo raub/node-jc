@@ -1,22 +1,27 @@
 // ----> MyClass <---- //
 
-// --- Class MyClass header --- //
 
-// Dynamic-headers
-float __MyClass_f(size_t _this_i_, __global char *_uniform_buffer_, int _f_param_x, char _f_param_z);
+// --- Forward declarations --- //
 
-// Uniform-headers
+// Uniform helpers
 
 
+// Dynamic methods
 
 
-// --- Class MyClass code ---
 
-float __MyClass_f(size_t _this_i_, __global char *_uniform_buffer_, int _f_param_x, char _f_param_z) {
-	// Class MyClass uniforms
-	
-	
-}
+// --- Implementation --- //
+
+// MyClass uniform helpers
 
 
-// --- Class MyClass END ---
+
+
+// MyClass dynamic methods
+
+
+
+
+// MyClass static methods
+
+

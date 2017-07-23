@@ -6,96 +6,10 @@
 const Scope = require('../base/scope');
 
 
-class Dynamic {
-	
-	get name()   { return this._name; }
-	get header() { return `${this.signature};`; }
-	get source()   {
-		return `${this.signature} {${this._inject}\n\t${
-			this._descBody.map(statement => {
-				const method = `__${statement.type}`;
-				return this[method] && this[method](statement, this._scope) ||
-					`// TODO: ${statement.type}`;
-			}).join('\n\t')
-		}\n}`;
-	}
-	
-	get inject()  { return this._inject; }
-	set inject(v) { this._inject = v; }
-	
-	get attributeParams()  { return this._attributeParams; }
-	set attributeParams(v) { this._attributeParams = v; }
-	
-	get attributeArgs()  { return this._attributeArgs; }
-	set attributeArgs(v) { this._attributeArgs = v; }
-	
-	get signature() {
-		this._paramList = this._paramList || this._params();
-		return `${this._ownType} ${this._ownName}${this._paramList}`;
-	}
-	
-	constructor(desc, owner) {
-		
-		this._name  = desc.name;
-		this._owner = owner;
-		
-		this._scope = owner.scope.clone(this._name);
-		this._ownScope = this._scope.get(this._name);
-		
-		this._ownName = this._scope.get(`${this._name}`).name;
-		this._ownType = desc.type;
-		
-		this._descParams = desc.params;
-		this._descBody = desc.body;
-		
-		this._body = 'BODY_NOT_READY';
-		
-		this._attributeParams = 'PARAMS_NOT_READY';
-		this._attributeArgs = 'ARGS_NOT_READY';
-		
-	}
+class DynamicChain {
 	
 	
-	_params() {
-		const desc = this._descParams;
-		return `(size_t _this_i_, __global char *_uniform_buffer_${
-				this._attributeParams ? `, ${this._attributeParams}` : ''
-			}${
-				desc.length ? `, ${desc.map(v => {
-					
-					const name = `_${this._name}_param_${v.name}`;
-					const ownScope = new Scope(name);
-					// TODO: fillScope?
-					this._scope.set(v.name, ownScope);
-					
-					return `${v.type} ${name}`;
-					
-				}).join(', ')
-			}` : ''})`;
-	}
-	
-	
-	__vars(desc) {
-		
-		return desc.list.map(v => {
-			
-			const name = `_${this._name}_local_${v.name}`;
-			const ownScope = new Scope(name);
-			this._scope.set(v.name, ownScope);
-			
-			
-			if (v.value) {
-				return `${desc.typeName} ${name} = ${this.__expression(v.value)};`;
-			} else {
-				return `${desc.typeName} ${name};`;
-			}
-			
-		}).join('\n');
-		
-	}
-	
-	
-	_chain(desc) {
+	constructor(desc) {
 		const that = this;
 		
 		let fullName = '';
@@ -217,4 +131,4 @@ class Dynamic {
 	
 };
 
-module.exports = Dynamic;
+module.exports = DynamicChain;

@@ -1,26 +1,27 @@
 // ----> MyClass1 <---- //
 
-// --- Class MyClass header --- //
 
-// Dynamic-headers
+// --- Forward declarations --- //
 
-
-// Uniform-headers
+// Uniform helpers
 
 
+// Dynamic methods
 
 
-// --- Class MyClass1 header --- //
 
-// Dynamic-headers
+// --- Implementation --- //
 
-
-// Uniform-headers
+// MyClass1 uniform helpers
 
 
 
 
-// --- Class MyClass1 code ---
+// MyClass1 dynamic methods
 
 
-// --- Class MyClass1 END ---
+
+
+// MyClass1 static methods
+
+

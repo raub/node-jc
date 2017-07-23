@@ -1,46 +1,27 @@
 // ----> MyClass3 <---- //
 
-// --- Class MyClass1 header --- //
 
-// Dynamic-headers
+// --- Forward declarations --- //
 
-
-// Uniform-headers
+// Uniform helpers
 
 
+// Dynamic methods
 
 
-// --- Class MyClass2 header --- //
 
-// Dynamic-headers
+// --- Implementation --- //
 
-
-// Uniform-headers
+// MyClass3 uniform helpers
 
 
 
 
-// --- Class MyClass header --- //
-
-// Dynamic-headers
-
-
-// Uniform-headers
+// MyClass3 dynamic methods
 
 
 
 
-// --- Class MyClass3 header --- //
-
-// Dynamic-headers
+// MyClass3 static methods
 
 
-// Uniform-headers
-
-
-
-
-// --- Class MyClass3 code ---
-
-
-// --- Class MyClass3 END ---

@@ -13,14 +13,17 @@ class Uniform {
 	set value(v) { this._value = v; this._write(); }
 	
 	get header() { return `${this._signature};`; }
-	get code()   { return `${this._signature} {\n\t${this._body}\n}`; }
+	get source() { return `${this._signature} {\n\t${this._body}\n}`; }
 	get inject() { return this._inject; }
 	
-	constructor(desc, scope) {
+	
+	constructor(desc, owner) {
 		
-		this._name     = desc.name;
-		this._scope    = scope.clone(this._name);
-		this._ownScope = scope.get(this._name);
+		this._name  = desc.name;
+		this._owner = owner;
+		
+		this._scope = owner.scope.clone(this._name);
+		this._ownScope = this._scope.get(this._name);
 		
 		if (typeof desc.type === 'object') {
 			

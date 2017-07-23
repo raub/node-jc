@@ -1,20 +1,27 @@
 // ----> MyClass <---- //
 
-// --- Class MyClass header --- //
 
-// Dynamic-headers
+// --- Forward declarations --- //
 
-
-// Uniform-headers
-float _uniform___MyClass_x(__global char *_uniform_buffer_);
+// Uniform helpers
 
 
-
-// --- Class MyClass code ---
-
-float _uniform___MyClass_x(__global char *_uniform_buffer_) {
-	return *((__global float*)(&_uniform_buffer_[4]));
-}
+// Dynamic methods
 
 
-// --- Class MyClass END ---
+
+// --- Implementation --- //
+
+// MyClass uniform helpers
+
+
+
+
+// MyClass dynamic methods
+
+
+
+
+// MyClass static methods
+
+

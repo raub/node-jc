@@ -24,35 +24,52 @@ class Class extends base.Class {
 		
 		super(desc, imported, location);
 		
-		this._cl = {};
+		this._attributes    = {};
+		this._attributeList = [];
 		
+		this._uniforms      = {};
+		this._uniformList   = [];
+		
+		this._dynamics      = {};
+		this._dynamicList   = [];
+		
+		this._statics       = {};
+		this._staticList    = [];
+		
+		
+		this._depends = {
+			attributes: [],
+			uniforms  : [],
+			dynamics  : [],
+		};
 		
 		desc.members.forEach(member => {
 			
 			switch (member.spec) {
 				
 				case 'attribute':
-					this._cl['attribute_' + member.name] =
-						new Attribute(member, this.scope);
+					this._attributes[member.name] = new Attribute(member, this);
+					this._attributeList.push(this._attributes[member.name]);
 					break;
 				
 				case 'uniform':
-					this._cl['uniform_' + member.name] =
-						new Uniform(member, this.scope);
+					this._uniforms[member.name] = new Uniform(member, this);
+					this._uniformList.push(this._uniforms[member.name]);
 					Object.defineProperty(this, member.name, {
-						get()  { return this._cl['uniform_' + member.name].value; },
-						set(v) { this._cl['uniform_' + member.name].value = v;    },
+						get()  { return this._uniforms[member.name].value; },
+						set(v) { this._uniforms[member.name].value = v;    },
 					});
 					break;
 				
 				case 'dynamic':
-					this._cl['dynamic_' + member.name] =
-						new Dynamic(member, this.scope);
+					this._dynamics[member.name] = new Dynamic(member, this);
+					this._dynamicList.push(this._dynamics[member.name]);
 					break;
 				
 				case 'static':
-					this._cl['static_' + member.name] =
-						new Static(member, this.scope);
+					this._statics[member.name] = new Static(member, this);
+					this._staticList.push(this._statics[member.name]);
+					this[member.name] = this._statics[member.name].invoke.bind(this._statics[member.name]);
 					break;
 				
 				default: break;
@@ -61,73 +78,60 @@ class Class extends base.Class {
 			
 		});
 		
+		this._attributeList.forEach( attr => this._depends.attributes.push(attr) );
+		this.classes.forEach(c => c._depends.attributes.forEach(
+			attr => this._depends.attributes.push(attr)
+		));
+		this._depends.attributes =
+			this._depends.attributes.filter((x,i,a) => a.indexOf(x) !== i);
 		
-		this._attributeParams = Object.keys(this._cl).filter(k => /^attribute_/.test(k)).map(
-			name => this._cl[name].param
-		).join(', ');
+		this._uniformList.forEach( attr => this._depends.uniforms.push(attr) );
+		this.classes.forEach(c => c._depends.uniforms.forEach(
+			attr => this._depends.uniforms.push(attr)
+		));
+		this._depends.uniforms =
+			this._depends.uniforms.filter((x,i,a) => a.indexOf(x) !== i);
 		
-		this._attributeArgs = Object.keys(this._cl).filter(k => /^attribute_/.test(k)).map(
-			name => this._scope.get(this._cl[name].name).name
-		).join(', ');
+		this._dynamicList.forEach( attr => this._depends.dynamics.push(attr) );
+		this.classes.forEach(c => c._depends.dynamics.forEach(
+			attr => this._depends.dynamics.push(attr)
+		));
+		this._depends.dynamics =
+			this._depends.dynamics.filter((x,i,a) => a.indexOf(x) !== i);
 		
-		const attributeParamsFull = [].concat(
-			this.classes.map(item => item.attributeParams).filter(x=>x),
-			(this._attributeParams ? [this._attributeParams] : [])
-		).join(', ');
 		
-		const attributeArgsFull = [].concat(
-			this.classes.map(item => item.attributeArgs).filter(x=>x),
-			(this._attributeArgs ? [this._attributeArgs] : [])
-		).join(', ');
 		
-		this._scope.info[this._name] = { attributeArgs: attributeArgsFull };
-		
-		this._inject = [].concat(
-			[`\n\t// Class ${this.name} uniforms`],
-			Object.keys(this._cl).filter(k => /^uniform_/.test(k)).map(
-				name => this._cl[name].inject
-			)
-		).join('\n') + '\n\t';
-		
-		const injectFull = this.classes.map(item => item.inject).join('\n') + this._inject;
-		
-		// Patch the methods
-		Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).forEach(name => {
-			this._cl[name].inject          = injectFull;
-			this._cl[name].attributeParams = attributeParamsFull;
-			this._cl[name].attributeArgs   = attributeArgsFull;
-		});
-		
-		// Pull method headers
-		this._header = `\n// --- Class ${this.name} header --- //\n` +
-			'\n// Dynamic-headers\n' +
-			Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).map(
-				name => this._cl[name].header
-			).join('\n') + '\n' +
-			'\n// Uniform-headers\n' +
-			Object.keys(this._cl).filter(k => /^uniform_/.test(k)).map(
-				name => this._cl[name].header
-			).join('\n') + '\n';
-		
+		// Pull headers
+		this._header = `
+// --- Forward declarations --- //
+
+// Uniform helpers
+${this._depends.uniforms.map(u => u.header).join('\n')}
+
+// Dynamic methods
+${this._depends.dynamics.map(d => d.header).join('\n')}
+`;
 		
 		// Pull code from methods
-		this._source = [].concat(
-			// Imported headers
-			this.classes.map(item => item.header),
-			// Own header
-			[this._header, `\n// --- Class ${this.name} code ---`],
-			// Own dynamic methods
-			Object.keys(this._cl).filter(k => /^dynamic_/.test(k)).map(
-				name => this._cl[name].code
-			),
-			Object.keys(this._cl).filter(k => /^static_/.test(k)).map(
-				name => this._cl[name].code
-			),
-			Object.keys(this._cl).filter(k => /^uniform_/.test(k)).map(
-				name => this._cl[name].code
-			),
-			[`\n// --- Class ${this.name} END ---`]
-		).join('\n\n') + '\n';
+		this._source = `
+${this._header}
+
+// --- Implementation --- //
+
+// ${this.name} uniform helpers
+
+${this._uniformList.map(d => d.source).join('\n')}
+
+
+// ${this.name} dynamic methods
+
+${this._dynamicList.map(d => d.source).join('\n')}
+
+
+// ${this.name} static methods
+
+${this._staticList.map(d => d.source).join('\n')}
+`;
 		
 		try {
 			this._program = device.cl.createProgramWithSource(device.context, this._source);

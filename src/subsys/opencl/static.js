@@ -10,11 +10,13 @@ class Static {
 	get code()   { return `${this._kernels}`; }
 	
 	
-	constructor(desc, scope) {
+	constructor(desc, owner) {
 		
-		this._name = desc.name;
+		this._name  = desc.name;
+		this._owner = owner;
 		
-		this._scope = scope.clone(this._name);
+		this._scope = owner.scope.clone(this._name);
+		this._ownScope = this._scope.get(this._name);
 		
 		this._kernels = '';
 		
@@ -22,6 +24,9 @@ class Static {
 	}
 	
 	
+	invoke() {
+		
+	}
 	
 };
 

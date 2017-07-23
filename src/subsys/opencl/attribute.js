@@ -25,11 +25,13 @@ class Attribute {
 	get code()   { return ``; }
 	get param() { return this._param; }
 	
-	constructor(desc, scope) {
+	constructor(desc, owner) {
 		
-		this._name     = desc.name;
-		this._scope    = scope.clone(this._name);
-		this._ownScope = scope.get(this._name);
+		this._name  = desc.name;
+		this._owner = owner;
+		
+		this._scope = owner.scope.clone(this._name);
+		this._ownScope = this._scope.get(this._name);
 		
 		if (typeof desc.type === 'object') {
 			
@@ -51,20 +53,6 @@ class Attribute {
 			types.fillScope(this._uniType, this._ownScope, this._scope);
 			
 		}
-		
-		// this._name = desc.name;
-		
-		// this._scope    = scope.clone(this._name);
-		// this._ownScope = scope.get(this._name);
-		
-		// if (typeof desc.type === 'object') {
-		// 	this._attrType  = desc.type.type;
-		// 	this._attrItems = desc.type.names.length;
-		// } else {
-		// 	this._attrType = desc.type;
-		// }
-		
-		// this._attrBytes = types.sizeof(this._attrType) * this._attrItems;
 		
 		this._uniBytes = this._uniItems * types.sizeof(this._uniType);
 		
