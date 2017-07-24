@@ -64,6 +64,10 @@ class Uniform {
 		
 	}
 	
+	compile() {
+		
+	}
+	
 	_write() {
 		const buffer = device.uniforms.buffer;
 		// console.log('BUF W', this._pos, this._uniBytes, this._array );

@@ -9,7 +9,7 @@ const Scope = require('../base/scope');
 class Dynamic {
 	
 	get name()   { return this._name; }
-	get header() { return `${this._signature};`; }
+	get header() { return this._header; }
 	get source() { return this._source; }
 	
 	
@@ -19,6 +19,7 @@ class Dynamic {
 		this._owner = owner;
 		
 		this._scope = owner.scope.clone(this._name);
+		
 		this._symbol = this._scope.get(this._name);
 		types.fillScope(desc.type, this._symbol, this.scope);
 		
@@ -26,7 +27,8 @@ class Dynamic {
 		
 		this._depends = owner.depends;
 		
-		this.source = `// NOT COMPILED: ${this.name}`;
+		this._header = `// NOT COMPILED HEADER: ${this.name}`;
+		this._source = `// NOT COMPILED SOURCE: ${this.name}`;
 		
 	}
 	
@@ -44,6 +46,8 @@ class Dynamic {
 		
 		const signature = `${type} ${this._symbol.name}${params}`;
 		this._paramList = this._params();
+		
+		this._header = `${this.signature};`;
 		
 		this._source = `${this.signature} {${this._inject}\n\t${
 			this._descBody.map(statement => {

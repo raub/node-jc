@@ -10,7 +10,12 @@ const Dynamic   = require('./dynamic');
 const Static    = require('./static');
 
 
-const CORE_MEMBERS = {attribute:1, uniform:1, dynamic:1, static:1};
+const CORE_MEMBERS = {
+	attribute : Attribute,
+	uniform   : Uniform,
+	dynamic   : Dynamic,
+	static    : Static,
+};
 
 class Class extends base.Class {
 	
@@ -21,88 +26,61 @@ class Class extends base.Class {
 	get depends() { return this._depends; }
 	
 	
-	_pushMember(member) {
-		if ( ! CORE_MEMBERS[member.spec] ) {
-			return;
+	_pushMember(desc) {
+		
+		if ( ! CORE_MEMBERS[desc.spec] ) {
+			return desc;
 		}
-		const hashName = `_${member.spec}Hash`;
-		const listName = `_${member.spec}List`;
-		this._attributes[member.name] = new Attribute(member, this);
-		this._attributeList.push(this._attributes[member.name]);
-		this._members.push(this._attributes[member.name]);
-		this._scope[member.name] = this._attributes[member.name];
+		
+		const hashName = `_${desc.spec}Hash`;
+		const listName = `_${desc.spec}List`;
+		
+		const member = new CORE_MEMBERS[desc.spec](desc, this);
+		
+		this[hashName][desc.name] = member;
+		this[listName].push(member);
+		
+		this._memberHash[desc.name] = member;
+		this._memberList.push(member);
+		
+		this._scope[desc.name] = member;
+		
+		return desc;
+		
 	}
+	
 	
 	constructor(desc, imported, location) {
 		
 		super(desc, imported, location);
 		
-		this._attributes    = {};
+		this._attributeHash = {};
 		this._attributeList = [];
 		
-		this._uniforms    = {};
+		this._uniformHash = {};
 		this._uniformList = [];
 		
-		this._dynamics    = {};
+		this._dynamicHash = {};
 		this._dynamicList = [];
 		
-		this._statics    = {};
+		this._staticHash = {};
 		this._staticList = [];
 		
-		this._members = [];
+		this._memberHash = {};
+		this._memberList = [];
 		
+		desc.members
+			.map(desc => this._pushMember(desc))
+			.filter(desc => desc.spec === 'alias')
+			.forEach(desc => {
+				this._scope[desc.name] = this._memberHash[desc.target];
+			});
 		
 		this._depends = {
 			attributes: [],
 			uniforms  : [],
 			dynamics  : [],
 		};
-		
-		desc.members.forEach(member => {
-			
-			switch (member.spec) {
-				
-				case 'alias':
-					this._attributes[member.name] = new Attribute(member, this);
-					this._attributeList.push(this._attributes[member.name]);
-					this._members.push(this._attributes[member.name]);
-					this._scope[member.name] = this._attributes[member.name];
-					break;
-				
-				case 'attribute':
-					this._attributes[member.name] = new Attribute(member, this);
-					this._attributeList.push(this._attributes[member.name]);
-					this._members.push(this._attributes[member.name]);
-					break;
-				
-				case 'uniform':
-					this._uniforms[member.name] = new Uniform(member, this);
-					this._uniformList.push(this._uniforms[member.name]);
-					this._members.push(this._uniforms[member.name]);
-					Object.defineProperty(this, member.name, {
-						get()  { return this._uniforms[member.name].value; },
-						set(v) { this._uniforms[member.name].value = v;    },
-					});
-					break;
-				
-				case 'dynamic':
-					this._dynamics[member.name] = new Dynamic(member, this);
-					this._dynamicList.push(this._dynamics[member.name]);
-					this._members.push(this._dynamics[member.name]);
-					break;
-				
-				case 'static':
-					this._statics[member.name] = new Static(member, this);
-					this._staticList.push(this._statics[member.name]);
-					this._members.push(this._statics[member.name]);
-					this[member.name] = this._statics[member.name].invoke.bind(this._statics[member.name]);
-					break;
-				
-				default: break;
-				
-			}
-			
-		});
 		
 		this._attributeList.forEach( attr => this._depends.attributes.push(attr) );
 		this.classes.forEach(c => c._depends.attributes.forEach(
@@ -126,7 +104,7 @@ class Class extends base.Class {
 			this._depends.dynamics.filter((x,i,a) => a.indexOf(x) !== i);
 		
 		// Compile all members
-		this._members.forEach(m => m.compile());
+		this._memberList.forEach(m => m.compile());
 		
 		
 		// Pull headers
