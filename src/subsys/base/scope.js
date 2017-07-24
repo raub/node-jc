@@ -33,6 +33,11 @@ class Scope {
 	}
 	
 	
+	has(k) {
+		return !! this._keys[k];
+	}
+	
+	
 	get(k) {
 		return this._keys[k] || k;
 	}

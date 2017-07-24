@@ -5,15 +5,16 @@ const Scope = require('./scope');
 
 class Class {
 	
-	get name()    { return this._name;    }
-	get parent()  { return this._parent;  }
-	get scope()   { return this._scope;   }
-	get classes() { return this._classes; }
+	get name()     { return this._name;     }
+	get parent()   { return this._parent;   }
+	get scope()    { return this._scope;    }
+	get imported() { return this._imported; }
+	get classes()  { return this._classes;  }
 	
 	
 	constructor(desc, imported, location) {
 		
-		this._name     = desc.name;
+		this._name = desc.name;
 		
 		if (desc.parent) {
 			this._parent = imported[desc.parent];
@@ -27,9 +28,8 @@ class Class {
 		this._classes  = Object.keys(imported).map(k => imported[k]);
 		
 		// Put imports into the scope
-		this._classes.forEach(c => this._scope.set(c.name, c.scope));
-		
-		this._scope.set(this._name, this._scope);
+		this._classes.forEach(c => this._scope.set(c.name, c));
+		this._scope.set(this._name, this);
 		
 		desc.members.forEach(member => {
 			

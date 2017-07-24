@@ -1,7 +1,7 @@
 'use strict';
 
 // const device = require('./device');
-// const types = require('./types');
+const types = require('./types');
 
 const Scope = require('../base/scope');
 
@@ -9,30 +9,9 @@ const Scope = require('../base/scope');
 class Dynamic {
 	
 	get name()   { return this._name; }
-	get header() { return `${this.signature};`; }
-	get source()   {
-		return `${this.signature} {${this._inject}\n\t${
-			this._descBody.map(statement => {
-				const method = `__${statement.type}`;
-				return this[method] && this[method](statement, this._scope) ||
-					`// TODO: ${statement.type}`;
-			}).join('\n\t')
-		}\n}`;
-	}
+	get header() { return `${this._signature};`; }
+	get source() { return this._source; }
 	
-	get inject()  { return this._inject; }
-	set inject(v) { this._inject = v; }
-	
-	get attributeParams()  { return this._attributeParams; }
-	set attributeParams(v) { this._attributeParams = v; }
-	
-	get attributeArgs()  { return this._attributeArgs; }
-	set attributeArgs(v) { this._attributeArgs = v; }
-	
-	get signature() {
-		this._paramList = this._paramList || this._params();
-		return `${this._ownType} ${this._ownName}${this._paramList}`;
-	}
 	
 	constructor(desc, owner) {
 		
@@ -40,20 +19,43 @@ class Dynamic {
 		this._owner = owner;
 		
 		this._scope = owner.scope.clone(this._name);
-		this._ownScope = this._scope.get(this._name);
+		this._symbol = this._scope.get(this._name);
+		types.fillScope(desc.type, this._symbol, this.scope);
 		
-		this._ownName = this._scope.get(`${this._name}`).name;
-		this._ownType = desc.type;
+		this._desc = desc;
 		
-		this._descParams = desc.params;
-		this._descBody = desc.body;
+		this._depends = owner.depends;
 		
-		this._body = 'BODY_NOT_READY';
-		
-		this._attributeParams = 'PARAMS_NOT_READY';
-		this._attributeArgs = 'ARGS_NOT_READY';
+		this.source = `// NOT COMPILED: ${this.name}`;
 		
 	}
+	
+	
+	compile() {
+		
+		const body = this._desc.body.map(statement => {
+			const method = `__${statement.type}`;
+			return this[method] && this[method](statement, this._scope) ||
+				`// TODO: ${statement.type}`;
+		}).join('\n\t');
+		
+		const type = types.translate(this._desc.type);
+		const params = this._params();
+		
+		const signature = `${type} ${this._symbol.name}${params}`;
+		this._paramList = this._params();
+		
+		this._source = `${this.signature} {${this._inject}\n\t${
+			this._descBody.map(statement => {
+				const method = `__${statement.type}`;
+				return this[method] && this[method](statement, this._scope) ||
+					`// TODO: ${statement.type}`;
+			}).join('\n\t')
+		}\n}`;
+		
+	}
+	
+	
 	
 	
 	_params() {

@@ -53,6 +53,20 @@ const fillScope = (typeName, scope, containerScope) => {
 };
 
 
+const translate = (type, scope) => {
+	
+	if (/^[A-Z]/.test(type)) {
+		if ( ! scope.has(type) ) {
+			throw new Error(`Unknown class used: ${type}.`)
+		}
+		return 'uint';
+	}
+	
+	return type;
+	
+};
+
+
 module.exports = {
 	CLASS_SIZE,
 	sizeof,

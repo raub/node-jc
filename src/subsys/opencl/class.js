@@ -10,15 +10,28 @@ const Dynamic   = require('./dynamic');
 const Static    = require('./static');
 
 
+const CORE_MEMBERS = {attribute:1, uniform:1, dynamic:1, static:1};
+
 class Class extends base.Class {
 	
 	get header()  { return this._header;  }
 	get inject()  { return this._inject;  }
 	get program() { return this._program; }
 	
-	get attributeParams() { return this._attributeParams; }
-	get attributeArgs() { return this._attributeArgs; }
+	get depends() { return this._depends; }
 	
+	
+	_pushMember(member) {
+		if ( ! CORE_MEMBERS[member.spec] ) {
+			return;
+		}
+		const hashName = `_${member.spec}Hash`;
+		const listName = `_${member.spec}List`;
+		this._attributes[member.name] = new Attribute(member, this);
+		this._attributeList.push(this._attributes[member.name]);
+		this._members.push(this._attributes[member.name]);
+		this._scope[member.name] = this._attributes[member.name];
+	}
 	
 	constructor(desc, imported, location) {
 		
@@ -27,14 +40,16 @@ class Class extends base.Class {
 		this._attributes    = {};
 		this._attributeList = [];
 		
-		this._uniforms      = {};
-		this._uniformList   = [];
+		this._uniforms    = {};
+		this._uniformList = [];
 		
-		this._dynamics      = {};
-		this._dynamicList   = [];
+		this._dynamics    = {};
+		this._dynamicList = [];
 		
-		this._statics       = {};
-		this._staticList    = [];
+		this._statics    = {};
+		this._staticList = [];
+		
+		this._members = [];
 		
 		
 		this._depends = {
@@ -47,14 +62,23 @@ class Class extends base.Class {
 			
 			switch (member.spec) {
 				
+				case 'alias':
+					this._attributes[member.name] = new Attribute(member, this);
+					this._attributeList.push(this._attributes[member.name]);
+					this._members.push(this._attributes[member.name]);
+					this._scope[member.name] = this._attributes[member.name];
+					break;
+				
 				case 'attribute':
 					this._attributes[member.name] = new Attribute(member, this);
 					this._attributeList.push(this._attributes[member.name]);
+					this._members.push(this._attributes[member.name]);
 					break;
 				
 				case 'uniform':
 					this._uniforms[member.name] = new Uniform(member, this);
 					this._uniformList.push(this._uniforms[member.name]);
+					this._members.push(this._uniforms[member.name]);
 					Object.defineProperty(this, member.name, {
 						get()  { return this._uniforms[member.name].value; },
 						set(v) { this._uniforms[member.name].value = v;    },
@@ -64,11 +88,13 @@ class Class extends base.Class {
 				case 'dynamic':
 					this._dynamics[member.name] = new Dynamic(member, this);
 					this._dynamicList.push(this._dynamics[member.name]);
+					this._members.push(this._dynamics[member.name]);
 					break;
 				
 				case 'static':
 					this._statics[member.name] = new Static(member, this);
 					this._staticList.push(this._statics[member.name]);
+					this._members.push(this._statics[member.name]);
 					this[member.name] = this._statics[member.name].invoke.bind(this._statics[member.name]);
 					break;
 				
@@ -99,6 +125,8 @@ class Class extends base.Class {
 		this._depends.dynamics =
 			this._depends.dynamics.filter((x,i,a) => a.indexOf(x) !== i);
 		
+		// Compile all members
+		this._members.forEach(m => m.compile());
 		
 		
 		// Pull headers
